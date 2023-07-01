@@ -1,4 +1,4 @@
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="96.8" height="103.2"
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="48.4" height="51.6"
     viewBox="0 0 484 516" preserveAspectRatio="xMidYMid meet">
     <g transform="translate(0.000000,516.000000) scale(0.100000,-0.100000)" fill="#E5222A" stroke="none">
         <path d="M1792 5127 c-24 -26 -47 -104 -62 -220 -31 -223 -89 -369 -170 -427
