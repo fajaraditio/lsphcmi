@@ -9,70 +9,10 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm px-3">
 
-            <div id="step-wizard" class="mb-5 py-3 border-b border-gray-100">
-                <ol class="flex justify-between items-center w-full">
-                    <li
-                        class="flex w-1/4 items-center text-red-600 dark:text-red-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-red-100 after:border-4 after:inline-block dark:after:border-red-800">
-                        <span
-                            class="flex items-center justify-center w-10 h-10 bg-red-100 rounded-full lg:h-12 lg:w-12 dark:bg-red-800 shrink-0">
-                            <small>{{ __('Mulai') }}</small>
-                        </span>
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700 before:content-[''] before:w-full before:h-1 before:border-b before:border-red-100 before:border-4 before:inline-block dark:before:border-red-800">
-                        <span
-                            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                            {{ __('1') }}
-                        </span>
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700 before:content-[''] before:w-full before:h-1 before:border-b before:border-gray-100 before:border-4 before:inline-block dark:before:border-gray-700">
-                        <span
-                            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                            {{ __('2') }}
-                        </span>
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700 before:content-[''] before:w-full before:h-1 before:border-b before:border-gray-100 before:border-4 before:inline-block dark:before:border-gray-700">
-                        <span
-                            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                            {{ __('3') }}
-                        </span>
-                    </li>
-                    <li
-                        class="flex w-1/4 items-center before:content-[''] before:w-full before:h-1 before:border-b before:border-gray-100 before:border-4 before:inline-block dark:before:border-gray-700">
-                        <span
-                            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                            {{ __('4') }}
-                        </span>
-                    </li>
-                </ol>
-                <ol class="flex justify-between items-center w-full text-sm text-center">
-                    <li
-                        class="flex w-1/4 items-center text-red-600 dark:text-red-500 after:content-[''] after:w-full after:h-1 after:inline-block">
-                        {{ __('Memilih Skema') }}
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 before:content-[''] before:w-full before:h-1 before:inline-block">
-                        {{ __('Rincian Data Pemohon') }}
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 before:content-[''] before:w-full before:h-1 before:inline-block">
-                        {{ __('Informasi Pembayaran') }}
-                    </li>
-                    <li
-                        class="flex w-1/2 items-center after:content-[''] after:w-full after:h-1 before:content-[''] before:w-full before:h-1 before:inline-block">
-                        {{ __('Unggah Portfolio') }}
-                    </li>
-                    <li
-                        class="flex w-1/4 items-center before:content-[''] before:w-full before:h-1 before:inline-block">
-                        {{ __('Asesmen Mandiri') }}
-                    </li>
-                </ol>
-            </div>
-
             <div id="form-wizard" class="pb-6">
                 @csrf
+
+                @livewire('components.step-wizard', ['stepWizards' => $stepWizards, 'currentStep' => $currentStep])
 
                 <div id="step-one" class="{{ $currentStep !== 1 ? 'hidden' : '' }}">
                     @foreach ($schemes as $scheme)
@@ -87,16 +27,18 @@
                     @endforeach
                 </div>
 
-                <div id="step-two" class="{{ $currentStep !== 2 ? 'hidden' : '' }}">
+                <div id="step-two" class="{{ $currentStep !== 0 ? 'hidden' : '' }}">
                     <span class="rounded-full bg-gray-500 text-white text-sm p-2">{{ __('A. Data Pribadi') }}</span>
 
                     <div class="sm:flex w-full mt-5">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="name" :value="__('Nama Lengkap')"></x-input-label>
                             <x-text-input id="name" type="text" :value="old('name')" class="block mt-1 w-full"
-                                placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas" required>
+                                placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas" wire:model="participant.name"
+                                required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            @error('participant.name') {{ 'border-red-500' }} @enderror
+                            <x-input-error :messages="$errors->get('participant.name')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -293,6 +235,40 @@
                             </x-text-input>
                             <x-input-error :messages="$errors->get('company_cell_phone_number')" class="mt-2" />
                         </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="flex justify-between">
+                        <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
+                        <x-primary-button wire:click="secondStepSubmit()">Selanjutnya</x-primary-button>
+                    </div>
+                </div>
+
+                <div id="step-three" class="{{ $currentStep !== 2 ? 'hidden' : '' }}">
+                    Peduli setan
+
+                    <div class="flex justify-between">
+                        <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
+                        <x-primary-button wire:click="thirdStepSubmit()">Selanjutnya</x-primary-button>
+                    </div>
+                </div>
+
+                <div id="step-four" class="{{ $currentStep !== 3 ? 'hidden' : '' }}">
+                    Halo Beni
+
+                    <div class="flex justify-between">
+                        <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
+                        <x-primary-button wire:click="fourthStepSubmit()">Selanjutnya</x-primary-button>
+                    </div>
+                </div>
+
+                <div id="step-five" class="{{ $currentStep !== 4 ? 'hidden' : '' }}">
+                    KUNING
+
+                    <div class="flex justify-between">
+                        <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
+                        <x-primary-button wire:click="fifthStepSubmit()">Selesai</x-primary-button>
                     </div>
                 </div>
             </div>
