@@ -58,8 +58,9 @@ class RegisterWizard extends Component
 
     public function secondStepSubmit()
     {
-        $validatedData = $this->validate([
+        $this->validate([
             'participant.name'          => 'required',
+            'participant.identity_number' => 'required',
             'participant.date_place'    => 'required',
             'participant.date_birth'    => 'required',
             'participant.gender'        => 'required|in:Male,Female',

@@ -33,11 +33,11 @@
                     <div class="sm:flex w-full mt-5">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="name" :value="__('Nama Lengkap')"></x-input-label>
-                            <x-text-input id="name" type="text" :value="old('name')" class="block mt-1 w-full"
+                            <x-text-input id="name" type="text" :value="old('name')"
+                                :error="$errors->has('participant.name')" class="block mt-1 w-full"
                                 placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas" wire:model="participant.name"
                                 required>
                             </x-text-input>
-                            @error('participant.name') {{ 'border-red-500' }} @enderror
                             <x-input-error :messages="$errors->get('participant.name')" class="mt-2" />
                         </div>
 
@@ -45,11 +45,12 @@
                             <x-input-label for="identity_number" :value="__('Nomor KTP / NIK / Paspor')">
                             </x-input-label>
                             <x-text-input id="identity_number" type="text" :value="old('identity_number')"
-                                class="block mt-1 w-full"
-                                placeholder="Masukkan Nomor KTP / NIK / Paspor, mis: 31200000001" required>
+                                :error="$errors->has('participant.identity_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan Nomor KTP / NIK / Paspor, mis: 31200000001"
+                                wire:model="participant.identity_number">
                             </x-text-input>
 
-                            <x-input-error :messages="$errors->get('identity_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.identity_number')" class="mt-2" />
                         </div>
                     </div>
 
