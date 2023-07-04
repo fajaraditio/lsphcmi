@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\Scheme;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegisterWizard extends Component
 {
+    use WithFileUploads;
+
     protected $wizardViews = [
         'step-one',
         'step-two',
@@ -40,7 +43,7 @@ class RegisterWizard extends Component
 
     public $schemeId;
     public $participant;
-    public $currentStep = 0;
+    public $currentStep = 2;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -63,6 +66,7 @@ class RegisterWizard extends Component
         'participant.company_phone_number'  => 'No Telp. Perusahaan',
         'participant.company_fax_number'    => 'No Fax. Perusahaan',
         'participant.company_cell_phone_number' => 'No HP Perusahaan',
+        'participant.payment_receipt' => 'Bukti Pembayaran',
     ];
 
     public function mount()
@@ -100,15 +104,19 @@ class RegisterWizard extends Component
             'participant.company_phone_number'  => 'required',
         ]);
 
-        // $this->currentStep += 1;
+        dd($this->schemeId);
 
-        dd($this->participant);
+        $this->currentStep += 1;
 
-        // $this->emit('updateCurrentStep', $this->currentStep);
+        $this->emit('updateCurrentStep', $this->currentStep);
     }
 
     public function thirdStepSubmit()
     {
+        $this->validate([
+            'participant.payment_receipt'   => 'required',
+        ]);
+
         $this->currentStep += 1;
 
         $this->emit('updateCurrentStep', $this->currentStep);

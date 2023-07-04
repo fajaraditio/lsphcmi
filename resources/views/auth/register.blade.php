@@ -281,7 +281,36 @@
                 </div>
 
                 <div id="step-three" class="{{ $currentStep !== 2 ? 'hidden' : '' }}">
-                    Peduli setan
+                    <div class="p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+                        role="alert">
+                        <span class="font-medium">💡 Informasi Pembayaran</span>
+                        <p>
+                            Silakan lakukan pembayaran ke rekening BRI a/n LSP HCMI
+                            dengan nomor rekening 1167.0100.0254.305 lalu unggah melalui form di bawah ini
+                        </p>
+                    </div>
+
+                    <div class="sm:flex w-full mt-5">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="payment_receipt" :value="__('Unggah Bukti Pembayaran')"></x-input-label>
+                            <x-file-input id="payment_receipt" :value="old('participant.payment_receipt')"
+                                class="block mt-1 w-full" :error="$errors->has('participant.payment_receipt')"
+                                placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas"
+                                wire:model="participant.payment_receipt" accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']" required>
+                            </x-file-input>
+                            <x-input-error :messages="$errors->get('participant.payment_receipt')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="sm:flex w-full mt-5">
+                        @if ($participant && $participant['payment_receipt'])
+                            <img src="{{ ($participant['payment_receipt'])->temporaryUrl() }}" class="w-48 h-auto" alt="Temporary Preview Image">
+                        @endif
+                    </div>
+
+                    <hr class="my-5">
 
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
