@@ -100,9 +100,11 @@ class RegisterWizard extends Component
             'participant.company_phone_number'  => 'required',
         ]);
 
-        $this->currentStep += 1;
+        // $this->currentStep += 1;
 
-        $this->emit('updateCurrentStep', $this->currentStep);
+        dd($this->participant);
+
+        // $this->emit('updateCurrentStep', $this->currentStep);
     }
 
     public function thirdStepSubmit()
@@ -138,12 +140,16 @@ class RegisterWizard extends Component
         $schemes = Scheme::all();
         $genders = [
             [
-                'attr'  => 'Laki-laki',
-                'value' => 'Male',
+                'attr'  => __('-- Pilih Jenis Kelamin --'),
+                'value' => '',
             ],
             [
-                'attr'  => 'Perempuan',
-                'value' => 'Female',
+                'attr'  => __('Laki-laki'),
+                'value' => __('Male'),
+            ],
+            [
+                'attr'  => __('Perempuan'),
+                'value' => __('Female'),
             ]
         ];
 

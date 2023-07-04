@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('bib_number')->nullable();
             $table->string('name')->nullable();
+            $table->integer('identity_number')->nullable();
             $table->string('place_birth')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('gender')->nullable();
