@@ -43,7 +43,7 @@ class RegisterWizard extends Component
 
     public $schemeId;
     public $participant;
-    public $currentStep = 2;
+    public $currentStep = 3;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
