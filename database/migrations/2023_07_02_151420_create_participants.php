@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('bib_number')->nullable();
             $table->string('name')->nullable();
-            $table->string('date_place')->nullable();
-            $table->string('date_birth')->nullable();
+            $table->string('place_birth')->nullable();
+            $table->date('birth_date')->nullable();
             $table->string('gender')->nullable();
             $table->string('nationality')->nullable();
             $table->text('address')->nullable();
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('office_phone_number')->nullable();
             $table->string('cell_phone_number')->nullable();
             $table->string('company_name')->nullable();
+            $table->string('position_at_work')->nullable();
             $table->text('company_address')->nullable();
             $table->text('company_city')->nullable();
             $table->integer('company_zip_code')->nullable();

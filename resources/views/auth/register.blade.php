@@ -14,7 +14,7 @@
 
                 @livewire('components.step-wizard', ['stepWizards' => $stepWizards, 'currentStep' => $currentStep])
 
-                <div id="step-one" class="{{ $currentStep !== 1 ? 'hidden' : '' }}">
+                <div id="step-one" class="{{ $currentStep !== 0 ? 'hidden' : '' }}">
                     @foreach ($schemes as $scheme)
                     <ul>
                         <li class="border-1 border-b border-gray-100 py-2">
@@ -27,60 +27,61 @@
                     @endforeach
                 </div>
 
-                <div id="step-two" class="{{ $currentStep !== 0 ? 'hidden' : '' }}">
+                <div id="step-two" class="{{ $currentStep !== 1 ? 'hidden' : '' }}">
                     <span class="rounded-full bg-gray-500 text-white text-sm p-2">{{ __('A. Data Pribadi') }}</span>
 
                     <div class="sm:flex w-full mt-5">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="name" :value="__('Nama Lengkap')"></x-input-label>
-                            <x-text-input id="name" type="text" :value="old('name')"
+                            <x-text-input id="name" type="text" :value="old('participant.name')"
                                 :error="$errors->has('participant.name')" class="block mt-1 w-full"
                                 placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas" wire:model="participant.name"
                                 required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('participant.name')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.participant.name')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="identity_number" :value="__('Nomor KTP / NIK / Paspor')">
                             </x-input-label>
-                            <x-text-input id="identity_number" type="text" :value="old('identity_number')"
+                            <x-text-input id="identity_number" type="text" :value="old('participant.identity_number')"
                                 :error="$errors->has('participant.identity_number')" class="block mt-1 w-full"
                                 placeholder="Masukkan Nomor KTP / NIK / Paspor, mis: 31200000001"
                                 wire:model="participant.identity_number">
                             </x-text-input>
 
-                            <x-input-error :messages="$errors->get('participant.identity_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.participant.identity_number')"
+                                class="mt-2" />
                         </div>
                     </div>
 
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="birth_place" :value="__('Tempat Lahir')"></x-input-label>
-                            <x-text-input id="birth_place" type="text" :value="old('birth_place')"
+                            <x-text-input id="birth_place" type="text" :value="old('participant.birth_place')"
                                 placeholder="Masukkan Tempat Lahir, mis: Jakarta" class="block mt-1 w-full" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('birth_place')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.birth_place')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="birth_date" :value="__('Tanggal Lahir')">
                             </x-input-label>
-                            <x-text-input id="birth_date" type="date" :value="old('birth_date')"
+                            <x-text-input id="birth_date" type="date" :value="old('participant.birth_date')"
                                 class="block mt-1 w-full" placeholder="Masukkan Tanggal Lahir" required>
                             </x-text-input>
 
-                            <x-input-error :messages="$errors->get('birth_date')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.birth_date')" class="mt-2" />
                         </div>
                     </div>
 
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="gender" :value="__('Jenis Kelamin')"></x-input-label>
-                            <x-select-input id="gender" type="text" :value="old('gender')" class="block mt-1 w-full"
-                                :options="$genders" required>
+                            <x-select-input id="gender" type="text" :value="old('participant.gender')"
+                                class="block mt-1 w-full" :options="$genders" required>
                             </x-select-input>
-                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.gender')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -90,10 +91,10 @@
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="nationality" :value="__('Kebangsaan')"></x-input-label>
-                            <x-text-input id="nationality" type="text" :value="old('nationality')"
+                            <x-text-input id="nationality" type="text" :value="old('participant.nationality')"
                                 class="block mt-1 w-full" placeholder="Masukkan Kebangsaan, mis: Indonesia" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('nationality')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.nationality')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -104,49 +105,54 @@
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="address" :value="__('Alamat Lengkap')"></x-input-label>
                             <x-textarea-input id="address" class="block mt-1 w-full h-32"
-                                placeholder="Masukkan Alamat Lengkap, mis: Jalan Rawajati" required>{{ old('address') }}
+                                placeholder="Masukkan Alamat Lengkap, mis: Jalan Rawajati" required>{{
+                                old('participant.address') }}
                             </x-textarea-input>
-                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.address')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="city" :value="__('Kota')"></x-input-label>
-                            <x-text-input id="city" type="text" :value="old('city')" class="block mt-1 w-full sm:w-1/2"
-                                placeholder="Masukkan Kota, mis: Jakarta Barat" required>
+                            <x-text-input id="city" type="text" :value="old('participant.city')"
+                                class="block mt-1 w-full sm:w-1/2" placeholder="Masukkan Kota, mis: Jakarta Barat"
+                                required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('city')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.city')" class="mt-2" />
 
                             <x-input-label for="zip_code" :value="__('Kode Pos')" class="my-2"></x-input-label>
-                            <x-text-input id="zip_code" type="number" :value="old('zip_code')"
+                            <x-text-input id="zip_code" type="number" :value="old('participant.zip_code')"
                                 class="block mt-1 w-full sm:w-1/2" placeholder="Masukkan Kode Pos, mis: 14440" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('zip_code')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.zip_code')" class="mt-2" />
                         </div>
                     </div>
 
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="home_phone_number" :value="__('No Telp. Rumah')"></x-input-label>
-                            <x-text-input id="home_phone_number" type="text" :value="old('home_phone_number')"
-                                class="block mt-1 w-full" placeholder="Masukkan No Telp. Rumah">
+                            <x-text-input id="home_phone_number" type="text"
+                                :value="old('participant.home_phone_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan No Telp. Rumah">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('home_phone_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.home_phone_number')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="office_phone_number" :value="__('No Telp. Kantor')"></x-input-label>
-                            <x-text-input id="office_phone_number" type="text" :value="old('office_phone_number')"
-                                class="block mt-1 w-full" placeholder="Masukkan No Telp. Kantor">
+                            <x-text-input id="office_phone_number" type="text"
+                                :value="old('participant.office_phone_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan No Telp. Kantor">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('office_phone_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.office_phone_number')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="cell_phone_number" :value="__('No Handphone')"></x-input-label>
-                            <x-text-input id="cell_phone_number" type="text" :value="old('cell_phone_number')"
-                                class="block mt-1 w-full" placeholder="Masukkan No Handphone">
+                            <x-text-input id="cell_phone_number" type="text"
+                                :value="old('participant.cell_phone_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan No Handphone">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('cell_phone_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.cell_phone_number')" class="mt-2" />
                         </div>
                     </div>
 
@@ -159,10 +165,10 @@
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="company_name" :value="__('Nama Institusi / Perusahaan')">
                             </x-input-label>
-                            <x-text-input id="company_name" type="text" :value="old('company_name')"
+                            <x-text-input id="company_name" type="text" :value="old('participant.company_name')"
                                 class="block mt-1 w-full" placeholder="Masukkan Nama Institusi / Perusahaan" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_name')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_name')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -171,12 +177,12 @@
 
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
-                            <x-input-label for="working_position" :value="__('Jabatan')">
+                            <x-input-label for="position_at_work" :value="__('Jabatan')">
                             </x-input-label>
-                            <x-text-input id="working_position" type="text" :value="old('working_position')"
+                            <x-text-input id="position_at_work" type="text" :value="old('participant.position_at_work')"
                                 class="block mt-1 w-full" placeholder="Masukkan Jabatan atau Posisi Pekerjaan" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('working_position')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.position_at_work')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -188,24 +194,25 @@
                             <x-input-label for="company_address" :value="__('Alamat Kantor')"></x-input-label>
                             <x-textarea-input id="company_address" class="block mt-1 w-full h-32"
                                 placeholder="Masukkan Alamat Kantor, mis: Jalan Panjang No. 63" required>{{
-                                old('address') }}
+                                old('participant.address') }}
                             </x-textarea-input>
-                            <x-input-error :messages="$errors->get('company_address')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_address')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="company_city" :value="__('Kota')"></x-input-label>
-                            <x-text-input id="company_city" type="text" :value="old('company_city')"
+                            <x-text-input id="company_city" type="text" :value="old('participant.company_city')"
                                 class="block mt-1 w-full sm:w-1/2" placeholder="Masukkan Kota, mis: Jakarta Barat"
                                 required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_city')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_city')" class="mt-2" />
 
                             <x-input-label for="company_zip_code" :value="__('Kode Pos')" class="my-2"></x-input-label>
-                            <x-text-input id="company_zip_code" type="number" :value="old('company_zip_code')"
-                                class="block mt-1 w-full sm:w-1/2" placeholder="Masukkan Kode Pos, mis: 14440" required>
+                            <x-text-input id="company_zip_code" type="number"
+                                :value="old('participant.company_zip_code')" class="block mt-1 w-full sm:w-1/2"
+                                placeholder="Masukkan Kode Pos, mis: 14440" required>
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_zip_code')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_zip_code')" class="mt-2" />
                         </div>
                     </div>
 
@@ -213,28 +220,31 @@
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="company_phone_number" :value="__('No Telp. Perusahaan')">
                             </x-input-label>
-                            <x-text-input id="company_phone_number" type="text" :value="old('company_phone_number')"
-                                class="block mt-1 w-full" placeholder="Masukkan No Telp. Perusahaan">
+                            <x-text-input id="company_phone_number" type="text"
+                                :value="old('participant.company_phone_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan No Telp. Perusahaan">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_phone_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_phone_number')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="company_fax_number" :value="__('No Fax. Perusahaan')"></x-input-label>
-                            <x-text-input id="company_fax_number" type="text" :value="old('company_fax_number')"
-                                class="block mt-1 w-full" placeholder="Masukkan No Fax. Perusahaan">
+                            <x-text-input id="company_fax_number" type="text"
+                                :value="old('participant.company_fax_number')" class="block mt-1 w-full"
+                                placeholder="Masukkan No Fax. Perusahaan">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_fax_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_fax_number')" class="mt-2" />
                         </div>
 
                         <div class="w-full sm:w-1/3 my-2 sm:mr-2">
                             <x-input-label for="company_cell_phone_number" :value="__('No HP Perusahaan')">
                             </x-input-label>
                             <x-text-input id="company_cell_phone_number" type="text"
-                                :value="old('company_cell_phone_number')" class="block mt-1 w-full"
+                                :value="old('participant.company_cell_phone_number')" class="block mt-1 w-full"
                                 placeholder="Masukkan No HP Perusahaan">
                             </x-text-input>
-                            <x-input-error :messages="$errors->get('company_cell_phone_number')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('participant.company_cell_phone_number')"
+                                class="mt-2" />
                         </div>
                     </div>
 
