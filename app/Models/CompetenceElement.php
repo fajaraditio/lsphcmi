@@ -10,4 +10,9 @@ class CompetenceElement extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function competence_criterias()
+    {
+        return $this->hasMany(CompetenceCriteria::class);
+    }
 }

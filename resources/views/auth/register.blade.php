@@ -415,7 +415,69 @@
                 </div>
 
                 <div id="step-five" class="{{ $currentStep !== 4 ? 'hidden' : '' }}">
-                    
+
+                    <div class="w-full mt-5">
+                        @foreach ($competenceUnits as $competenceUnit)
+                        <table class="table-auto border-collapse border border-slate-400 w-full text-left mt-3">
+                            <tbody>
+                                <tr>
+                                    <th class="border border-slate-300 w-1/5 p-2">Kode</th>
+                                    <td class="border border-slate-300 w-4/5 p-2" colspan="4">{{ $competenceUnit->code
+                                        }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="border border-slate-300 w-1/5 p-2">Judul</th>
+                                    <td class="border border-slate-300 w-4/5 p-2" colspan="4">{{ $competenceUnit->title
+                                        }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2" colspan="2">Dapatkah saya ...?</td>
+                                    <td class="border border-slate-300 p-2 text-center">K</td>
+                                    <td class="border border-slate-300 p-2 text-center">BK</td>
+                                    <td class="border border-slate-300 p-2 text-center">Bukti Relevan</td>
+                                </tr>
+                                @foreach ($competenceUnit->competence_elements as $competenceElement)
+                                <tr>
+                                    <th class="border border-slate-300 p-2">Elemen {{ $competenceElement->no }}</th>
+                                    <td class="border border-slate-300 p-2" colspan="4">{{ $competenceElement->title }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2" colspan="5">Kriteria Untuk Kerja</td>
+                                </tr>
+                                @foreach ($competenceElement->competence_criterias as $competenceCriteria)
+                                <tr>
+                                    <td class="border border-slate-300 p-2">{{ $competenceElement->no . '.' .
+                                        $competenceCriteria->no }}</td>
+                                    <td class="border border-slate-300 w-2/5 p-2">{{ $competenceCriteria->title }}</td>
+                                    <td class="border border-slate-300 p-2">
+                                        <input type="radio"
+                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400">
+                                    </td>
+                                    <td class="border border-slate-300 p-2">
+                                        <input type="radio"
+                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400">
+                                    </td>
+                                    <td class="border border-slate-300 p-2">
+                                        <x-file-input id="references_letter"
+                                            :value="old('participant_docs.references_letter')" class="block mt-1 w-full"
+                                            :error="$errors->has('participant_docs.references_letter')"
+                                            placeholder="Masukkan Scan Sertifikat Pelatihan Kerja" accept="image/*"
+                                            :allowed-exts="['PNG', 'BMP', 'JPG']">
+                                        </x-file-input>
+                                        <x-input-error :messages="$errors->get('participant_docs.references_letter')"
+                                            class="mt-2" />
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        @endforeach
+                    </div>
+
+                    <hr class="my-5">
 
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>

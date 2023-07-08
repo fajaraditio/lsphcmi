@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\CompetenceUnit;
 use App\Models\Scheme;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -152,6 +153,7 @@ class RegisterWizard extends Component
     public function render()
     {
         $schemes = Scheme::all();
+        $competenceUnits = CompetenceUnit::with('competence_elements.competence_criterias')->get();
         $genders = [
             [
                 'attr'  => __('-- Pilih Jenis Kelamin --'),
@@ -193,7 +195,7 @@ class RegisterWizard extends Component
             ],
         ];
 
-        return view('auth.register', compact('schemes', 'genders', 'purposes'))
+        return view('auth.register', compact('schemes', 'genders', 'purposes', 'competenceUnits'))
             ->layout('layouts.guest');
     }
 }
