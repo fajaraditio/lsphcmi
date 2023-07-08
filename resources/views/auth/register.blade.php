@@ -415,7 +415,7 @@
                 </div>
 
                 <div id="step-five" class="{{ $currentStep !== 4 ? 'hidden' : '' }}">
-                    KUNING
+                    
 
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>

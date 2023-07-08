@@ -1,0 +1,158 @@
+[
+    {
+        "code": "M.703SDM01.010.2",
+        "title": "Menyusun Uraian Jabatan",
+        "elements": [
+            {
+                "no": 1,
+                "title": "Melakukan Uraian Jabatan",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Metode dan perangkat analisis jabatan ditetapkan dalam bentuk dokumen tertulis."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Informasi pekerjaan dari setiap jabatan diindentifikasi dari berbagai narasumber di dalam organisasi."
+                    },
+                    {
+                        "no": 3,
+                        "title": "Data dan informasi jabatan dianalisis berdasarkan metode dan perangkat analisis jabatan yang ditetapkan."
+                    }
+                ]
+            },
+            {
+                "no": 2,
+                "title": "Menetapkan Uraian Jabatan",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Komponen uraian jabatan ditentukan sesuai format job description yang telah ditetapkan."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Uraian jabatan setiap posisi jabatan dibuat berdasrakan data dan informasi jabatan yang telah dikumpulkan."
+                    },
+                    {
+                        "no": 3,
+                        "title": "Uraian jabatan ditetapkan berdasarkan Standar Operasional Prosedur (SOP) yang berlaku di organisasi."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "M.70SDM01.058.2",
+        "title": "Melakukan Administrasi Jaminan Sosial",
+        "elements": [
+            {
+                "no": 1,
+                "title": "Mendaftarkan Program Jaminan Sosial",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Ketentuan dan aturan tentang kepesertaan dan manfaat program jaminan sosial dipahami dengan seksama."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Pendaftaran kepesertaan program jaminan sosial dilaksanakan dengan melengkapi data perusahaan, data pekerja dan upah pekerja sesuai ketentuan."
+                    },
+                    {
+                        "no": 3,
+                        "title": "Kartu kepesertaan anggota jaminan sosial dari badan penyelenggara dibagikan kepada pekerja."
+                    }
+                ]
+            },
+            {
+                "no": 2,
+                "title": "Melakukan Administrasi Kepesertaan Jaminan Sosial",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Pembayaran iuran program jaminan sosial dilakukan sesuai dengan ketentuan yang berlaku."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Penerimaan manfaat program jaminan sosial dipastikan sampai kepada peserta atau ahli waris yang berhak."
+                    },
+                    {
+                        "no": 3,
+                        "title": "Pelaksanaan administrasi jaminan sosial didokumentasikan."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "M.70SDM01.057.2",
+        "title": "Melakukan Administrasi Pengupahan",
+        "elements": [
+            {
+                "no": 1,
+                "title": "Mengkompilasi Ketentuan dan Prosedur Administrasi Pengupahan",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Ketentuan dan prosedur kerja tentang pengupahan diidentifikasi."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Ketentuan dan prosedur kerja administrasi pengupahan dikompilasi."
+                    }
+                ]
+            },
+            {
+                "no": 2,
+                "title": "Melaksanakan Administrasi Pengupahan",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Upah dihitung sesuai dengan ketentuan yang berlaku di organisasi."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Pembayaran upah pekerja dilakukan secara akurat dan tepat waktu sesuai ketentuan yang berlaku."
+                    },
+                    {
+                        "no": 3,
+                        "title": "Bukti-bukti dan dokumen pelaksanaan pembayaran upah pekerja didokumentasikan."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "M.70SDM01.059.2",
+        "title": "Mengkompilasi Ketentuan Administrasi Penerapan Kebijakan MSDM",
+        "elements": [
+            {
+                "no": 1,
+                "title": "Mengkompilasi Ketentuan Administrasi Penerapan Kebijakan MSDM",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Ketentuan dan prosedur kerja berkaitan dengan administrasi penerapan kebijakan MSDM diidentifikasi."
+                    },
+                    {
+                        "no": 2,
+                        "title": " Prosedur kerja dan bagan alur proses yang berkaitan dengan pengelolaan administrasi penerapan kebijakan MSDM dikompilasi."
+                    }
+                ]
+            },
+            {
+                "no": 2,
+                "title": "Melaksanakan Administrasi Kebijakan MSDM",
+                "criterias": [
+                    {
+                        "no": 1,
+                        "title": "Kegiatan administrasi penerapan kebijakan MSDM dilaksanakan secara akurat dan tepat waktu sesuai prosedur kerja yang berlaku."
+                    },
+                    {
+                        "no": 2,
+                        "title": "Administrasi penerapan kebijakan MSDM didokumentasikan sesuai prosedur."
+                    }
+                ]
+            }
+        ]
+    }
+]
