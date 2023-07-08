@@ -296,7 +296,8 @@
                             <x-file-input id="payment_receipt" :value="old('participant.payment_receipt')"
                                 class="block mt-1 w-full" :error="$errors->has('participant.payment_receipt')"
                                 placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas"
-                                wire:model="participant.payment_receipt" accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']" required>
+                                wire:model="participant.payment_receipt" accept="image/*"
+                                :allowed-exts="['PNG', 'BMP', 'JPG']" required>
                             </x-file-input>
                             <x-input-error :messages="$errors->get('participant.payment_receipt')" class="mt-2" />
                         </div>
@@ -306,7 +307,8 @@
 
                     <div class="sm:flex w-full mt-5">
                         @if ($participant && $participant['payment_receipt'])
-                            <img src="{{ ($participant['payment_receipt'])->temporaryUrl() }}" class="w-48 h-auto" alt="Temporary Preview Image">
+                        <img src="{{ ($participant['payment_receipt'])->temporaryUrl() }}" class="w-48 h-auto"
+                            alt="Temporary Preview Image">
                         @endif
                     </div>
 
@@ -319,7 +321,92 @@
                 </div>
 
                 <div id="step-four" class="{{ $currentStep !== 3 ? 'hidden' : '' }}">
-                    Halo Beni
+
+                    <div class="sm:flex w-full mt-5">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="name" :value="__('Judul Skema Asesmen')"></x-input-label>
+                            <x-text-input id="name" type="text" class="block mt-1 w-full"
+                                :value="$selectedScheme ? $selectedScheme->name : ''" disabled>
+                            </x-text-input>
+                        </div>
+                    </div>
+
+                    <div class="sm:flex w-full mt-3">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="purpose" :value="__('Tujuan Asesmen')"></x-input-label>
+                            <x-select-input id="gender" type="text" :value="old('participant.purpose')"
+                                class="block mt-1 w-full" :options="$purposes" wire:model="participant.purpose"
+                                required>
+                            </x-select-input>
+                            <x-input-error :messages="$errors->get('participant.purpose')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="sm:flex w-full mt-3">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="identity_card"
+                                :value="__('Scan KTP / Paspor / Kartu Identitas Lainnya')">
+                            </x-input-label>
+                            <x-file-input id="identity_card" :value="old('participant_docs.identity_card')"
+                                class="block mt-1 w-full" :error="$errors->has('participant_docs.identity_card')"
+                                placeholder="Masukkan Scan Kartu Identitas" wire:model="participant_docs.identity_card"
+                                accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']" required>
+                            </x-file-input>
+                            <x-input-error :messages="$errors->get('participant_docs.identity_card')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div class="sm:flex w-full mt-3">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="graduation_certificate" :value="__('Scan Ijazah Minimal D3 Sederajat')">
+                            </x-input-label>
+                            <x-file-input id="graduation_certificate"
+                                :value="old('participant_docs.graduation_certificate')" class="block mt-1 w-full"
+                                :error="$errors->has('participant_docs.graduation_certificate')"
+                                placeholder="Masukkan Scan Ijazah" wire:model="participant_docs.graduation_certificate"
+                                accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']" required>
+                            </x-file-input>
+                            <x-input-error :messages="$errors->get('participant_docs.graduation_certificate')"
+                                class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div class="sm:flex w-full mt-3">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="training_certificate"
+                                :value="__('Scan Sertifikat Pelatihan Kerja (jika ada)')">
+                            </x-input-label>
+                            <x-file-input id="training_certificate"
+                                :value="old('participant_docs.training_certificate')" class="block mt-1 w-full"
+                                :error="$errors->has('participant_docs.training_certificate')"
+                                placeholder="Masukkan Scan Sertifikat Pelatihan Kerja"
+                                wire:model="participant_docs.training_certificate" accept="image/*"
+                                :allowed-exts="['PNG', 'BMP', 'JPG']">
+                            </x-file-input>
+                            <x-input-error :messages="$errors->get('participant_docs.training_certificate')"
+                                class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div class="sm:flex w-full mt-3">
+                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            <x-input-label for="references_letter"
+                                :value="__('Scan Surat Keterangan Bekerja di bidang yang relevan dengan skema (jika ada)')">
+                            </x-input-label>
+                            <x-file-input id="references_letter" :value="old('participant_docs.references_letter')"
+                                class="block mt-1 w-full" :error="$errors->has('participant_docs.references_letter')"
+                                placeholder="Masukkan Scan Sertifikat Pelatihan Kerja"
+                                wire:model="participant_docs.references_letter" accept="image/*"
+                                :allowed-exts="['PNG', 'BMP', 'JPG']">
+                            </x-file-input>
+                            <x-input-error :messages="$errors->get('participant_docs.references_letter')"
+                                class="mt-2" />
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
 
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>

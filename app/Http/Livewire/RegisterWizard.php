@@ -42,8 +42,10 @@ class RegisterWizard extends Component
     ];
 
     public $schemeId;
+    public $selectedScheme;
     public $participant;
-    public $currentStep = 3;
+    public $participantDocs;
+    public $currentStep = 4;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -67,6 +69,10 @@ class RegisterWizard extends Component
         'participant.company_fax_number'    => 'No Fax. Perusahaan',
         'participant.company_cell_phone_number' => 'No HP Perusahaan',
         'participant.payment_receipt' => 'Bukti Pembayaran',
+        'participant_docs.identity_card'            => 'Scan atau Foto KTP / Paspor / Kartu Identitas Lainnya',
+        'participant_docs.graduation_certificate'   => 'Scan atau Foto Ijazah',
+        'participant_docs.training_certificate'     => 'Scan atau Foto Sertifikat Pelatihan',
+        'participant_docs.references_letter'        => 'Scan atau Foto Surat Keterangan Bekerja',
     ];
 
     public function mount()
@@ -104,8 +110,6 @@ class RegisterWizard extends Component
             'participant.company_phone_number'  => 'required',
         ]);
 
-        dd($this->schemeId);
-
         $this->currentStep += 1;
 
         $this->emit('updateCurrentStep', $this->currentStep);
@@ -116,6 +120,8 @@ class RegisterWizard extends Component
         $this->validate([
             'participant.payment_receipt'   => 'required',
         ]);
+
+        $this->selectedScheme = Scheme::find(1);
 
         $this->currentStep += 1;
 
@@ -160,8 +166,34 @@ class RegisterWizard extends Component
                 'value' => __('Female'),
             ]
         ];
+        $purposes = [
+            [
+                'attr'  => __('-- Pilih Tujuan Sertifikasi --'),
+                'value' => '',
+            ],
+            [
+                'attr'  => __('Sertifikasi'),
+                'value' => __('Sertifikasi'),
+            ],
+            [
+                'attr'  => __('Sertifikasi Ulang'),
+                'value' => __('Sertifikasi Ulang'),
+            ],
+            [
+                'attr'  => __('Pengakuan Kompetensi Terkini (PKT)'),
+                'value' => __('Pengakuan Kompetensi Terkini (PKT)'),
+            ],
+            [
+                'attr'  => __('Rekognisi Pembelajaran Lampau'),
+                'value' => __('Rekognisi Pembelajaran Lampau'),
+            ],
+            [
+                'attr'  => __('Lainnya'),
+                'value' => __('Lainnya'),
+            ],
+        ];
 
-        return view('auth.register', compact('schemes', 'genders'))
+        return view('auth.register', compact('schemes', 'genders', 'purposes'))
             ->layout('layouts.guest');
     }
 }
