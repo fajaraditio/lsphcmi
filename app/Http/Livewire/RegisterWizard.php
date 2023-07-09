@@ -46,6 +46,7 @@ class RegisterWizard extends Component
     public $selectedScheme;
     public $participant;
     public $participantDocs;
+    public $participantCompetencies;
     public $currentStep = 4;
 
     protected $validationAttributes = [
@@ -70,15 +71,19 @@ class RegisterWizard extends Component
         'participant.company_fax_number'    => 'No Fax. Perusahaan',
         'participant.company_cell_phone_number' => 'No HP Perusahaan',
         'participant.payment_receipt' => 'Bukti Pembayaran',
-        'participant_docs.identity_card'            => 'Scan atau Foto KTP / Paspor / Kartu Identitas Lainnya',
-        'participant_docs.graduation_certificate'   => 'Scan atau Foto Ijazah',
-        'participant_docs.training_certificate'     => 'Scan atau Foto Sertifikat Pelatihan',
-        'participant_docs.references_letter'        => 'Scan atau Foto Surat Keterangan Bekerja',
+        'participantDocs.identity_card'            => 'Scan atau Foto KTP / Paspor / Kartu Identitas Lainnya',
+        'participantDocs.graduation_certificate'   => 'Scan atau Foto Ijazah',
+        'participantDocs.training_certificate'     => 'Scan atau Foto Sertifikat Pelatihan',
+        'participantDocs.references_letter'        => 'Scan atau Foto Surat Keterangan Bekerja',
+        'participantCompetencies.*.status'         => 'Status Kompetensi',
+        'participantCompetencies.*.relevant_proof' => 'Bukti yang Relevan',
     ];
 
     public function mount()
     {
-        $this->participant = [];
+        $this->participant              = [];
+        $this->participantDocs          = [];
+        $this->participantCompetencies  = [];
     }
 
     public function firstStepSubmit($schemeId)
@@ -138,9 +143,12 @@ class RegisterWizard extends Component
 
     public function fifthStepSubmit()
     {
-        $this->currentStep += 1;
+        $validated = $this->validate([
+            'participantCompetencies.*.status'          => 'required|in:K,BK',
+            'participantCompetencies.*.relevant_proof'  => 'required_if:participantCompetencies.*.status,K',
+        ]);
 
-        $this->emit('updateCurrentStep', $this->currentStep);
+        dd($this->participantCompetencies);
     }
 
     public function backStepSubmit()

@@ -452,20 +452,28 @@
                                     <td class="border border-slate-300 w-2/5 p-2">{{ $competenceCriteria->title }}</td>
                                     <td class="border border-slate-300 p-2">
                                         <input type="radio"
-                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400">
+                                            name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
+                                            wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
+                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400"
+                                            value="K">
                                     </td>
                                     <td class="border border-slate-300 p-2">
                                         <input type="radio"
-                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400">
+                                            name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
+                                            wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
+                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400"
+                                            value="BK">
                                     </td>
                                     <td class="border border-slate-300 p-2">
                                         <x-file-input id="references_letter"
-                                            :value="old('participant_docs.references_letter')" class="block mt-1 w-full"
-                                            :error="$errors->has('participant_docs.references_letter')"
-                                            placeholder="Masukkan Scan Sertifikat Pelatihan Kerja" accept="image/*"
-                                            :allowed-exts="['PNG', 'BMP', 'JPG']">
+                                            :value="old('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
+                                            class="block mt-1 w-full"
+                                            :error="$errors->has('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
+                                            placeholder="Masukkan Scan Sertifikat Pelatihan Kerja"
+                                            accept="application/pdf" :allowed-exts="['PDF']" disabled>
                                         </x-file-input>
-                                        <x-input-error :messages="$errors->get('participant_docs.references_letter')"
+                                        <x-input-error
+                                            :messages="$errors->get('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
                                             class="mt-2" />
                                     </td>
                                 </tr>
