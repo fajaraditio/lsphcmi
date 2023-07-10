@@ -354,14 +354,14 @@
 
                     <div id="step-four" class="{{ $currentStep !== 3 ? 'hidden' : '' }}">
 
-                        <div class="sm:flex w-full mt-5">
+                        {{-- <div class="sm:flex w-full mt-5">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                                 <x-input-label for="name" :value="__('Judul Skema Asesmen')"></x-input-label>
                                 <x-text-input id="name" type="text" class="block mt-1 w-full"
                                     :value="$selectedScheme ? $selectedScheme->name : ''" disabled>
                                 </x-text-input>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="sm:flex w-full mt-3">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">

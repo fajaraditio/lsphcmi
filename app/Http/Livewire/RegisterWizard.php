@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\CompetenceUnit;
+use App\Models\Participant;
 use App\Models\Scheme;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -54,7 +55,7 @@ class RegisterWizard extends Component
     public $participant;
     public $participantDocs;
     public $participantCompetencies;
-    public $currentStep = 0;
+    public $currentStep = 3;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -147,6 +148,11 @@ class RegisterWizard extends Component
             'participant.payment_receipt'   => 'required',
         ]);
 
+        $filename  = 'pr_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participant['payment_receipt']->getClientOriginalExtension();
+        $uploaded  = $this->participant['payment_receipt']->storeAs('public/payment_receipt', $filename);
+
+        $this->participant['payment_receipt'] = url('storage/' . str_replace('public/', '', $uploaded));
+
         $this->selectedScheme = Scheme::find($this->schemeId);
 
         $this->currentStep += 1;
@@ -163,6 +169,32 @@ class RegisterWizard extends Component
             'participantDocs.graduation_certificate'   => 'required',
         ]);
 
+        $idCardFilename  = 'idc_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['identity_card']->getClientOriginalExtension();
+        $idCardUploaded  = $this->participantDocs['identity_card']->storeAs('public/docs', $idCardFilename);
+
+        $this->participantDocs['identity_card'] = url('storage/' . str_replace('public/', '', $idCardUploaded));
+
+        $gradCertFilename  = 'gcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['graduation_certificate']->getClientOriginalExtension();
+        $gradCertUploaded  = $this->participantDocs['graduation_certificate']->storeAs('public/docs', $gradCertFilename);
+
+        $this->participantDocs['graduation_certificate'] = url('storage/' . str_replace('public/', '', $gradCertUploaded));
+
+        if ($this->participantDocs['training_certificate']) {
+            $trainingCertFilename  = 'tcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['training_certificate']->getClientOriginalExtension();
+            $trainingCertUploaded  = $this->participantDocs['training_certificate']->storeAs('public/docs', $trainingCertFilename);
+
+            $this->participantDocs['training_certificate'] = url('storage/' . str_replace('public/', '', $trainingCertUploaded));
+        }
+
+        if ($this->participantDocs['references_letter']) {
+            $refLetterFilename  = 'refl_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['references_letter']->getClientOriginalExtension();
+            $refLetterUploaded  = $this->participantDocs['references_letter']->storeAs('public/docs', $refLetterFilename);
+
+            $this->participantDocs['references_letter'] = url('storage/' . str_replace('public/', '', $refLetterUploaded));
+        }
+
+        dd($this->participantDocs);
+
         $this->currentStep += 1;
 
         $this->updatePage();
@@ -175,6 +207,8 @@ class RegisterWizard extends Component
             'participantCompetencies.*.status'          => 'required|in:K,BK',
             'participantCompetencies.*.relevant_proof'  => 'required_if:participantCompetencies.*.status,K',
         ]);
+
+        $participant = Participant::create($this->participant);
 
         $this->updatePage();
     }
