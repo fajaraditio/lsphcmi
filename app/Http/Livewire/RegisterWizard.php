@@ -117,7 +117,8 @@ class RegisterWizard extends Component
     {
         $this->validate([
             'participant.name'          => 'required',
-            'participant.identity_number' => 'required',
+            'participant.identity_number' => 'required|numeric',
+            'participant.email'         => 'required|email',
             'participant.birth_place'   => 'required',
             'participant.birth_date'    => 'required',
             'participant.gender'        => 'required|in:Male,Female',
@@ -157,7 +158,7 @@ class RegisterWizard extends Component
     public function fourthStepSubmit()
     {
         $this->validate([
-            'participant.assignment_purpose'           => 'required',
+            'participant.assessment_purpose'           => 'required',
             'participantDocs.identity_card'            => 'required',
             'participantDocs.graduation_certificate'   => 'required',
         ]);

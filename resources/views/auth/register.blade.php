@@ -113,6 +113,20 @@
 
                         <div class="sm:flex w-full">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                                <x-input-label for="email" :value="__('Email')"></x-input-label>
+                                <x-text-input id="email" type="email" :value="old('participant.email')"
+                                    class="block mt-1 w-full" :error="$errors->has('participant.email')"
+                                    placeholder="Masukkan Alamat Email" wire:model="participant.email" required>
+                                </x-text-input>
+                                <x-input-error :messages="$errors->get('participant.email')" class="mt-2" />
+                            </div>
+
+                            <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                            </div>
+                        </div>
+
+                        <div class="sm:flex w-full">
+                            <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                                 <x-input-label for="address" :value="__('Alamat Lengkap')"></x-input-label>
                                 <x-textarea-input id="address" class="block mt-1 w-full h-32"
                                     :error="$errors->has('participant.address')"
@@ -351,12 +365,13 @@
 
                         <div class="sm:flex w-full mt-3">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
-                                <x-input-label for="purpose" :value="__('Tujuan Asesmen')"></x-input-label>
-                                <x-select-input id="gender" type="text" :value="old('participant.purpose')"
-                                    class="block mt-1 w-full" :options="$purposes" wire:model="participant.purpose"
-                                    required>
+                                <x-input-label for="assessment_purpose" :value="__('Tujuan Asesmen')"></x-input-label>
+                                <x-select-input id="assessment_purpose" type="text"
+                                    :value="old('participant.assessment_purpose')" class="block mt-1 w-full"
+                                    :options="$purposes" wire:model="participant.assessment_purpose" required>
                                 </x-select-input>
-                                <x-input-error :messages="$errors->get('participant.purpose')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('participant.assessment_purpose')"
+                                    class="mt-2" />
                             </div>
                         </div>
 
@@ -490,16 +505,17 @@
                                                 value="BK">
                                         </td>
                                         <td class="border border-slate-300 p-2">
-                                            <x-file-input id="references_letter"
-                                                :value="old('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
-                                                class="block mt-1 w-full"
-                                                :error="$errors->has('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
-                                                placeholder="Masukkan Scan Sertifikat Pelatihan Kerja"
-                                                accept="application/pdf" :allowed-exts="['PDF']" disabled>
+                                            <x-file-input id="relevant_proof" class="block mt-1 w-full" :error="$errors->has('participantCompetencies.' .
+                                                $competenceCriteria->id . '.relevant_proof')"
+                                                wire:model="participantCompetencies.{{ $competenceCriteria->id }}.relevant_proof"
+                                                placeholder="Masukkan Bukti yang Relevan" accept="application/pdf"
+                                                :allowed-exts="['PDF']" :disabled="empty($participantCompetencies[$competenceCriteria->
+                                                id]['status']) ||
+                                                $participantCompetencies[$competenceCriteria->id]['status'] ==
+                                                'BK'">
                                             </x-file-input>
-                                            <x-input-error
-                                                :messages="$errors->get('participantCompetencies.' . $competenceCriteria->id . '.relevant_proof')"
-                                                class="mt-2" />
+                                            <x-input-error :messages="$errors->get('participantCompetencies.' .
+                                                $competenceCriteria->id . '.relevant_proof')" class="mt-2" />
                                         </td>
                                     </tr>
                                     @endforeach
