@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('company_phone_number')->nullable();
             $table->string('company_fax_number')->nullable();
             $table->string('company_cell_phone_number')->nullable();
+            $table->string('assessment_purpose')->nullable();
             $table->timestamps();
         });
     }

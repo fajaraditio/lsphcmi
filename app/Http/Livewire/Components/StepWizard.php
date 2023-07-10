@@ -6,9 +6,9 @@ use Livewire\Component;
 
 class StepWizard extends Component
 {
-    public array $stepWizards;
-    public int $currentStep;
-    public array $stepStyles;
+    public $stepWizards;
+    public $currentStep;
+    public $stepStyles;
 
     protected $listeners = ['updateCurrentStep'];
 

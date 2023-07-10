@@ -23,31 +23,38 @@ class RegisterWizard extends Component
         [
             'label'     => 'Mulai',
             'attr'      => 'Memilih Skema',
+            'desc'      => 'Memilih salah satu skema sertifikasi yang akan diujikan',
         ],
         [
             'label'     => '2',
             'attr'      => 'Rincian Data Pemohon',
+            'desc'      => 'Mengisi rincian data pemohon',
         ],
         [
             'label'     => '3',
             'attr'      => 'Informasi Pembayaran',
+            'desc'      => 'Mengunggah bukti pembayaran sertifikasi',
         ],
         [
             'label'     => '4',
             'attr'      => 'Unggah Portfolio',
+            'desc'      => 'Mengunggah portfolio dan persyaratan dasar',
         ],
         [
             'label'     => '5',
             'attr'      => 'Asesmen Mandiri',
+            'desc'      => 'Mengisi asesmen mandiri',
         ],
     ];
 
+    public $titlePage;
+    public $descriptionPage;
     public $schemeId;
     public $selectedScheme;
     public $participant;
     public $participantDocs;
     public $participantCompetencies;
-    public $currentStep = 4;
+    public $currentStep = 0;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -70,7 +77,8 @@ class RegisterWizard extends Component
         'participant.company_phone_number'  => 'No Telp. Perusahaan',
         'participant.company_fax_number'    => 'No Fax. Perusahaan',
         'participant.company_cell_phone_number' => 'No HP Perusahaan',
-        'participant.payment_receipt' => 'Bukti Pembayaran',
+        'participant.assignment_purpose'    => 'Tujuan Asesmen',
+        'participant.payment_receipt'       => 'Bukti Pembayaran',
         'participantDocs.identity_card'            => 'Scan atau Foto KTP / Paspor / Kartu Identitas Lainnya',
         'participantDocs.graduation_certificate'   => 'Scan atau Foto Ijazah',
         'participantDocs.training_certificate'     => 'Scan atau Foto Sertifikat Pelatihan',
@@ -81,9 +89,18 @@ class RegisterWizard extends Component
 
     public function mount()
     {
+        $this->titlePage            = $this->stepWizards[$this->currentStep]['attr'];
+        $this->descriptionPage      = $this->stepWizards[$this->currentStep]['desc'];
+
         $this->participant              = [];
         $this->participantDocs          = [];
         $this->participantCompetencies  = [];
+    }
+
+    public function updatePage()
+    {
+        $this->titlePage            = $this->stepWizards[$this->currentStep]['attr'];
+        $this->descriptionPage      = $this->stepWizards[$this->currentStep]['desc'];
     }
 
     public function firstStepSubmit($schemeId)
@@ -92,6 +109,7 @@ class RegisterWizard extends Component
 
         $this->currentStep += 1;
 
+        $this->updatePage();
         $this->emit('updateCurrentStep', $this->currentStep);
     }
 
@@ -118,6 +136,7 @@ class RegisterWizard extends Component
 
         $this->currentStep += 1;
 
+        $this->updatePage();
         $this->emit('updateCurrentStep', $this->currentStep);
     }
 
@@ -127,34 +146,43 @@ class RegisterWizard extends Component
             'participant.payment_receipt'   => 'required',
         ]);
 
-        $this->selectedScheme = Scheme::find(1);
+        $this->selectedScheme = Scheme::find($this->schemeId);
 
         $this->currentStep += 1;
 
+        $this->updatePage();
         $this->emit('updateCurrentStep', $this->currentStep);
     }
 
     public function fourthStepSubmit()
     {
+        $this->validate([
+            'participant.assignment_purpose'           => 'required',
+            'participantDocs.identity_card'            => 'required',
+            'participantDocs.graduation_certificate'   => 'required',
+        ]);
+
         $this->currentStep += 1;
 
+        $this->updatePage();
         $this->emit('updateCurrentStep', $this->currentStep);
     }
 
     public function fifthStepSubmit()
     {
-        $validated = $this->validate([
+        $this->validate([
             'participantCompetencies.*.status'          => 'required|in:K,BK',
             'participantCompetencies.*.relevant_proof'  => 'required_if:participantCompetencies.*.status,K',
         ]);
 
-        dd($this->participantCompetencies);
+        $this->updatePage();
     }
 
     public function backStepSubmit()
     {
         $this->currentStep -= 1;
 
+        $this->updatePage();
         $this->emit('updateCurrentStep', $this->currentStep);
     }
 
