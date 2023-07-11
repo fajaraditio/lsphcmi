@@ -325,21 +325,22 @@
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                                 <x-input-label for="payment_receipt" :value="__('Unggah Bukti Pembayaran')">
                                 </x-input-label>
-                                <x-file-input id="payment_receipt" :value="old('participant.payment_receipt')"
-                                    class="block mt-1 w-full" :error="$errors->has('participant.payment_receipt')"
+                                <x-file-input id="payment_receipt" :value="old('participant.payment_receipt_file')"
+                                    class="block mt-1 w-full" :error="$errors->has('participant.payment_receipt_file')"
                                     placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas"
-                                    wire:model="participant.payment_receipt" accept="image/*"
+                                    wire:model="participant.payment_receipt_file" accept="image/*"
                                     :allowed-exts="['PNG', 'BMP', 'JPG']" required>
                                 </x-file-input>
-                                <x-input-error :messages="$errors->get('participant.payment_receipt')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('participant.payment_receipt_file')"
+                                    class="mt-2" />
                             </div>
                         </div>
 
                         <hr class="my-3">
 
                         <div class="sm:flex w-full mt-5">
-                            @if ($participant && array_key_exists('payment_receipt', $participant))
-                            <img src="{{ ($participant['payment_receipt'])->temporaryUrl() }}" class="w-48 h-auto"
+                            @if ($participant && array_key_exists('payment_receipt_file', $participant))
+                            <img src="{{ ($participant['payment_receipt_file'])->temporaryUrl() }}" class="w-48 h-auto"
                                 alt="Temporary Preview Image">
                             @endif
                         </div>
@@ -354,14 +355,14 @@
 
                     <div id="step-four" class="{{ $currentStep !== 3 ? 'hidden' : '' }}">
 
-                        {{-- <div class="sm:flex w-full mt-5">
+                        <div class="sm:flex w-full mt-5">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                                 <x-input-label for="name" :value="__('Judul Skema Asesmen')"></x-input-label>
                                 <x-text-input id="name" type="text" class="block mt-1 w-full"
                                     :value="$selectedScheme ? $selectedScheme->name : ''" disabled>
                                 </x-text-input>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="sm:flex w-full mt-3">
                             <div class="w-full sm:w-1/2 my-2 sm:mr-2">
@@ -531,6 +532,29 @@
                         <div class="flex justify-between">
                             <x-secondary-button wire:click="backStepSubmit()">Sebelumnya</x-secondary-button>
                             <x-primary-button wire:click="fifthStepSubmit()">Selesai</x-primary-button>
+                        </div>
+                    </div>
+
+
+                    <div id="finish" class="{{ $currentStep !== 5 ? 'hidden' : '' }}">
+
+                        <div class="w-full mt-5">
+                            <div class="p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                                role="alert">
+                                <span class="font-medium">⌛️ Pendaftaran Anda sedang kami tinjau</span>
+                                <p>
+                                    Mohon menunggu 1 x 24 jam untuk kami meninjau berkas dan bukti pembayaran Anda. Jika
+                                    telah melewati proses peninjauan akan kami kirimkan email berisikan detail akun
+                                    asesmen Anda.
+                                </p>
+                            </div>
+                        </div>
+
+                        <hr class="my-5">
+
+                        <div class="flex justify-center">
+                            <x-primary-button onclick="window.location.href='{{ url('/') }}'">Kembali ke Halaman Depan
+                            </x-primary-button>
                         </div>
                     </div>
                 </div>

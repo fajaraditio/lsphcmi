@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('bib_number')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->integer('identity_number')->nullable();
-            $table->string('place_birth')->nullable();
+            $table->bigInteger('identity_number')->nullable();
+            $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('gender')->nullable();
             $table->string('nationality')->nullable();
@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('company_phone_number')->nullable();
             $table->string('company_fax_number')->nullable();
             $table->string('company_cell_phone_number')->nullable();
+            $table->string('payment_receipt')->nullable();
             $table->string('assessment_purpose')->nullable();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\CompetenceUnit;
 use App\Models\Participant;
+use App\Models\ParticipantDoc;
 use App\Models\Scheme;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -18,6 +19,7 @@ class RegisterWizard extends Component
         'step-three',
         'step-four',
         'step-five',
+        'finish',
     ];
 
     public $stepWizards = [
@@ -46,6 +48,11 @@ class RegisterWizard extends Component
             'attr'      => 'Asesmen Mandiri',
             'desc'      => 'Mengisi asesmen mandiri',
         ],
+        [
+            'label'     => 'Selesai',
+            'attr'      => 'Pendaftaran Selesai',
+            'desc'      => 'Pendaftaran dalam proses pengecekan pembayaran dan berkas',
+        ],
     ];
 
     public $titlePage;
@@ -55,7 +62,7 @@ class RegisterWizard extends Component
     public $participant;
     public $participantDocs;
     public $participantCompetencies;
-    public $currentStep = 3;
+    public $currentStep = 5;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -145,13 +152,8 @@ class RegisterWizard extends Component
     public function thirdStepSubmit()
     {
         $this->validate([
-            'participant.payment_receipt'   => 'required',
+            'participant.payment_receipt_file'   => 'required',
         ]);
-
-        $filename  = 'pr_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participant['payment_receipt']->getClientOriginalExtension();
-        $uploaded  = $this->participant['payment_receipt']->storeAs('public/payment_receipt', $filename);
-
-        $this->participant['payment_receipt'] = url('storage/' . str_replace('public/', '', $uploaded));
 
         $this->selectedScheme = Scheme::find($this->schemeId);
 
@@ -169,32 +171,6 @@ class RegisterWizard extends Component
             'participantDocs.graduation_certificate'   => 'required',
         ]);
 
-        $idCardFilename  = 'idc_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['identity_card']->getClientOriginalExtension();
-        $idCardUploaded  = $this->participantDocs['identity_card']->storeAs('public/docs', $idCardFilename);
-
-        $this->participantDocs['identity_card'] = url('storage/' . str_replace('public/', '', $idCardUploaded));
-
-        $gradCertFilename  = 'gcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['graduation_certificate']->getClientOriginalExtension();
-        $gradCertUploaded  = $this->participantDocs['graduation_certificate']->storeAs('public/docs', $gradCertFilename);
-
-        $this->participantDocs['graduation_certificate'] = url('storage/' . str_replace('public/', '', $gradCertUploaded));
-
-        if ($this->participantDocs['training_certificate']) {
-            $trainingCertFilename  = 'tcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['training_certificate']->getClientOriginalExtension();
-            $trainingCertUploaded  = $this->participantDocs['training_certificate']->storeAs('public/docs', $trainingCertFilename);
-
-            $this->participantDocs['training_certificate'] = url('storage/' . str_replace('public/', '', $trainingCertUploaded));
-        }
-
-        if ($this->participantDocs['references_letter']) {
-            $refLetterFilename  = 'refl_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['references_letter']->getClientOriginalExtension();
-            $refLetterUploaded  = $this->participantDocs['references_letter']->storeAs('public/docs', $refLetterFilename);
-
-            $this->participantDocs['references_letter'] = url('storage/' . str_replace('public/', '', $refLetterUploaded));
-        }
-
-        dd($this->participantDocs);
-
         $this->currentStep += 1;
 
         $this->updatePage();
@@ -208,9 +184,41 @@ class RegisterWizard extends Component
             'participantCompetencies.*.relevant_proof'  => 'required_if:participantCompetencies.*.status,K',
         ]);
 
+        // Submit Participant's Payment Receipt
+        $paymentReceiptfilename  = 'pr_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participant['payment_receipt_file']->getClientOriginalExtension();
+        $paymentReceiptUploaded  = $this->participant['payment_receipt_file']->storeAs('public/payment_receipt', $paymentReceiptfilename);
+        $this->participant['payment_receipt'] = str_replace('public/', '', $paymentReceiptUploaded);
+
+        // Submit Participant's Docs
+        $idCardFilename  = 'idc_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['identity_card']->getClientOriginalExtension();
+        $idCardUploaded  = $this->participantDocs['identity_card']->storeAs('public/docs', $idCardFilename);
+        $this->participantDocs['identity_card'] = str_replace('public/', '', $idCardUploaded);
+
+        $gradCertFilename  = 'gcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['graduation_certificate']->getClientOriginalExtension();
+        $gradCertUploaded  = $this->participantDocs['graduation_certificate']->storeAs('public/docs', $gradCertFilename);
+        $this->participantDocs['graduation_certificate'] = str_replace('public/', '', $gradCertUploaded);
+
+        if (array_key_exists('training_certificate', $this->participantDocs)) {
+            $trainingCertFilename  = 'tcrt_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['training_certificate']->getClientOriginalExtension();
+            $trainingCertUploaded  = $this->participantDocs['training_certificate']->storeAs('public/docs', $trainingCertFilename);
+            $this->participantDocs['training_certificate'] = str_replace('public/', '', $trainingCertUploaded);
+        }
+
+        if (array_key_exists('references_letter', $this->participantDocs)) {
+            $refLetterFilename  = 'refl_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $this->participantDocs['references_letter']->getClientOriginalExtension();
+            $refLetterUploaded  = $this->participantDocs['references_letter']->storeAs('public/docs', $refLetterFilename);
+            $this->participantDocs['references_letter'] = str_replace('public/', '', $refLetterUploaded);
+        }
+
         $participant = Participant::create($this->participant);
 
+        $this->participantDocs['participant_id'] = $participant->id;
+        ParticipantDoc::create($this->participantDocs);
+
+        $this->currentStep += 1;
+
         $this->updatePage();
+        $this->emit('updateCurrentStep', $this->currentStep);
     }
 
     public function backStepSubmit()

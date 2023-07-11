@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('participant_id')->nullable();
             $table->string('identity_card');
             $table->string('graduation_certificate');
-            $table->string('training_certificate');
-            $table->string('references_letter');
+            $table->string('training_certificate')->nullable();
+            $table->string('references_letter')->nullable();
             $table->timestamps();
         });
     }

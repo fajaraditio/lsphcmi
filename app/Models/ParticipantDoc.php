@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Participant extends Model
+class ParticipantDoc extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['payment_receipt_file'];
+    protected $table = 'participants_docs';
+
+    protected $guarded = [];
 }
