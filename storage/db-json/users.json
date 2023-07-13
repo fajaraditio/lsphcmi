@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Administrator Keuangan",
+        "email": "finance@lsphcmi.com",
+        "password": "12345678",
+        "role": {
+            "slug": "finance",
+            "name": "Bagian Keuangan"
+        }
+    },
+    {
+        "name": "Manajer",
+        "email": "manager@lsphcmi.com",
+        "password": "12345678",
+        "role": {
+            "slug": "manager",
+            "name": "Manajemen"
+        }
+    },
+    {
+        "name": "Administrator Sertifikasi",
+        "email": "certification@lsphcmi.com",
+        "password": "12345678",
+        "role": {
+            "slug": "certification",
+            "name": "Bagian Sertifikasi"
+        }
+    },
+    {
+        "name": "Asesor 1",
+        "email": "asessor1@lsphcmi.com",
+        "password": "12345678",
+        "role": {
+            "slug": "asessor",
+            "name": "Asesor"
+        }
+    },
+    {
+        "role": {
+            "slug": "participant",
+            "name": "Asesi"
+        }
+    }
+]
