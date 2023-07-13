@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('participants_competencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participant_id')->nullable();
-            $table->unsignedBigInteger('competency_criteria_id')->nullable();
-            $table->string('status');
-            $table->string('relevant_proof');
+            $table->unsignedBigInteger('competence_criteria_id')->nullable();
+            $table->string('status')->default('BK');
+            $table->string('relevant_proof')->nullable();
             $table->timestamps();
         });
     }

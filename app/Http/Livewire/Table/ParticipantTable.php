@@ -6,6 +6,7 @@ use App\Models\Participant;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
@@ -53,7 +54,9 @@ final class ParticipantTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Participant::query();
+        return Participant::query()
+            ->select('participants.*', DB::raw('schemes.name scheme_name'))
+            ->join('schemes', 'schemes.id', '=', 'participants.scheme_id');
     }
 
     /*
@@ -132,15 +135,13 @@ final class ParticipantTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
+            Column::make('Skema Pilihan', 'scheme_name'),
+
             Column::make('Tujuan Asesmen', 'assessment_purpose')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Created at', 'created_at')
-                ->hidden(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->searchable()
+            Column::make('Dibuat pada', 'created_at_formatted', 'created_at')
         ];
     }
 
@@ -188,16 +189,14 @@ final class ParticipantTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
     public function actionRules(): array
     {
-       return [
+        return [
 
-           //Hide button edit for ID 1
+            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($participant) => $participant->id === 1)
+                ->when(fn ($participant) => $participant->id === 1)
                 ->hide(),
         ];
     }
-    */
 }

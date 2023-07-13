@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\CompetenceUnit;
 use App\Models\Participant;
+use App\Models\ParticipantCompetency;
 use App\Models\ParticipantDoc;
 use App\Models\Scheme;
 use Livewire\Component;
@@ -62,7 +63,7 @@ class RegisterWizard extends Component
     public $participant;
     public $participantDocs;
     public $participantCompetencies;
-    public $currentStep = 5;
+    public $currentStep = 0;
 
     protected $validationAttributes = [
         'participant.name'          => 'Nama Lengkap',
@@ -210,12 +211,35 @@ class RegisterWizard extends Component
             $this->participantDocs['references_letter'] = str_replace('public/', '', $refLetterUploaded);
         }
 
+        // Adding Participant's Scheme ID
         $this->participant['scheme_id'] = $this->schemeId;
 
+        // Create Participant
         $participant = Participant::create($this->participant);
 
+        // Create Participant's Docs
         $this->participantDocs['participant_id'] = $participant->id;
         ParticipantDoc::create($this->participantDocs);
+
+        // Submit Participant's Competencies
+        foreach ($this->participantCompetencies as $criteriaId => $competency) {
+            $competenceRelProof = null;
+
+            // Submit Relevant Proof If Exists
+            if (array_key_exists('relevant_proof', $competency)) {
+                $relProofFilename   = 'rproof_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $competency['relevant_proof']->getClientOriginalExtension();
+                $relProofUploaded   = $competency['relevant_proof']->storeAs('public/docs', $relProofFilename);
+                $competenceRelProof = str_replace('public/', '', $relProofUploaded);
+            }
+
+            // Create Participant's Competencies
+            ParticipantCompetency::create([
+                'participant_id'            => $participant->id,
+                'competence_criteria_id'    => $criteriaId,
+                'status'                    => $competency['status'],
+                'relevant_proof'            => $competenceRelProof,
+            ]);
+        }
 
         $this->currentStep += 1;
 
