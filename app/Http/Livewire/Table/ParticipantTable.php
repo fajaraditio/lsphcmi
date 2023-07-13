@@ -14,6 +14,8 @@ final class ParticipantTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public $index = 0;
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -45,10 +47,10 @@ final class ParticipantTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Participant>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Participant>
+     */
     public function datasource(): Builder
     {
         return Participant::query();
@@ -85,8 +87,11 @@ final class ParticipantTable extends PowerGridComponent
     */
     public function addColumns(): PowerGridEloquent
     {
+        $this->index = $this->page > 1 ? ($this->page - 1) * $this->perPage : 0;
+
         return PowerGrid::eloquent()
             ->addColumn('id')
+            ->addColumn('no', fn () => ++$this->index)
             ->addColumn('name')
             ->addColumn('name_lower', fn (Participant $model) => strtolower(e($model->name)))
             ->addColumn('created_at')
@@ -102,28 +107,39 @@ final class ParticipantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
      */
     public function columns(): array
     {
+
         return [
-            Column::make('ID', 'id')
+            Column::make('No. Peserta', 'bib_number')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Name', 'name')
+            Column::make('Nama', 'name')
                 ->searchable()
-                ->makeInputText('name')
+                ->sortable(),
+
+            Column::make('NIK / Paspor / KTP', 'identity_number')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Email', 'email')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Tujuan Asesmen', 'assessment_purpose')
+                ->searchable()
                 ->sortable(),
 
             Column::make('Created at', 'created_at')
                 ->hidden(),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->makeInputDatePicker()
                 ->searchable()
         ];
     }
@@ -136,7 +152,7 @@ final class ParticipantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Participant Action Buttons.
      *
      * @return array<int, Button>
@@ -166,7 +182,7 @@ final class ParticipantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Participant Action Rules.
      *
      * @return array<int, RuleActions>

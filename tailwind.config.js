@@ -7,6 +7,7 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './app/Http/Livewire/*.php',
+        './app/Http/Livewire/**/*.php',
         './vendor/wire-elements/modal/src/ModalComponent.php',
     ],
 

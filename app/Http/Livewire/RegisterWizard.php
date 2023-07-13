@@ -210,6 +210,8 @@ class RegisterWizard extends Component
             $this->participantDocs['references_letter'] = str_replace('public/', '', $refLetterUploaded);
         }
 
+        $this->participant['scheme_id'] = $this->schemeId;
+
         $participant = Participant::create($this->participant);
 
         $this->participantDocs['participant_id'] = $participant->id;
