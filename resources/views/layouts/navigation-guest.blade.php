@@ -28,6 +28,9 @@
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Tentang') }}
                 </x-nav-link>
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login / Daftar') }}
+                </x-nav-link>
             </div>
 
             <!-- Hamburger -->
