@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('company_cell_phone_number')->nullable();
             $table->string('payment_receipt')->nullable();
             $table->string('assessment_purpose')->nullable();
+            $table->string('status')->default('unpaid')->nullable();
             $table->timestamps();
         });
     }

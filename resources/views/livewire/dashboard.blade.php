@@ -15,9 +15,9 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-6 text-sm text-gray-900">
-                    <h3 class="font-bold text-lg">Daftar Calon Asesi</h3>
 
                     @if (auth()->user()->role->slug === 'finance')
+                    <h3 class="font-bold text-lg mb-5">{{ __('Daftar Calon Asesi') }}</h3>
                     @livewire('table.participant-table')
                     @endif
                 </div>
