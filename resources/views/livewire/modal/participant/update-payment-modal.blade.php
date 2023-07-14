@@ -27,8 +27,8 @@
                 <x-input-label for="status" class="font-bold my-2" :value="__('Status Konfirmasi')"></x-input-label>
                 <div class="my-2">
                     <x-select-input id="status" class="block text-sm mt-1" :options="$confirmOps"
-                        :error="$errors->has('participant.payment_receipt_file')" wire:model="status"></x-select-input>
-                    <x-input-error :messages="$errors->get('participant.payment_receipt_file')" class="mt-2" />
+                        :error="$errors->has('status')" wire:model="status"></x-select-input>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
                 </div>
             </div>
             <div class="bg-gray-50 p-3 sm:flex justify-end">

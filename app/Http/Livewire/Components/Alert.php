@@ -18,6 +18,7 @@ class Alert extends Component
     {
         $colors = ['success' => 'green', 'error' => 'red', 'warning' => 'yellow', 'info' => 'blue'];
 
+        $this->type     = $type;
         $this->title    = $title;
         $this->message  = $message;
         $this->color    = $colors[$type];
