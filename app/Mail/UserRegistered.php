@@ -46,7 +46,11 @@ class UserRegistered extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'mails.user-registered',
+            with: [
+                'user' => $this->user,
+                'url' => route('login'),
+            ]
         );
     }
 
