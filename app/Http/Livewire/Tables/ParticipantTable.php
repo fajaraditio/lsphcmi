@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Table;
+namespace App\Http\Livewire\Tables;
 
 use App\Models\Participant;
 use Illuminate\Support\Carbon;

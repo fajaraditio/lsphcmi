@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('scheme_id');
             $table->string('bib_number')->nullable();
             $table->string('name')->nullable();

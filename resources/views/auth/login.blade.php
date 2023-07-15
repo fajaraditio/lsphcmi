@@ -3,7 +3,7 @@
 
         <div
             class="w-full sm:max-w-md mt-10 px-6 py-4 bg-white dark:bg-gray-800 shadow-lg overflow-hidden sm:rounded-lg">
-            <h1 class="font-antialised font-bold text-lg py-4">Login Dashboard</h1>
+            <h1 class="font-antialised font-bold text-lg py-4">{{ __('Login Account') }}</h1>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -50,7 +50,7 @@
                     @if (Route::has('register'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         href="{{ route('register') }}">
-                        {{ __('Belum punya akun? Daftar sekarang') }}
+                        {{ __('Not registered yet? Have an account') }}
                     </a>
                     @endif
                 </div>
