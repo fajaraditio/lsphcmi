@@ -48,6 +48,16 @@
                                 accept="application/pdf" :allowed-exts="['PDF']" required>
                             </x-file-input>
                             <x-input-error :messages="$errors->get('participantDocs.identity_card')" class="mt-2" />
+
+                            @if (!empty($participantDoc) && !empty($participantDoc->identity_card))
+                            <span class="text-sm">
+                                Berkas:
+                                <a href="{{ url('storage/' . $participantDoc->identity_card) }}"
+                                    class="text-red-500 underline hover:text-red-700" target="_blank">
+                                    {{ $participantDoc->identity_card }}
+                                </a>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
@@ -63,6 +73,16 @@
                             </x-file-input>
                             <x-input-error :messages="$errors->get('participantDocs.graduation_certificate')"
                                 class="mt-2" />
+
+                            @if (!empty($participantDoc) && !empty($participantDoc->graduation_certificate))
+                            <span class="text-sm">
+                                Berkas:
+                                <a href="{{ url('storage/' . $participantDoc->graduation_certificate) }}"
+                                    class="text-red-500 underline hover:text-red-700" target="_blank">
+                                    {{ $participantDoc->graduation_certificate }}
+                                </a>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
@@ -79,6 +99,16 @@
                             </x-file-input>
                             <x-input-error :messages="$errors->get('participantDocs.training_certificate')"
                                 class="mt-2" />
+
+                            @if (!empty($participantDoc) && !empty($participantDoc->training_certificate))
+                            <span class="text-sm">
+                                Berkas:
+                                <a href="{{ url('storage/' . $participantDoc->training_certificate) }}"
+                                    class="text-red-500 underline hover:text-red-700" target="_blank">
+                                    {{ $participantDoc->training_certificate }}
+                                </a>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
@@ -94,6 +124,16 @@
                                 :allowed-exts="['PDF']">
                             </x-file-input>
                             <x-input-error :messages="$errors->get('participantDocs.references_letter')" class="mt-2" />
+
+                            @if (!empty($participantDoc) && !empty($participantDoc->references_letter))
+                            <span class="text-sm">
+                                Berkas:
+                                <a href="{{ url('storage/' . $participantDoc->references_letter) }}"
+                                    class="text-red-500 underline hover:text-red-700" target="_blank">
+                                    {{ $participantDoc->references_letter }}
+                                </a>
+                            </span>
+                            @endif
                         </div>
                     </div>
 

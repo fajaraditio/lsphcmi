@@ -13,6 +13,7 @@ class RegisterStep3 extends Component
 
     public $participant;
     public $participantDocs;
+    public $participantDoc;
     public $purposes = [
         [
             'attr'  => '-- Pilih Tujuan Sertifikasi --',
@@ -93,6 +94,7 @@ class RegisterStep3 extends Component
     public function mount()
     {
         $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
+        $this->participantDoc   = ParticipantDoc::where('participant_id', $this->participant->id)->first();
         $this->participantDocs  = [];
     }
 
@@ -135,7 +137,7 @@ class RegisterStep3 extends Component
 
         ParticipantDoc::updateOrCreate(['participant_id' => $this->participant->id], $this->participantDocs);
 
-        return redirect()->route('participant.register.4');
+        return redirect()->refresh();
     }
 
     public function render()
