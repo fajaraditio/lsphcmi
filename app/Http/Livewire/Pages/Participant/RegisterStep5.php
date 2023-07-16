@@ -49,6 +49,16 @@ class RegisterStep5 extends Component
         }
     }
 
+    public function back($step = null)
+    {
+        if (!empty($step)) {
+            return redirect()->route('participant.register.' . $step);
+        } else {
+            return redirect()->route('participant.register.' . $this->currentStep - 1);
+        }
+    }
+
+
     public function render()
     {
         return view('livewire.pages.participant.register-step5');

@@ -24,6 +24,19 @@
 
                     <hr class="mb-5">
 
+                    @if (empty($participant->payment_status) || $participant->payment_status !== 'paid')
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Proses Verifikasi Pembayaran') }}</span> {{ __('Mohon
+                            mengecek secara berkala proses verifikasi pembayaran agar dapat lanjut ke tahap Asesmen
+                            Mandiri.') }}
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
                         role="alert">
                         <span class="font-medium">💡 Informasi Pembayaran</span>
