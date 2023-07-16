@@ -18,15 +18,23 @@
 
                     @if (auth()->user()->role->slug === 'participant')
                     <!-- Participant Nav -->
-                    <x-nav-link :href="route('participant.register.1')" :active="request()->routeIs('participant.register.1')">
+                    <x-nav-link :href="route('participant.register.1')"
+                        :active="request()->routeIs('participant.register.1')">
                         {{ __('Registration Form') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Competency Test') }}
                     </x-nav-link>
-                    @endif
 
+                    @elseif (auth()->user()->role->slug === 'certification')
+                    <!-- Ceritifcation Nav -->
+                    <x-nav-link :href="route('certification.registration')"
+                        :active="request()->routeIs('certification.registration')">
+                        {{ __('Registration List') }}
+                    </x-nav-link>
+
+                    @endif
                 </div>
             </div>
 

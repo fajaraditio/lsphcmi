@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Pages\Certification\Registration;
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
 use App\Http\Livewire\Pages\Participant\RegisterStep2;
 use App\Http\Livewire\Pages\Participant\RegisterStep3;
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/participant/register/step/3', RegisterStep3::class)->name('participant.register.3');
         Route::get('/participant/register/step/4', RegisterStep4::class)->name('participant.register.4');
         Route::get('/participant/register/step/5', RegisterStep5::class)->name('participant.register.5');
+    });
+
+    Route::middleware('role:certification')->group(function () {
+        Route::get('/registration', Registration::class)->name('certification.registration');
     });
 });
 
