@@ -125,6 +125,7 @@ class RegisterStep3 extends Component
             $trainingCertUploaded  = $this->participantDocs['training_certificate']->storeAs('public/docs', $trainingCertFilename);
             $this->participantDocs['training_certificate'] = str_replace('public/', '', $trainingCertUploaded);
         }
+        
         if (array_key_exists('references_letter', $this->participantDocs)) {
             $refLetterFilename  = 'refl_' . $midfix . '.' . $this->participantDocs['references_letter']->getClientOriginalExtension();
             $refLetterUploaded  = $this->participantDocs['references_letter']->storeAs('public/docs', $refLetterFilename);

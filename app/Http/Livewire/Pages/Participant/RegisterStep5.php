@@ -36,11 +36,6 @@ class RegisterStep5 extends Component
             'attr'      => 'Asesmen Mandiri',
             'desc'      => 'Mengisi asesmen mandiri',
         ],
-        [
-            'label'     => 'Selesai',
-            'attr'      => 'Pendaftaran Selesai',
-            'desc'      => 'Pendaftaran dalam proses pengecekan pembayaran dan berkas',
-        ],
     ];
     public $currentStep = 5;
 
@@ -48,6 +43,10 @@ class RegisterStep5 extends Component
     {
         $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
         $this->competenceUnits  = CompetenceUnit::with('competence_elements.competence_criterias')->get();
+
+        if (empty($this->participant->payment_verified_at)) {
+            return redirect()->route('participant.register.4');
+        }
     }
 
     public function render()

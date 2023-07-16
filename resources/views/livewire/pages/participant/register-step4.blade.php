@@ -37,22 +37,25 @@
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="payment_receipt" :value="__('Unggah Bukti Pembayaran')">
                             </x-input-label>
-                            <x-file-input id="payment_receipt" :value="old('participant.payment_receipt_file')"
-                                class="block mt-1 w-full" :error="$errors->has('participant.payment_receipt_file')"
+                            <x-file-input id="payment_receipt" :value="old('paymentReceiptFile')"
+                                class="block mt-1 w-full" :error="$errors->has('paymentReceiptFile')"
                                 placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas"
-                                wire:model="participant.payment_receipt_file" accept="image/*"
-                                :allowed-exts="['PNG', 'BMP', 'JPG']" required>
+                                wire:model="paymentReceiptFile" accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']"
+                                required>
                             </x-file-input>
-                            <x-input-error :messages="$errors->get('participant.payment_receipt_file')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('paymentReceiptFile')" class="mt-2" />
                         </div>
                     </div>
 
                     <hr class="my-3">
 
                     <div class="sm:flex w-full mt-5">
-                        @if ($participant && !empty($participant->payment_receipt_file))
-                        <img src="{{ ($participant['payment_receipt_file'])->temporaryUrl() }}" class="w-48 h-auto"
+                        @if (!empty($paymentReceiptFile))
+                        <img src="{{ $paymentReceiptFile->temporaryUrl() }}" class="w-48 h-auto"
                             alt="Temporary Preview Image">
+                        @elseif (!empty($participant->payment_receipt))
+                        <img src="{{ url('storage/' . $participant->payment_receipt) }}" class="w-48 h-auto"
+                            alt="Payment Receipt">
                         @endif
                     </div>
 

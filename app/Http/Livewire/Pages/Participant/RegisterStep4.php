@@ -5,11 +5,15 @@ namespace App\Http\Livewire\Pages\Participant;
 use App\Models\Participant;
 use App\Models\ParticipantDoc;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegisterStep4 extends Component
 {
+    use WithFileUploads;
+
     public $participant;
     public $participantDoc;
+    public $paymentReceiptFile;
     public $stepWizards = [
         [
             'label'     => 'Mulai',
@@ -44,6 +48,14 @@ class RegisterStep4 extends Component
     ];
     public $currentStep = 4;
 
+    protected $rules = [
+        'paymentReceiptFile' => 'required|mimes:jpg,png,bmp',
+    ];
+
+    protected $validationAttributes = [
+        'paymentReceiptFile' => 'Bukti pembayaran',
+    ];
+
     public function mount()
     {
         $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
@@ -52,6 +64,32 @@ class RegisterStep4 extends Component
         if (empty($this->participant->first_apl_verified_at)) {
             return redirect()->route('participant.register.3');
         }
+    }
+
+    public function back($step = null)
+    {
+        if (!empty($step)) {
+            return redirect()->route('participant.register.' . $step);
+        } else {
+            return redirect()->route('participant.register.' . $this->currentStep - 1);
+        }
+    }
+
+    public function save()
+    {
+        if (empty($this->participant->payment_receipt)) $this->validate();
+
+        $midfix = date('Ymd_Gis') . '_dark' . auth()->user()->id;
+
+        if ($this->paymentReceiptFile) {
+            $paymentReceiptFilename  = 'pr_' . $midfix . '.' . $this->paymentReceiptFile->getClientOriginalExtension();
+            $paymentReceiptUploaded  = $this->paymentReceiptFile->storeAs('public/docs', $paymentReceiptFilename);
+            $this->participant->payment_receipt = str_replace('public/', '', $paymentReceiptUploaded);
+
+            $this->participant->save();
+        }
+
+        return redirect()->route('participant.register.5');
     }
 
     public function render()
