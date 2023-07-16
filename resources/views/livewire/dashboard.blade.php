@@ -17,13 +17,6 @@
                 <div class="p-6 text-sm text-gray-900">
 
                     @livewire('components.alert')
-
-                    @if ($role === 'participant')
-                    <h2 class="font-bold text-md">{{ __('Selamat datang di dasbor LSP HCMI') }}</h2>
-                    @elseif ($role === 'finance')
-                    <h3 class="font-bold text-lg mb-5">{{ __('Daftar Calon Asesi') }}</h3>
-                    @livewire('table.participant-table')
-                    @endif
                 </div>
             </div>
         </div>

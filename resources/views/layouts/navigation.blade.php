@@ -34,6 +34,13 @@
                         {{ __('Registration List') }}
                     </x-nav-link>
 
+                    @elseif (auth()->user()->role->slug === 'finance')
+                    <!-- Finance Nav -->
+                    <x-nav-link :href="route('finance.registration')"
+                        :active="request()->routeIs('finance.registration')">
+                        {{ __('Payment List') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>

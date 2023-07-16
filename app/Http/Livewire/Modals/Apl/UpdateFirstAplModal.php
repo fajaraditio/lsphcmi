@@ -10,7 +10,7 @@ use LivewireUI\Modal\ModalComponent;
 
 class UpdateFirstAplModal extends ModalComponent
 {
-    public $participant;
+    public Participant $participant;
     public $confirmOps = [
         [
             'value' => '',
@@ -25,12 +25,6 @@ class UpdateFirstAplModal extends ModalComponent
             'attr'  => 'Ditolak',
         ]
     ];
-
-
-    public function mount(Participant $participant)
-    {
-        $this->participant = $participant;
-    }
 
     public function updateStatus($status)
     {

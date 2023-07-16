@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tables;
+namespace App\Http\Livewire\Tables\Apl;
 
 use App\Models\Participant;
 use Illuminate\Support\Carbon;
@@ -11,11 +11,9 @@ use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class ParticipantTable extends PowerGridComponent
+final class PaymentTable extends PowerGridComponent
 {
     use ActionButton;
-
-    public $index = 0;
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +24,7 @@ final class ParticipantTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        // $this->showCheckBox();
+        $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -90,15 +88,12 @@ final class ParticipantTable extends PowerGridComponent
     */
     public function addColumns(): PowerGridEloquent
     {
-        $this->index = $this->page > 1 ? ($this->page - 1) * $this->perPage : 0;
-
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('no', fn () => ++$this->index)
             ->addColumn('name')
             ->addColumn('name_lower', fn (Participant $model) => strtolower(e($model->name)))
             ->addColumn('status_formatted', function (Participant $model) {
-                if ($model->status === 'paid') {
+                if ($model->payment_status === 'paid') {
                     return '<div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Lunas</div>';
                 } else {
                     return '<div class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Belum Lunas</div>';
@@ -124,7 +119,6 @@ final class ParticipantTable extends PowerGridComponent
      */
     public function columns(): array
     {
-
         return [
             Column::make('No. Peserta', 'bib_number')
                 ->searchable()
@@ -200,11 +194,11 @@ final class ParticipantTable extends PowerGridComponent
     /*
     public function actionRules(): array
     {
-        return [
+       return [
 
-            //Hide button edit for ID 1
+           //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn ($participant) => $participant->id === 1)
+                ->when(fn($participant) => $participant->id === 1)
                 ->hide(),
         ];
     }
