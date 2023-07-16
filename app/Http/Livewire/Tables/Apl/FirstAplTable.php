@@ -94,7 +94,7 @@ final class FirstAplTable extends PowerGridComponent
             ->addColumn('name')
             ->addColumn('status_formatted', function (Participant $model) {
                 if ($model->first_apl_status === 'verified') {
-                    return '<div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Terverifikasi</div>';
+                    return '<div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Lolos</div>';
                 } elseif ($model->first_apl_status === 'rejected') {
                     return '<div class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Ditolak</div>';
                 } else {

@@ -11,6 +11,11 @@ class Participant extends Model
 
     protected $guarded = ['payment_receipt_file'];
 
+    public function docs()
+    {
+        return $this->hasOne(ParticipantDoc::class);
+    }
+
     public function scheme()
     {
         return $this->belongsTo(Scheme::class);
