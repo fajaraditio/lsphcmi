@@ -10,4 +10,9 @@ class Participant extends Model
     use HasFactory;
 
     protected $guarded = ['payment_receipt_file'];
+
+    public function scheme()
+    {
+        return $this->belongsTo(Scheme::class);
+    }
 }

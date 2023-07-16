@@ -12,10 +12,10 @@ class StepWizard extends Component
 
     protected $listeners = ['updateCurrentStep'];
 
-    public function mount($stepWizards, $currentStep = 0)
+    public function mount($stepWizards, $currentStep = 1)
     {
         $this->stepWizards = $stepWizards;
-        $this->currentStep = $currentStep;
+        $this->currentStep = $currentStep - 1;
     }
 
     public function updateCurrentStep($currentStep)

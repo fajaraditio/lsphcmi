@@ -41,7 +41,10 @@ return new class extends Migration
             $table->string('company_cell_phone_number')->nullable();
             $table->string('payment_receipt')->nullable();
             $table->string('assessment_purpose')->nullable();
-            $table->string('status')->default('unpaid')->nullable();
+            $table->timestamp('first_apl_verified_at')->nullable();
+            $table->timestamp('payment_verified_at')->nullable();
+            $table->timestamp('second_apl_verified_at')->nullable();
+            $table->integer('step')->default(1)->nullable();
             $table->timestamps();
         });
     }
