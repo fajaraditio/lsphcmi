@@ -36,11 +36,6 @@ class RegisterStep1 extends Component
             'attr'      => 'Asesmen Mandiri',
             'desc'      => 'Mengisi asesmen mandiri',
         ],
-        [
-            'label'     => 'Selesai',
-            'attr'      => 'Pendaftaran Selesai',
-            'desc'      => 'Pendaftaran dalam proses pengecekan pembayaran dan berkas',
-        ],
     ];
     public $currentStep = 1;
 

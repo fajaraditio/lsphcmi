@@ -66,11 +66,6 @@ class RegisterStep3 extends Component
             'attr'      => 'Asesmen Mandiri',
             'desc'      => 'Mengisi asesmen mandiri',
         ],
-        [
-            'label'     => 'Selesai',
-            'attr'      => 'Pendaftaran Selesai',
-            'desc'      => 'Pendaftaran dalam proses pengecekan pembayaran dan berkas',
-        ],
     ];
     public $currentStep = 3;
 
@@ -109,17 +104,21 @@ class RegisterStep3 extends Component
 
     public function save()
     {
-        $this->validate();
+        if (empty($this->participantDoc)) $this->validate();
 
         $midfix = date('Ymd_Gis') . '_dark' . auth()->user()->id;
 
-        $idCardFilename  = 'idc_' . $midfix . '.' . $this->participantDocs['identity_card']->getClientOriginalExtension();
-        $idCardUploaded  = $this->participantDocs['identity_card']->storeAs('public/docs', $idCardFilename);
-        $this->participantDocs['identity_card'] = str_replace('public/', '', $idCardUploaded);
+        if (array_key_exists('identity_card', $this->participantDocs)) {
+            $idCardFilename  = 'idc_' . $midfix . '.' . $this->participantDocs['identity_card']->getClientOriginalExtension();
+            $idCardUploaded  = $this->participantDocs['identity_card']->storeAs('public/docs', $idCardFilename);
+            $this->participantDocs['identity_card'] = str_replace('public/', '', $idCardUploaded);
+        }
 
-        $gradCertFilename  = 'gcrt_' . $midfix . '.' . $this->participantDocs['graduation_certificate']->getClientOriginalExtension();
-        $gradCertUploaded  = $this->participantDocs['graduation_certificate']->storeAs('public/docs', $gradCertFilename);
-        $this->participantDocs['graduation_certificate'] = str_replace('public/', '', $gradCertUploaded);
+        if (array_key_exists('graduation_certificate', $this->participantDocs)) {
+            $gradCertFilename  = 'gcrt_' . $midfix . '.' . $this->participantDocs['graduation_certificate']->getClientOriginalExtension();
+            $gradCertUploaded  = $this->participantDocs['graduation_certificate']->storeAs('public/docs', $gradCertFilename);
+            $this->participantDocs['graduation_certificate'] = str_replace('public/', '', $gradCertUploaded);
+        }
 
         if (array_key_exists('training_certificate', $this->participantDocs)) {
             $trainingCertFilename  = 'tcrt_' . $midfix . '.' . $this->participantDocs['training_certificate']->getClientOriginalExtension();
@@ -137,7 +136,7 @@ class RegisterStep3 extends Component
 
         ParticipantDoc::updateOrCreate(['participant_id' => $this->participant->id], $this->participantDocs);
 
-        return redirect()->refresh();
+        return redirect()->route('participant.register.4');
     }
 
     public function render()

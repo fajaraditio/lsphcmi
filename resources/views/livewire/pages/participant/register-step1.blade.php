@@ -2,9 +2,9 @@
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Memilih Skema')}}
+                {{ $stepWizards[$currentStep - 1]['attr'] }}
             </h2>
-            <p>{{ __('Memilih salah satu skema sertifikasi yang akan diujikan') }}</p>
+            <p>{{ $stepWizards[$currentStep - 1]['desc'] }}</p>
         </div>
     </header>
 

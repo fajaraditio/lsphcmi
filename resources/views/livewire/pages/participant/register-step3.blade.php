@@ -2,9 +2,9 @@
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Isi Persyaratan Dasar')}}
+                {{ $stepWizards[$currentStep - 1]['attr'] }}
             </h2>
-            <p>{{ __('Mengisi persyaratan dasar') }}</p>
+            <p>{{ $stepWizards[$currentStep - 1]['desc'] }}</p>
         </div>
     </header>
 
@@ -23,6 +23,20 @@
                     </div>
 
                     <hr class="mb-5">
+
+                    @if (!empty($participantDoc))
+                    <div class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Proses Verifikasi Form APL-01') }}</span> {{ __('Langkah 1
+                            sampai 3 merupakan bagian dari Form APL-01 dan sedang dilakukan verifikasi pada data diri
+                            dan berkas. Mohon mengecek secara berkala proses verifikasi form agar dapat melanjutkan ke
+                            tahap pembayaran.') }}
+                        </div>
+                    </div>
+                    @endif
 
                     <div class="sm:flex w-full mt-3">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">

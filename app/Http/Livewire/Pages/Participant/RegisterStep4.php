@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Pages\Participant;
 
 use App\Models\Participant;
+use App\Models\ParticipantDoc;
 use Livewire\Component;
 
 class RegisterStep4 extends Component
 {
     public $participant;
+    public $participantDoc;
     public $stepWizards = [
         [
             'label'     => 'Mulai',
@@ -44,7 +46,12 @@ class RegisterStep4 extends Component
 
     public function mount()
     {
-        $this->participant = Participant::where('user_id', auth()->user()->id)->first();
+        $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
+        $this->participantDoc   = ParticipantDoc::where('participant_id', $this->participant->id)->first();
+
+        if (empty($this->participant->first_apl_verified_at)) {
+            return redirect()->route('participant.register.3');
+        }
     }
 
     public function render()

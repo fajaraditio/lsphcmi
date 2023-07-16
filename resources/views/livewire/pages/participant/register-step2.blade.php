@@ -2,9 +2,9 @@
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Rincian Data Pemohon')}}
+                {{ $stepWizards[$currentStep - 1]['attr'] }}
             </h2>
-            <p>{{ __('Mengisi rincian data pemohon') }}</p>
+            <p>{{ $stepWizards[$currentStep - 1]['desc'] }}</p>
         </div>
     </header>
 
@@ -17,7 +17,8 @@
 
                     <div class="pb-5">
                         <b>Skema Pilihan:</b> <span
-                            class="rounded-full bg-red-500 hover:bg-red-600 text-white text-sm p-2 cursor-pointer" wire:click="back(1)">{{
+                            class="rounded-full bg-red-500 hover:bg-red-600 text-white text-sm p-2 cursor-pointer"
+                            wire:click="back(1)">{{
                             $participant->scheme->name }}</span>
                     </div>
 
