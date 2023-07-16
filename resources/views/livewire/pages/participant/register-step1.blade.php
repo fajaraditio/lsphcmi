@@ -18,7 +18,8 @@
                     @foreach ($schemes as $scheme)
                     <ul>
                         <li class="border-1 border-b border-gray-100 py-2">
-                            <button wire:click="save({{ $scheme->id }})" class="hover:underline">
+                            <button wire:click="save({{ $scheme->id }})"
+                                class="hover:underline @if (!empty($participant) && $participant->scheme->id == $scheme->id) font-bold text-red-500 @endif">
                                 {{ $scheme->name }}
                             </button>
                         </li>

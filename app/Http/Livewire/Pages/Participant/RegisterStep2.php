@@ -35,13 +35,13 @@ class RegisterStep2 extends Component
         ],
         [
             'label'     => '3',
-            'attr'      => 'Informasi Pembayaran',
-            'desc'      => 'Mengunggah bukti pembayaran sertifikasi',
+            'attr'      => 'Isi Persyaratan Dasar',
+            'desc'      => 'Mengisi persyaratan dasar',
         ],
         [
             'label'     => '4',
-            'attr'      => 'Unggah Portfolio',
-            'desc'      => 'Mengunggah portfolio dan persyaratan dasar',
+            'attr'      => 'Informasi Pembayaran',
+            'desc'      => 'Mengunggah bukti pembayaran sertifikasi',
         ],
         [
             'label'     => '5',
@@ -108,17 +108,22 @@ class RegisterStep2 extends Component
         $this->participant = Participant::where('user_id', auth()->user()->id)->first();
     }
 
-    public function back()
+    public function back($step = null)
     {
-        return redirect()->route('participant.register.1');
+        if (!empty($step)) {
+            return redirect()->route('participant.register.' . $step);
+        } else {
+            return redirect()->route('participant.register.' . $this->currentStep - 1);
+        }
     }
 
     public function save()
     {
         $this->validate();
 
+        $this->participant->step = 3;
         $this->participant->save();
-        
+
         return redirect()->route('participant.register.3');
     }
 

@@ -15,10 +15,9 @@
                 <div id="form-wizard" class="p-8">
                     @livewire('components.step-wizard', ['stepWizards' => $stepWizards, 'currentStep' => $currentStep])
 
-
                     <div class="pb-5">
                         <b>Skema Pilihan:</b> <span
-                            class="rounded-full bg-red-500 hover:bg-red-600 text-white text-sm p-2 cursor-pointer" wire:click="back()">{{
+                            class="rounded-full bg-red-500 hover:bg-red-600 text-white text-sm p-2 cursor-pointer" wire:click="back(1)">{{
                             $participant->scheme->name }}</span>
                     </div>
 

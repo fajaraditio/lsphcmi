@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class RegisterStep1 extends Component
 {
+    public $participant;
     public $schemes;
     public $stepWizards = [
         [
@@ -22,13 +23,13 @@ class RegisterStep1 extends Component
         ],
         [
             'label'     => '3',
-            'attr'      => 'Informasi Pembayaran',
-            'desc'      => 'Mengunggah bukti pembayaran sertifikasi',
+            'attr'      => 'Isi Persyaratan Dasar',
+            'desc'      => 'Mengisi persyaratan dasar',
         ],
         [
             'label'     => '4',
-            'attr'      => 'Unggah Portfolio',
-            'desc'      => 'Mengunggah portfolio dan persyaratan dasar',
+            'attr'      => 'Informasi Pembayaran',
+            'desc'      => 'Mengunggah bukti pembayaran sertifikasi',
         ],
         [
             'label'     => '5',
@@ -46,6 +47,8 @@ class RegisterStep1 extends Component
     public function mount()
     {
         $this->schemes = Scheme::all();
+
+        $this->participant = Participant::where('user_id', auth()->user()->id)->first();
     }
 
     public function save($schemeId)
@@ -58,7 +61,7 @@ class RegisterStep1 extends Component
                 'name'      => auth()->user()->name,
                 'email'     => auth()->user()->email,
                 'scheme_id' => $schemeId,
-                'step'      => 1,
+                'step'      => 2,
             ]
         );
 
