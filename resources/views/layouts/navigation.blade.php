@@ -18,8 +18,8 @@
 
                     @if (auth()->user()->role->slug === 'participant')
                     <!-- Participant Nav -->
-                    <x-nav-link :href="route('participant.register.1')"
-                        :active="request()->routeIs('participant.register.1')">
+                    <x-nav-link :href="route('participant.register.1',  ['jumpCurrent' => 'true'])"
+                        :active="request()->routeIs('participant.register.*')">
                         {{ __('Registration Form') }}
                     </x-nav-link>
 

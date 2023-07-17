@@ -2,14 +2,21 @@
 
 namespace App\Http\Livewire\Pages\Participant;
 
+use App\Models\CompetenceCriteria;
 use App\Models\CompetenceUnit;
 use App\Models\Participant;
+use App\Models\ParticipantCompetency;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegisterStep5 extends Component
 {
+    use WithFileUploads;
+
     public $participant;
+    public $participantCompetencies;
     public $competenceUnits;
+    public $competenceCriterias;
     public $stepWizards = [
         [
             'label'     => 'Mulai',
@@ -39,10 +46,31 @@ class RegisterStep5 extends Component
     ];
     public $currentStep = 5;
 
+    protected $validationAttributes = [
+        'participantCompetencies.*'                 => 'Kriteria',
+        'participantCompetencies.*.status'          => 'Jawaban Kriteria',
+        'participantCompetencies.*.relevant_proof'  => 'Bukti Relevan',
+    ];
+
     public function mount()
     {
-        $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
-        $this->competenceUnits  = CompetenceUnit::with('competence_elements.competence_criterias')->get();
+        $this->participant              = Participant::where('user_id', auth()->user()->id)->first();
+        $this->competenceUnits          = CompetenceUnit::with('competence_elements.competence_criterias')->get();
+        $this->competenceCriterias      = CompetenceCriteria::get();
+        $this->participantCompetencies  = [];
+
+        foreach ($this->competenceCriterias as $criteria) {
+            $this->participantCompetencies[$criteria->id]['status']         = null;
+            $this->participantCompetencies[$criteria->id]['relevant_proof'] = null;
+
+            $participantCriteria = ParticipantCompetency::where('participant_id', $this->participant->id)
+                ->where('competence_criteria_id', $criteria->id)
+                ->first();
+
+            if (!empty($participantCriteria)) {
+                $this->participantCompetencies[$criteria->id]['status']           = $participantCriteria->status;
+            }
+        }
 
         if (empty($this->participant->payment_verified_at)) {
             return redirect()->route('participant.register.4');
@@ -58,6 +86,47 @@ class RegisterStep5 extends Component
         }
     }
 
+    public function save()
+    {
+        $validateData = [];
+        foreach ($this->competenceCriterias as $criteria) {
+            $validateData = array_merge(
+                $validateData,
+                [
+                    'participantCompetencies.' . $criteria->id                      => 'required',
+                    'participantCompetencies.' . $criteria->id . '.status'          => 'required|in:K,BK',
+                    'participantCompetencies.' . $criteria->id . '.relevant_proof'  => 'required_if:participantCompetencies.' . $criteria->id . '.status,K|nullable|mimes:pdf',
+                ]
+            );
+        }
+
+        $this->validate($validateData);
+
+        foreach ($this->participantCompetencies as $criteriaId => $competency) {
+            $competenceRelProof = null;
+
+            // Submit Relevant Proof If Exists
+            if (array_key_exists('relevant_proof', $competency) && $competency['status'] === 'K') {
+                $relProofFilename   = 'rproof_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $competency['relevant_proof']->getClientOriginalExtension();
+                $relProofUploaded   = $competency['relevant_proof']->storeAs('public/docs', $relProofFilename);
+                $competenceRelProof = str_replace('public/', '', $relProofUploaded);
+            }
+
+            // Create Participant's Competencies
+            ParticipantCompetency::updateOrCreate(
+                [
+                    'participant_id'            => $this->participant->id,
+                    'competence_criteria_id'    => $criteriaId,
+                ],
+                [
+                    'status'                    => $competency['status'],
+                    'relevant_proof'            => $competenceRelProof,
+                ]
+            );
+        }
+
+        return redirect()->route('participant.register.5');
+    }
 
     public function render()
     {

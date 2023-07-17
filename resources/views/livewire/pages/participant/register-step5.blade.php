@@ -62,18 +62,20 @@
                                         $competenceCriteria->no }}</td>
                                     <td class="border border-slate-300 w-2/5 p-2">{{ $competenceCriteria->title }}
                                     </td>
-                                    <td class="border border-slate-300 p-2">
+                                    <td
+                                        class="border border-slate-300 p-2 @error('participantCompetencies.' . $competenceCriteria->id . '.status') border-2 border-red-300 @enderror">
                                         <input type="radio"
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
-                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400"
+                                            class="appearance-none text-red-500 checked:ring-red-400 focus:ring-red-400"
                                             value="K">
                                     </td>
-                                    <td class="border border-slate-300 p-2">
+                                    <td
+                                        class="border border-slate-300 p-2 @error('participantCompetencies.' . $competenceCriteria->id) border-2 border-red-300 @enderror">
                                         <input type="radio"
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
-                                            class="appearance-none default:ring text-red-500 checked:bg-red-500 focus:ring-red-400"
+                                            class="appearance-none text-red-500 checked:ring-red-400 focus:ring-red-400"
                                             value="BK">
                                     </td>
                                     <td class="border border-slate-300 p-2">

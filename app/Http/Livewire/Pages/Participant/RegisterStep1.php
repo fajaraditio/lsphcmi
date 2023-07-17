@@ -39,11 +39,19 @@ class RegisterStep1 extends Component
     ];
     public $currentStep = 1;
 
+    public $jumpCurrent;
+    
+    protected $queryString = ['jumpCurrent'];
+
     public function mount()
     {
         $this->schemes = Scheme::all();
 
         $this->participant = Participant::where('user_id', auth()->user()->id)->first();
+
+        if (!empty($this->jumpCurrent)) {
+            return redirect()->route('participant.register.' . $this->participant->step);
+        }
     }
 
     public function save($schemeId)
