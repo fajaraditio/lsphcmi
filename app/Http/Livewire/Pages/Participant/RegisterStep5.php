@@ -62,13 +62,15 @@ class RegisterStep5 extends Component
         foreach ($this->competenceCriterias as $criteria) {
             $this->participantCompetencies[$criteria->id]['status']         = null;
             $this->participantCompetencies[$criteria->id]['relevant_proof'] = null;
+            $this->participantCompetencies[$criteria->id]['relevant_proof_path'] = null;
 
             $participantCriteria = ParticipantCompetency::where('participant_id', $this->participant->id)
                 ->where('competence_criteria_id', $criteria->id)
                 ->first();
 
             if (!empty($participantCriteria)) {
-                $this->participantCompetencies[$criteria->id]['status']           = $participantCriteria->status;
+                $this->participantCompetencies[$criteria->id]['status'] = $participantCriteria->status;
+                $this->participantCompetencies[$criteria->id]['relevant_proof_path'] = $participantCriteria->relevant_proof;
             }
         }
 
@@ -95,7 +97,7 @@ class RegisterStep5 extends Component
                 [
                     'participantCompetencies.' . $criteria->id                      => 'required',
                     'participantCompetencies.' . $criteria->id . '.status'          => 'required|in:K,BK',
-                    'participantCompetencies.' . $criteria->id . '.relevant_proof'  => 'required_if:participantCompetencies.' . $criteria->id . '.status,K|nullable|mimes:pdf',
+                    'participantCompetencies.' . $criteria->id . '.relevant_proof'  => (empty($this->participantCompetencies[$criteria->id]['relevant_proof_path']) ? 'required_if:participantCompetencies.' . $criteria->id . '.status,K' : null) . '|nullable|mimes:pdf',
                 ]
             );
         }
@@ -107,9 +109,13 @@ class RegisterStep5 extends Component
 
             // Submit Relevant Proof If Exists
             if (array_key_exists('relevant_proof', $competency) && $competency['status'] === 'K') {
-                $relProofFilename   = 'rproof_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $competency['relevant_proof']->getClientOriginalExtension();
-                $relProofUploaded   = $competency['relevant_proof']->storeAs('public/docs', $relProofFilename);
-                $competenceRelProof = str_replace('public/', '', $relProofUploaded);
+                if (empty($competency['relevant_proof_path'])) {
+                    $relProofFilename   = 'rproof_' . date('Ymd_Gis') . '_dark' . rand(100, 200) . '.' . $competency['relevant_proof']->getClientOriginalExtension();
+                    $relProofUploaded   = $competency['relevant_proof']->storeAs('public/docs', $relProofFilename);
+                    $competenceRelProof = str_replace('public/', '', $relProofUploaded);
+                } else {
+                    $competenceRelProof = $competency['relevant_proof_path'];
+                }
             }
 
             // Create Participant's Competencies
@@ -124,6 +130,9 @@ class RegisterStep5 extends Component
                 ]
             );
         }
+
+        $this->participant->step = 5;
+        $this->participant->save();
 
         return redirect()->route('participant.register.5');
     }

@@ -90,6 +90,17 @@
                                         </x-file-input>
                                         <x-input-error :messages="$errors->get('participantCompetencies.' .
                                         $competenceCriteria->id . '.relevant_proof')" class="mt-2" />
+
+                                        @if(!empty($participantCompetencies[$competenceCriteria->id]['relevant_proof_path']))
+                                        <span class="text-sm">
+                                            Berkas:
+                                            <a href="{{ url('storage/' . $participantCompetencies[$competenceCriteria->id]['relevant_proof_path']) }}"
+                                                class="text-red-500 underline hover:text-red-700" target="_blank">
+                                                {{ $participantCompetencies[$competenceCriteria->id]['relevant_proof_path']
+                                                }}
+                                            </a>
+                                        </span>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
