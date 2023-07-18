@@ -258,6 +258,24 @@
                 @endif
             </div>
         </div>
+
+        <hr class="my-5">
+
+        <h3 class="font-bold">Penugasan Asesor</h3>
+
+        <div class="sm:flex w-full">
+            <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+                <x-input-label for="assessorUserId" :value="__('Pilih Asesor')"></x-input-label>
+                <x-select-input id="assessorUserId" :value="old('assessorUserId')" class="block mt-1 w-full text-sm"
+                    :options="$assessors" wire:model="assessorUserId" required>
+                </x-select-input>
+                <x-input-error :messages="$errors->get('assessorUserId')" class="mt-2" />
+            </div>
+
+            <div class="w-full sm:w-1/2 my-2 sm:mr-2">
+            </div>
+        </div>
+
     </div>
 
     <div class="bg-gray-50 p-3 sm:flex justify-end">

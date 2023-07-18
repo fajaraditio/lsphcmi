@@ -31,7 +31,7 @@
         "email": "asessor1@lsphcmi.com",
         "password": "12345678",
         "role": {
-            "slug": "asessor",
+            "slug": "assessor",
             "name": "Asesor"
         }
     },

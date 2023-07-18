@@ -76,8 +76,8 @@
                     <div class="sm:flex w-full">
                         <div class="w-full sm:w-1/2 my-2 sm:mr-2">
                             <x-input-label for="gender" :value="__('Jenis Kelamin')"></x-input-label>
-                            <x-select-input id="gender" type="text" :value="old('participant.gender')"
-                                class="block mt-1 w-full" :options="$genders" wire:model="participant.gender" required>
+                            <x-select-input id="gender" :value="old('participant.gender')" class="block mt-1 w-full"
+                                :options="$genders" wire:model="participant.gender" required>
                             </x-select-input>
                             <x-input-error :messages="$errors->get('participant.gender')" class="mt-2" />
                         </div>

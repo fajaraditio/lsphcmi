@@ -42,11 +42,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:certification')->group(function () {
-        Route::get('/registration', CertificationRegistration::class)->name('certification.registration');
+        Route::get('/c/registration', CertificationRegistration::class)->name('certification.registration');
     });
 
     Route::middleware('role:finance')->group(function () {
-        Route::get('/registration', FinanceRegistration::class)->name('finance.registration');
+        Route::get('/f/registration', FinanceRegistration::class)->name('finance.registration');
     });
 });
 
