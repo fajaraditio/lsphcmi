@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Sesi 1",
+        "started_at": "08.00",
+        "ended_at": "09.15"
+    },
+    {
+        "name": "Sesi 2",
+        "started_at": "09.15",
+        "ended_at": "10.30"
+    },
+    {
+        "name": "Sesi 3",
+        "started_at": "10.30",
+        "ended_at": "11.45"
+    },
+    {
+        "name": "Sesi 4",
+        "started_at": "13.00",
+        "ended_at": "14.45"
+    },
+    {
+        "name": "Sesi 5",
+        "started_at": "14.45",
+        "ended_at": "15.30"
+    },
+    {
+        "name": "Sesi 6",
+        "started_at": "15.30",
+        "ended_at": "16.45"
+    }
+]
