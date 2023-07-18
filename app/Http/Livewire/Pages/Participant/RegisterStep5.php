@@ -79,6 +79,10 @@ class RegisterStep5 extends Component
         if (empty($this->participant->payment_verified_at)) {
             return redirect()->route('participant.register.4');
         }
+
+        if (!empty($this->participant->second_apl_verified_at)) {
+            return redirect()->route('participant.registration.verified');
+        }
     }
 
     public function back($step = null)

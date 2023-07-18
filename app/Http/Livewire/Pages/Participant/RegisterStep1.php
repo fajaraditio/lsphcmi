@@ -52,6 +52,10 @@ class RegisterStep1 extends Component
         if (!empty($this->jumpCurrent)) {
             return redirect()->route('participant.register.' . $this->participant->step);
         }
+
+        if (!empty($this->participant->second_apl_verified_at)) {
+            return redirect()->route('participant.registration.verified');
+        }
     }
 
     public function save($schemeId)

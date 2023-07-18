@@ -91,6 +91,10 @@ class RegisterStep3 extends Component
         $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
         $this->participantDoc   = ParticipantDoc::where('participant_id', $this->participant->id)->first();
         $this->participantDocs  = [];
+
+        if (!empty($this->participant->second_apl_verified_at)) {
+            return redirect()->route('participant.registration.verified');
+        }
     }
 
     public function back($step = null)

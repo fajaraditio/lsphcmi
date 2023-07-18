@@ -101,6 +101,10 @@ class RegisterStep2 extends Component
     public function mount()
     {
         $this->participant = Participant::where('user_id', auth()->user()->id)->first();
+
+        if (!empty($this->participant->second_apl_verified_at)) {
+            return redirect()->route('participant.registration.verified');
+        }
     }
 
     public function back($step = null)
