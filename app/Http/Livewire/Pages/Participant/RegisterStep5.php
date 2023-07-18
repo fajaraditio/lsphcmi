@@ -15,6 +15,7 @@ class RegisterStep5 extends Component
 
     public $participant;
     public $participantCompetencies;
+    public $hasParticipantCompetencies;
     public $competenceUnits;
     public $competenceCriterias;
     public $stepWizards = [
@@ -54,10 +55,11 @@ class RegisterStep5 extends Component
 
     public function mount()
     {
-        $this->participant              = Participant::where('user_id', auth()->user()->id)->first();
-        $this->competenceUnits          = CompetenceUnit::with('competence_elements.competence_criterias')->get();
-        $this->competenceCriterias      = CompetenceCriteria::get();
-        $this->participantCompetencies  = [];
+        $this->participant                  = Participant::where('user_id', auth()->user()->id)->first();
+        $this->competenceUnits              = CompetenceUnit::with('competence_elements.competence_criterias')->get();
+        $this->hasParticipantCompetencies   = (bool) ParticipantCompetency::where('participant_id', $this->participant->id)->count() && empty($this->participant->second_apl_verified_at);
+        $this->competenceCriterias          = CompetenceCriteria::get();
+        $this->participantCompetencies      = [];
 
         foreach ($this->competenceCriterias as $criteria) {
             $this->participantCompetencies[$criteria->id]['status']         = null;

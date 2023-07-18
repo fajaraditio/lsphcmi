@@ -24,6 +24,20 @@
 
                     <hr class="mb-5">
 
+                    @if ($hasParticipantCompetencies)
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Proses Verifikasi Form APL-02') }}</span> {{ __('Langkah 5
+                            merupakan bagian dari Form APL-02 dan sedang dilakukan verifikasi pada asesmen mandiri.
+                            Mohon mengecek secara berkala proses verifikasi form agar dapat melanjutkan ke tahapan Uji
+                            Kompetensi.') }}
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="w-full mt-5">
                         @foreach ($competenceUnits as $competenceUnit)
                         <table class="table-auto border-collapse border border-slate-400 w-full text-left mt-3">
@@ -68,7 +82,7 @@
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
                                             class="appearance-none text-red-500 checked:ring-red-400 focus:ring-red-400"
-                                            value="K">
+                                            value="K" @if($hasParticipantCompetencies) disabled @endif>
                                     </td>
                                     <td
                                         class="border border-slate-300 p-2 @error('participantCompetencies.' . $competenceCriteria->id) border-2 border-red-300 @enderror">
@@ -76,7 +90,7 @@
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
                                             class="appearance-none text-red-500 checked:ring-red-400 focus:ring-red-400"
-                                            value="BK">
+                                            value="BK" @if($hasParticipantCompetencies) disabled @endif>
                                     </td>
                                     <td class="border border-slate-300 p-2">
                                         <x-file-input id="relevant_proof" class="block mt-1 w-full" :error="$errors->has('participantCompetencies.' .
@@ -86,7 +100,7 @@
                                             :allowed-exts="['PDF']" :disabled="empty($participantCompetencies[$competenceCriteria->
                                         id]['status']) ||
                                         $participantCompetencies[$competenceCriteria->id]['status'] ==
-                                        'BK'">
+                                        'BK' || $hasParticipantCompetencies">
                                         </x-file-input>
                                         <x-input-error :messages="$errors->get('participantCompetencies.' .
                                         $competenceCriteria->id . '.relevant_proof')" class="mt-2" />
@@ -96,7 +110,8 @@
                                             Berkas:
                                             <a href="{{ url('storage/' . $participantCompetencies[$competenceCriteria->id]['relevant_proof_path']) }}"
                                                 class="text-red-500 underline hover:text-red-700" target="_blank">
-                                                {{ $participantCompetencies[$competenceCriteria->id]['relevant_proof_path']
+                                                {{
+                                                $participantCompetencies[$competenceCriteria->id]['relevant_proof_path']
                                                 }}
                                             </a>
                                         </span>
