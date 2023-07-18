@@ -23,7 +23,8 @@
                         {{ __('Registration Form') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('participant.test.agreement')"
+                        :active="request()->routeIs('participant.test.agreement')">
                         {{ __('Competency Test') }}
                     </x-nav-link>
 

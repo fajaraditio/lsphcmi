@@ -10,6 +10,8 @@ use App\Http\Livewire\Pages\Participant\RegisterStep2;
 use App\Http\Livewire\Pages\Participant\RegisterStep3;
 use App\Http\Livewire\Pages\Participant\RegisterStep4;
 use App\Http\Livewire\Pages\Participant\RegisterStep5;
+use App\Http\Livewire\Pages\Participant\RegistrationVerified;
+use App\Http\Livewire\Pages\Participant\TestAgreement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +42,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/participant/register/step/3', RegisterStep3::class)->name('participant.register.3');
         Route::get('/participant/register/step/4', RegisterStep4::class)->name('participant.register.4');
         Route::get('/participant/register/step/5', RegisterStep5::class)->name('participant.register.5');
+
+        Route::get('/participant/registration/verified', RegistrationVerified::class)->name('participant.registration.verified');
+
+        Route::get('/participant/test/agreement', TestAgreement::class)->name('participant.test.agreement');
     });
 
     Route::middleware('role:certification')->group(function () {
