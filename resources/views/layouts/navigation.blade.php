@@ -31,7 +31,7 @@
                     <!-- Ceritifcation Nav -->
                     <x-nav-link :href="route('certification.registration')"
                         :active="request()->routeIs('certification.registration')">
-                        {{ __('Registration List') }}
+                        {{ __('Registration List') }} / APL-01
                     </x-nav-link>
 
                     @elseif (auth()->user()->role->slug === 'finance')
@@ -39,6 +39,13 @@
                     <x-nav-link :href="route('finance.registration')"
                         :active="request()->routeIs('finance.registration')">
                         {{ __('Payment List') }}
+                    </x-nav-link>
+
+                    @elseif (auth()->user()->role->slug === 'assessor')
+                    <!-- Finance Nav -->
+                    <x-nav-link :href="route('assessor.registration')"
+                        :active="request()->routeIs('assessor.registration')">
+                        {{ __('Registration List') }} / APL-02
                     </x-nav-link>
 
                     @endif

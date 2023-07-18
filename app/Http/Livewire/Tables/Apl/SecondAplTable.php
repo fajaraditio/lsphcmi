@@ -6,6 +6,7 @@ use App\Models\Participant;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
@@ -23,7 +24,7 @@ final class SecondAplTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        $this->showCheckBox();
+        // $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -45,13 +46,17 @@ final class SecondAplTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Participant>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Participant>
+     */
     public function datasource(): Builder
     {
-        return Participant::query();
+        return Participant::query()
+            ->select('participants.*', DB::raw('schemes.name scheme_name'))
+            ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
+            ->has('documents')
+            ->whereNull('second_apl_verified_at');
     }
 
     /*
@@ -88,7 +93,15 @@ final class SecondAplTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('name')
-            ->addColumn('name_lower', fn (Participant $model) => strtolower(e($model->name)))
+            ->addColumn('status_formatted', function (Participant $model) {
+                if ($model->second_apl_status === 'verified') {
+                    return '<div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Lolos</div>';
+                } elseif ($model->first_apl_status === 'rejected') {
+                    return '<div class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Ditolak</div>';
+                } else {
+                    return '<div class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Belum Terverifikasi</div>';
+                }
+            })
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Participant $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -102,7 +115,7 @@ final class SecondAplTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -114,16 +127,33 @@ final class SecondAplTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Name', 'name')
+            Column::make('No. Peserta', 'bib_number')
                 ->searchable()
-                ->makeInputText('name')
                 ->sortable(),
 
-            Column::make('Created at', 'created_at')
-                ->hidden(),
+            Column::make('Status', 'status_formatted')
+                ->searchable()
+                ->sortable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->makeInputDatePicker()
+            Column::make('Nama', 'name')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('NIK / Paspor / KTP', 'identity_number')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Email', 'email')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Skema Pilihan', 'scheme_name'),
+
+            Column::make('Tujuan Asesmen', 'assessment_purpose')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Dibuat pada', 'created_at_formatted', 'created_at')
                 ->searchable()
         ];
     }
@@ -136,27 +166,24 @@ final class SecondAplTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Participant Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('participant.edit', ['participant' => 'id']),
-
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('participant.destroy', ['participant' => 'id'])
-               ->method('delete')
+        return [
+            Button::make('decision', 'Perbaharui')
+                ->caption('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                </svg>')
+                ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->openModal('modals.apl.update-first-apl-modal', ['participant' => 'id']),
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -166,7 +193,7 @@ final class SecondAplTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Participant Action Rules.
      *
      * @return array<int, RuleActions>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
+use App\Http\Livewire\Pages\Assessor\Registration as AssessorRegistration;
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
 use App\Http\Livewire\Pages\Participant\RegisterStep2;
 use App\Http\Livewire\Pages\Participant\RegisterStep3;
@@ -42,11 +43,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:certification')->group(function () {
-        Route::get('/c/registration', CertificationRegistration::class)->name('certification.registration');
+        Route::get('/registration/apl/1', CertificationRegistration::class)->name('certification.registration');
     });
 
     Route::middleware('role:finance')->group(function () {
-        Route::get('/f/registration', FinanceRegistration::class)->name('finance.registration');
+        Route::get('/registration/payment', FinanceRegistration::class)->name('finance.registration');
+    });
+
+    Route::middleware('role:assessor')->group(function () {
+        Route::get('/registration/apl/2', AssessorRegistration::class)->name('assessor.registration');
     });
 });
 

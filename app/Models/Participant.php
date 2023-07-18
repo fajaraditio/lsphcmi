@@ -20,4 +20,9 @@ class Participant extends Model
     {
         return $this->belongsTo(Scheme::class);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(ParticipantDoc::class);
+    }
 }
