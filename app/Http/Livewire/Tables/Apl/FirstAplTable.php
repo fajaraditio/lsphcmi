@@ -55,7 +55,8 @@ final class FirstAplTable extends PowerGridComponent
         return Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
-            ->whereNull('first_apl_verified_at');
+            ->whereNull('payment_verified_at')
+            ->whereNull('second_apl_verified_at');
     }
 
     /*

@@ -55,8 +55,9 @@ final class SecondAplTable extends PowerGridComponent
         return Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
-            ->has('documents')
-            ->whereNull('second_apl_verified_at');
+            ->whereNotNull('first_apl_verified_at')
+            ->whereNotNull('payment_verified_at')
+            ->has('documents');
     }
 
     /*
@@ -181,7 +182,7 @@ final class SecondAplTable extends PowerGridComponent
                 <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
                 </svg>')
                 ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->openModal('modals.apl.update-first-apl-modal', ['participant' => 'id']),
+                ->openModal('modals.apl.update-second-apl-modal', ['participant' => 'id']),
         ];
     }
 

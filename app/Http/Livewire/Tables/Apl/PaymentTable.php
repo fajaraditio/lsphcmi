@@ -54,7 +54,9 @@ final class PaymentTable extends PowerGridComponent
     {
         return Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
-            ->join('schemes', 'schemes.id', '=', 'participants.scheme_id');
+            ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
+            ->whereNotNull('first_apl_verified_at')
+            ->whereNull('second_apl_verified_at');
     }
 
     /*
