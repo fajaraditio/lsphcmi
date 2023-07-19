@@ -49,6 +49,11 @@
                         {{ __('Registration List') }} / APL-02
                     </x-nav-link>
 
+                    <x-nav-link :href="route('assessor.test.list')"
+                        :active="request()->routeIs('assessor.test.list')">
+                        {{ __('Competency Test List') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>
