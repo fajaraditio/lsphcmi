@@ -91,24 +91,40 @@
 
                     <hr class="my-5">
 
-                    <div class="signature-pad">
-                        <p>{{ __('Tanggal: ') . Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
+                    <div class="flex justify-between">
+                        <div class="signature-pad">
+                            @if (!empty($testSchedule->agreement) &&
+                            !empty($testSchedule->agreement->participant_signed_at))
+                            <p>{{ __('Tanggal: ') . Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
 
-                        @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                        empty($testSchedule->agreement->participant_signed_at)))
-                        <canvas class="border border-slate-400" id="signature-pad-canvas"></canvas>
-                        <x-input-error :messages="$errors->get('signature')" class="mt-2" />
-                        @else
-                        <img src="{{ $testSchedule->agreement->participant_signature }}" alt="Signature"
-                            style="width: 200px; height: 100px;">
-                        @endif
+                            <img src="{{ $testSchedule->agreement->participant_signature }}" alt="Signature"
+                                style="width: 200px; height: 100px;">
+                            @endif
+
+                            <p>{{ $testSchedule->participant->name }}</p>
+                        </div>
+
+                        <div class="signature-pad">
+                            <p>{{ __('Tanggal: ') . Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
+
+                            @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
+                            empty($testSchedule->agreement->assessor_signed_at)))
+                            <canvas class="border border-slate-400" id="signature-pad-canvas"></canvas>
+                            <x-input-error :messages="$errors->get('signature')" class="mt-2" />
+                            @else
+                            <img src="{{ $testSchedule->agreement->assessor_signature }}" alt="Signature"
+                                style="width: 200px; height: 100px;">
+                            @endif
+
+                            <p>{{ $testSchedule->assessor->name }}</p>
+                        </div>
                     </div>
 
                     <hr class="my-5">
 
                     <div class="flex justify-between">
                         @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                        empty($testSchedule->agreement->participant_signed_at)))
+                        empty($testSchedule->agreement->assessor_signed_at)))
                         <x-secondary-button id="clear-signature">Ulangi Tandatangan</x-secondary-button>
                         @else
                         <div></div>
