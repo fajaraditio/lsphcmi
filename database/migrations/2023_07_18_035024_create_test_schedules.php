@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('assessor_user_id')->nullable();
             $table->unsignedBigInteger('test_session_id')->nullable();
             $table->date('scheduled_at')->nullable();
+            $table->string('participant_status')->default('agreement');
+            $table->string('assessor_status')->default('agreement');
             $table->timestamps();
         });
     }

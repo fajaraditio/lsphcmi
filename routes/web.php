@@ -14,6 +14,11 @@ use App\Http\Livewire\Pages\Participant\RegisterStep5;
 use App\Http\Livewire\Pages\Participant\RegistrationVerified;
 use App\Http\Livewire\Pages\Participant\TestAgreement as ParticipantTestAgreement;
 use App\Http\Livewire\Pages\Assessor\TestAgreement as AssessorTestAgreement;
+use App\Http\Livewire\Pages\Assessor\TestScheduleDetail as AssessorTestScheduleDetail;
+use App\Http\Livewire\Pages\Assessor\TestObservation as AssessorTestObservation;
+use App\Http\Livewire\Pages\Assessor\TestPractice as AssessorTestPractice;
+use App\Http\Livewire\Pages\Assessor\TestFeedback as AssessorTestFeedback;
+use App\Http\Livewire\Pages\Assessor\TestReport as AssessorTestReport;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,7 +74,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/registration/apl/2',               AssessorRegistration::class)->name('assessor.registration');
 
             Route::get('/test/list',                        AssessorCompetencyTestList::class)->name('assessor.test.list');
+            Route::get('/test/{testSchedule}',              AssessorTestScheduleDetail::class)->name('assessor.test.schedule.detail');
             Route::get('/test/{testSchedule}/agreement',    AssessorTestAgreement::class)->name('assessor.test.agreement');
+            Route::get('/test/{testSchedule}/ak/1',         AssessorTestPractice::class)->name('assessor.test.practice');
+            Route::get('/test/{testSchedule}/ak/2',         AssessorTestObservation::class)->name('assessor.test.observation');
+            Route::get('/test/{testSchedule}/feedback',     AssessorTestFeedback::class)->name('assessor.test.feedback');
+            Route::get('/test/{testSchedule}/report',       AssessorTestReport::class)->name('assessor.test.report');
         });
     });
 });
