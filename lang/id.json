@@ -1146,6 +1146,9 @@
     "verified": "Lolos",
     "paid": "Lunas",
     "rejected": "Ditolak",
+    "signing_agreement": "Menandatangani Form Persetujuan",
+    "input_test_practice": "Penyusunan Form Praktik (AK.02)",
+    "input_test_observation": "Penyusunan Form Observasi (AK.03)",
     "Login Account": "Masuk Akun",
     "Register Account": "Daftar Akun",
     "Not registered yet? Have an account": "Belum punya akun? Daftar sekarang",
@@ -1154,5 +1157,6 @@
     "Registration List": "Daftar Permohonan",
     "Payment List": "Daftar Pembayaran",
     "Competency Test": "Uji Kompetensi",
-    "Competency Test List": "Daftar Uji Kompetensi"
+    "Competency Test List": "Daftar Uji Kompetensi",
+    "Test Schedule #:value": "Jadwal Uji Kompetensi #:value"
 }
