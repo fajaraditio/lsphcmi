@@ -13,21 +13,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
-                    @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                    empty($testSchedule->agreement->assessor_signed_at)))
+                    @if (!empty($testSchedule->agreement) && empty($testSchedule->agreement->participant_signed_at))
                     <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
                         role="alert">
                         <span class="mr-3">⌛️</span>
                         <span class="sr-only"></span>
                         <div>
-                            <span class="font-bold">{{ __('Menunggu Persetujuan Asesor') }}</span> {{ __('Harap tunggu
+                            <span class="font-bold">{{ __('Menunggu Persetujuan Asesi') }}</span> {{ __('Harap tunggu
                             karena sistem sedang
                             menunggu persetujuan asesor untuk dapat dilaksanakan asesmen.
                             Mohon mengecek secara berkala proses verifikasi form agar dapat melanjutkan ke tahapan Uji
                             Kompetensi.') }}
                         </div>
                     </div>
-                    @else
+                    @elseif (!empty($testSchedule->agreement) &&
+                    !empty($testSchedule->agreement->participant_signed_at) &&
+                    !empty($testSchedule->agreement->assessor_signed_at))
                     <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400"
                         role="alert">
                         <span class="mr-3">✅</span>
@@ -92,45 +93,55 @@
                     <hr class="my-5">
 
                     <div class="flex justify-between">
-                        <div class="signature-pad">
+                        <div class="flex flex-col signature-pad">
                             @if (!empty($testSchedule->agreement) &&
                             !empty($testSchedule->agreement->participant_signed_at))
-                            <p>{{ __('Tanggal: ') . Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
+                            <p>{{ __('Tanggal: ') .
+                                Carbon\Carbon::parse($testSchedule->agreement->participant_signed_at)->translatedFormat('j
+                                F Y') }}</p>
 
                             <img src="{{ $testSchedule->agreement->participant_signature }}" alt="Signature"
                                 style="width: 200px; height: 100px;">
                             @endif
-
-                            <p>{{ $testSchedule->participant->name }}</p>
+                            <p class="mt-auto">{{ $testSchedule->participant->name }}</p>
                         </div>
 
-                        <div class="signature-pad">
+                        <div class="flex flex-col signature-pad">
+                            @if (empty($testSchedule->agreement))
+                            <div style="height: 200px;"></div>
+                            
+                            @elseif (!empty($testSchedule->agreement) &&
+                            !empty($testSchedule->agreement->participant_signed_at) &&
+                            empty($testSchedule->agreement->assessor_signed_at))
                             <p>{{ __('Tanggal: ') . Carbon\Carbon::now()->translatedFormat('j F Y') }}</p>
-
-                            @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                            empty($testSchedule->agreement->assessor_signed_at)))
                             <canvas class="border border-slate-400" id="signature-pad-canvas"></canvas>
                             <x-input-error :messages="$errors->get('signature')" class="mt-2" />
+
                             @else
+                            <p>{{ __('Tanggal: ') .
+                                Carbon\Carbon::parse($testSchedule->agreement->assessor_signed_at)->translatedFormat('j
+                                F Y') }}</p>
                             <img src="{{ $testSchedule->agreement->assessor_signature }}" alt="Signature"
                                 style="width: 200px; height: 100px;">
                             @endif
 
-                            <p>{{ $testSchedule->assessor->name }}</p>
+                            <p class="mt-auto">{{ $testSchedule->assessor->name }}</p>
                         </div>
                     </div>
 
                     <hr class="my-5">
 
                     <div class="flex justify-between">
-                        @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                        empty($testSchedule->agreement->assessor_signed_at)))
+                        @if (!empty($testSchedule->agreement) &&
+                        !empty($testSchedule->agreement->participant_signed_at) &&
+                        empty($testSchedule->agreement->assessor_signed_at))
                         <x-secondary-button id="clear-signature">Ulangi Tandatangan</x-secondary-button>
 
                         <x-primary-button id="accept">Setuju dan Tandatangani
                         </x-primary-button>
                         @else
                         <x-secondary-button wire:click="back()">Kembali ke Uji Kompetensi</x-secondary-button>
+                        <x-primary-button wire:click="next()">Pengisian Form Tugas Praktik</x-primary-button>
                         @endif
                     </div>
                 </div>

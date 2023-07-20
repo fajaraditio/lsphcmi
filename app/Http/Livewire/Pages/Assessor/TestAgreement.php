@@ -25,6 +25,9 @@ class TestAgreement extends Component
     {
         $this->validate(['signature' => 'required']);
 
+        $this->testSchedule->assessor_signed_agreement_at = Carbon::now();
+        $this->testSchedule->save();
+
         $this->testAgreement->test_schedule_id   = $this->testSchedule->id;
         $this->testAgreement->assessor_signed_at = Carbon::now();
         $this->testAgreement->assessor_signature = $this->signature;
@@ -36,6 +39,11 @@ class TestAgreement extends Component
     public function back()
     {
         return redirect()->route('assessor.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
+    }
+
+    public function next()
+    {
+        return redirect()->route('assessor.test.practice', ['testSchedule' => $this->testSchedule->id]);
     }
 
     public function render()

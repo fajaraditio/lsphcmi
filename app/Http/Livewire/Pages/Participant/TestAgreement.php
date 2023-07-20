@@ -26,6 +26,9 @@ class TestAgreement extends Component
     {
         $this->validate(['signature' => 'required']);
 
+        $this->testSchedule->participant_signed_agreement_at = Carbon::now();
+        $this->testSchedule->save();
+
         $this->testAgreement->test_schedule_id      = $this->testSchedule->id;
         $this->testAgreement->participant_signed_at = Carbon::now();
         $this->testAgreement->participant_signature = $this->signature;

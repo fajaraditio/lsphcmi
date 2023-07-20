@@ -21,6 +21,14 @@ return new class extends Migration
             $table->date('scheduled_at')->nullable();
             $table->string('participant_status')->default('signing_agreement');
             $table->string('assessor_status')->default('signing_agreement');
+            $table->datetime('participant_signed_agreement_at')->nullable();
+            $table->datetime('assessor_signed_agreement_at')->nullable();
+            $table->datetime('participant_responded_test_practice_at')->nullable();
+            $table->datetime('assessor_submitted_test_practice_at')->nullable();
+            $table->datetime('participant_responded_test_observation_at')->nullable();
+            $table->datetime('assessor_submitted_test_observation_at')->nullable();
+            $table->datetime('participant_responded_feedback_at')->nullable();
+            $table->datetime('assessor_submitted_report_at')->nullable();
             $table->timestamps();
         });
     }

@@ -130,8 +130,19 @@
                         <div></div>
                         @endif
 
-                        <x-primary-button id="accept">Setuju dan Tandatangani
-                        </x-primary-button>
+                        @if (!empty($testSchedule->agreement) &&
+                        !empty($testSchedule->agreement->participant_signed_at) &&
+                        !empty($testSchedule->agreement->assessor_signed_at))
+
+                        @if (!empty($testSchedule->assessor_submitted_test_practice_at))
+                        <x-primary-button id="next">Lanjut Pengisian Tugas Praktik</x-primary-button>
+                        @else
+                        <x-primary-button class="bg-red-400 hover:bg-red-400" disabled>Menunggu Tugas Praktik ...</x-primary-button>
+                        @endif
+
+                        @else
+                        <x-primary-button id="accept">Setuju dan Tandatangani</x-primary-button>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use App\Http\Livewire\Components\Alert;
 use App\Http\Livewire\Tables\Test\TestPracticeTable;
 use App\Models\TestSchedule;
 use App\Models\TestPractice;
+use Carbon\Carbon;
 use LivewireUI\Modal\ModalComponent;
 
 class SubmitTestPracticeModal extends ModalComponent
@@ -16,6 +17,7 @@ class SubmitTestPracticeModal extends ModalComponent
     {
         $this->testSchedule->participant_status = 'respond_test_practice';
         $this->testSchedule->assessor_status    = 'input_test_observation';
+        $this->testSchedule->assessor_submitted_test_practice_at = Carbon::now();
         $this->testSchedule->save();
 
         TestPractice::where('test_schedule_id', $this->testSchedule->id)

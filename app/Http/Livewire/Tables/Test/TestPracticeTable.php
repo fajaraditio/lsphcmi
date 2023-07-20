@@ -42,14 +42,17 @@ final class TestPracticeTable extends PowerGridComponent
 
     public function header(): array
     {
-        if (auth()->user()->role->slug === 'assessor') {
+        if (
+            auth()->user()->role->slug === 'assessor' &&
+            empty($this->testSchedule->assessor_submitted_test_practice_at)
+        ) {
             return [
                 Button::add('create-case')
                     ->caption('Buat Kasus')
                     ->class('block w-full bg-red-500 text-white border border-red-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-red-500 dark:bg-red-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
                     ->openModal('modals.test.create-test-practice-case-modal', ['testSchedule' => $this->testSchedule->id]),
 
-                Button::add('create-case')
+                Button::add('submit-test-practice')
                     ->caption('Submit Form Tugas Praktik')
                     ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
                     ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
@@ -207,16 +210,19 @@ final class TestPracticeTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
+
     public function actionRules(): array
     {
-       return [
+        return [
 
-           //Hide button edit for ID 1
+            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($test-practice) => $test-practice->id === 1)
+                ->when(fn ($testPractice) => $testPractice->status === 'locked')
+                ->hide(),
+
+            Rule::button('destroy')
+                ->when(fn ($testPractice) => $testPractice->status === 'locked')
                 ->hide(),
         ];
     }
-    */
 }
