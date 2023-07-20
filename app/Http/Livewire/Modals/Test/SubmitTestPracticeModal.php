@@ -15,23 +15,34 @@ class SubmitTestPracticeModal extends ModalComponent
 
     public function submit()
     {
-        $this->testSchedule->participant_status = 'respond_test_practice';
-        $this->testSchedule->assessor_status    = 'input_test_observation';
-        $this->testSchedule->assessor_submitted_test_practice_at = Carbon::now();
-        $this->testSchedule->save();
+        $testPractice = TestPractice::where('test_schedule_id', $this->testSchedule->id);
 
-        TestPractice::where('test_schedule_id', $this->testSchedule->id)
-            ->update([
+        if ($testPractice->count() < 1) {
+            $this->emitTo(
+                Alert::class,
+                'sendAlert',
+                $title = 'Tugas praktik gagal disubmit!',
+                $message = 'Tidak ada pertanyaan observasi yang disubmit',
+                $type = 'error'
+            );
+        } else {
+            $this->testSchedule->participant_status = 'respond_test_practice';
+            $this->testSchedule->assessor_status    = 'input_test_observation';
+            $this->testSchedule->assessor_submitted_test_practice_at = Carbon::now();
+            $this->testSchedule->save();
+
+            $testPractice->update([
                 'status' => 'locked',
             ]);
 
-        $this->emitTo(
-            Alert::class,
-            'sendAlert',
-            $title = 'Tugas praktik berhasil disubmit!',
-            $message = 'Tugas praktik sudah disubmit dan diberikan kepada asesi untuk diisikan',
-            $type = 'success'
-        );
+            $this->emitTo(
+                Alert::class,
+                'sendAlert',
+                $title = 'Tugas praktik berhasil disubmit!',
+                $message = 'Tugas praktik sudah disubmit dan diberikan kepada asesi untuk diisikan',
+                $type = 'success'
+            );
+        }
 
         $this->emitTo(TestPracticeTable::class, 'pg:eventRefresh-default');
         $this->closeModal();

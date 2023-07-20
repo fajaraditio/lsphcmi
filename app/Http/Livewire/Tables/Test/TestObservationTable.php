@@ -210,16 +210,16 @@ final class TestObservationTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
     public function actionRules(): array
     {
-       return [
-
-           //Hide button edit for ID 1
+        return [
             Rule::button('edit')
-                ->when(fn($test-observation) => $test-observation->id === 1)
+                ->when(fn ($testObservation) => $testObservation->status === 'locked')
+                ->hide(),
+
+            Rule::button('destroy')
+                ->when(fn ($testObservation) => $testObservation->status === 'locked')
                 ->hide(),
         ];
     }
-    */
 }
