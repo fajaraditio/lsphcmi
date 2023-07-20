@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('participant_user_id');
             $table->unsignedBigInteger('assessor_user_id');
             $table->unsignedBigInteger('competence_criteria_id');
+            $table->unsignedBigInteger('test_schedule_id');
             $table->text('question');
             $table->text('response');
             $table->string('result')->nullable();

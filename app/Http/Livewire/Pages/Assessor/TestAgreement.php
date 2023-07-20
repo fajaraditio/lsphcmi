@@ -33,6 +33,10 @@ class TestAgreement extends Component
         return redirect()->route('assessor.test.agreement');
     }
 
+    public function back() {
+        return redirect()->route('assessor.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
+    }
+
     public function render()
     {
         return view('livewire.pages.assessor.test-agreement');

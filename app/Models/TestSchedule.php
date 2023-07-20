@@ -9,6 +9,8 @@ class TestSchedule extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function assessor()
     {
         return $this->belongsTo(User::class, 'assessor_user_id');

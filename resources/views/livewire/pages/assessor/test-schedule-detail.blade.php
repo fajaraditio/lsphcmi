@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Test Schedule #:value', ['value' => $testSchedule->id]) }}
             </h2>
-            <p>{{ __('Berikut ini merupakan detail dan menu uji kompetensi') }}</p>
+            <p>{{ __('Detail dan menu uji kompetensi') }}</p>
         </div>
     </header>
 
@@ -59,8 +59,9 @@
                             <br>
 
                             <a href="{{ route('assessor.test.agreement', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Persetujuan
-                                    (AK.01)')}}</span>
+                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Persetujuan')
+                                    }} <br>
+                                    {{ __('(FR.AK.01)')}}</span>
                             </a>
                         </div>
                         <div
@@ -74,8 +75,8 @@
                             <br>
 
                             <a href="{{ route('assessor.test.practice', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Praktik
-                                    (AK.02)')}}</span>
+                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Tugas Praktik
+                                    ') }} <br> {{ __('(FR.IA.02)')}}</span>
                             </a>
                         </div>
                         <div
@@ -89,8 +90,8 @@
                             <br>
 
                             <a href="{{ route('assessor.test.observation', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Observasi
-                                    (AK.02)')}}</span>
+                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Pertanyaan
+                                    Observasi') }} <br> {{ __('(FR.IA.03)') }}</span>
                             </a>
                         </div>
                         <div
@@ -105,7 +106,7 @@
 
                             <a href="{{ route('assessor.test.feedback', ['testSchedule' => $testSchedule->id ])}}">
                                 <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form
-                                    Feedback')}}</span>
+                                    Feedback') }} <br> {{ __('(FR.AK.03)')}}</span>
                             </a>
                         </div>
                         <div
@@ -119,7 +120,8 @@
                             <br>
 
                             <a href="{{ route('assessor.test.report', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Laporan')}}</span>
+                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form
+                                    Laporan') }} <br> {{ __('(FR.AK.05)')}}</span>
                             </a>
                         </div>
                     </div>

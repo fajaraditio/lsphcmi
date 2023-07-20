@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('participant_user_id');
             $table->unsignedBigInteger('assessor_user_id');
+            $table->unsignedBigInteger('test_schedule_id');
             $table->text('component');
             $table->string('result');
             $table->text('note');

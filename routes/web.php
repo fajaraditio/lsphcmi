@@ -76,8 +76,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/test/list',                        AssessorCompetencyTestList::class)->name('assessor.test.list');
             Route::get('/test/{testSchedule}',              AssessorTestScheduleDetail::class)->name('assessor.test.schedule.detail');
             Route::get('/test/{testSchedule}/agreement',    AssessorTestAgreement::class)->name('assessor.test.agreement');
-            Route::get('/test/{testSchedule}/ak/1',         AssessorTestPractice::class)->name('assessor.test.practice');
-            Route::get('/test/{testSchedule}/ak/2',         AssessorTestObservation::class)->name('assessor.test.observation');
+            Route::get('/test/{testSchedule}/ia/2',         AssessorTestPractice::class)->name('assessor.test.practice');
+            Route::get('/test/{testSchedule}/ia/3',         AssessorTestObservation::class)->name('assessor.test.observation');
             Route::get('/test/{testSchedule}/feedback',     AssessorTestFeedback::class)->name('assessor.test.feedback');
             Route::get('/test/{testSchedule}/report',       AssessorTestReport::class)->name('assessor.test.report');
         });

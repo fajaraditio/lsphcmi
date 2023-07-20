@@ -126,12 +126,12 @@
                         @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
                         empty($testSchedule->agreement->assessor_signed_at)))
                         <x-secondary-button id="clear-signature">Ulangi Tandatangan</x-secondary-button>
-                        @else
-                        <div></div>
-                        @endif
 
                         <x-primary-button id="accept">Setuju dan Tandatangani
                         </x-primary-button>
+                        @else
+                        <x-secondary-button wire:click="back()">Kembali ke Uji Kompetensi</x-secondary-button>
+                        @endif
                     </div>
                 </div>
             </div>
