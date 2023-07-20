@@ -12,8 +12,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
-                    @livewire('components.alert')
-
                     <table class="table-auto border-collapse border border-slate-400 w-1/2 text-left mt-3">
                         <tbody>
                             <tr>
@@ -35,6 +33,8 @@
                     </table>
 
                     <hr class="my-5">
+
+                    @livewire('components.alert')
 
                     @livewire('tables.test.test-practice-table', ['testSchedule' => $testSchedule])
                 </div>

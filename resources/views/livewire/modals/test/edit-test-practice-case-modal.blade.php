@@ -1,7 +1,7 @@
 <div>
     <div class="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-150">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ __('Edit Kasus #') }}
+            {{ __('Edit Kasus #:value', ['value' => $testPractice->id]) }}
         </h3>
     </div>
 
@@ -22,7 +22,7 @@
             <x-input-label for="competenceElementId" :value="__('Elemen')"></x-input-label>
             <select @if (empty($competenceElements)) disabled @endif id="competenceElementId"
                 wire:model="competenceElementId"
-                class="block mt-2 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('competenceUnitId') border-red-500 @enderror">
+                class="block mt-2 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('competenceElementId') border-red-500 @enderror">
                 <option value="">-- Pilih Elemen --</option>
                 @foreach ($competenceElements as $competenceElement)
                 <option value="{{ $competenceElement->id }}">{{ $competenceElement->title }}</option>
@@ -35,7 +35,7 @@
             <x-input-label for="competenceCriteriaId" :value="__('Kriteria untuk Kerja')"></x-input-label>
             <select @if (empty($competenceCriterias)) disabled @endif id="competenceCriteriaId"
                 wire:model="competenceCriteriaId"
-                class="block mt-2 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('competenceUnitId') border-red-500 @enderror">
+                class="block mt-2 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('competenceCriteriaId') border-red-500 @enderror">
                 <option value="">-- Pilih Elemen --</option>
                 @foreach ($competenceCriterias as $competenceCriteria)
                 <option value="{{ $competenceCriteria->id }}">{{ $competenceCriteria->title }}</option>
@@ -47,7 +47,8 @@
         <div class="w-full mt-5">
             <x-input-label for="case" :value="__('Kasus')"></x-input-label>
             <textarea id="case" wire:model="case"
-                class="w-full h-48 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('competenceUnitId') border-red-500 @enderror"></textarea>
+                class="w-full h-48 text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm @error('case') border-red-500 @enderror"></textarea>
+            <x-input-error :messages="$errors->get('case')" class="mt-2" />
         </div>
     </div>
 
@@ -63,7 +64,7 @@
                 </svg>
             </span>
             <span>
-                {{ __('Buat Kasus') }}
+                {{ __('Edit Kasus') }}
             </span>
         </button>
     </div>

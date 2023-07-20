@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire\Modals\Test;
 
+use App\Http\Livewire\Components\Alert;
 use App\Http\Livewire\Tables\Test\TestPracticeTable;
 use App\Models\CompetenceCriteria;
 use App\Models\CompetenceElement;
 use App\Models\CompetenceUnit;
 use App\Models\TestPractice;
-use App\Models\TestSchedule;
 use LivewireUI\Modal\ModalComponent;
 
 class EditTestPracticeCaseModal extends ModalComponent
 {
-    public TestSchedule $testSchedule;
+    public TestPractice $testPractice;
+    public $testSchedule;
     public $competenceUnitId;
     public $competenceElementId;
     public $competenceCriteriaId;
@@ -37,9 +38,14 @@ class EditTestPracticeCaseModal extends ModalComponent
 
     public function mount()
     {
+        $this->testSchedule         = $this->testPractice->test_schedule;
         $this->competenceUnits      = CompetenceUnit::all();
-        $this->competenceElements   = [];
-        $this->competenceCriterias  = [];
+        $this->competenceUnitId     = $this->testPractice->competence_criteria->competence_element->competence_unit_id;
+        $this->competenceCriterias  = CompetenceCriteria::where('competence_element_id', $this->testPractice->competence_criteria->competence_element_id)->get();
+        $this->competenceCriteriaId = $this->testPractice->competence_criteria_id;
+        $this->competenceElements   = CompetenceElement::where('competence_unit_id', $this->testPractice->competence_criteria->competence_element->competence_unit_id)->get();
+        $this->competenceElementId  = $this->testPractice->competence_criteria->competence_element_id;
+        $this->case = $this->testPractice->case;
     }
 
     public function updatedCompetenceUnitId()
@@ -60,21 +66,20 @@ class EditTestPracticeCaseModal extends ModalComponent
     {
         $this->validate();
 
-        TestPractice::create([
-            'participant_user_id'   => $this->testSchedule->participant_user_id,
-            'assessor_user_id'      => $this->testSchedule->assessor_user_id,
-            'test_schedule_id'      => $this->testSchedule->id,
-            'competence_criteria_id' => $this->competenceCriteriaId,
-            'case'                  => $this->case,
-        ]);
-
-        $competenceCriteria = CompetenceCriteria::find($this->competenceCriteriaId);
+        TestPractice::where('id', $this->testPractice->id)
+            ->update([
+                'participant_user_id'   => $this->testSchedule->participant_user_id,
+                'assessor_user_id'      => $this->testSchedule->assessor_user_id,
+                'test_schedule_id'      => $this->testSchedule->id,
+                'competence_criteria_id' => $this->competenceCriteriaId,
+                'case'                  => $this->case,
+            ]);
 
         $this->emitTo(
             Alert::class,
             'sendAlert',
-            $title = 'Kasus berhasil dibuat!',
-            $message = 'Kasus Tugas Praktik dengan KUK ' . $competenceCriteria->title . ' berhasil ditambahkan',
+            $title = 'Kasus berhasil diedit!',
+            $message = 'Kasus Tugas Praktik dengan ID ' . $this->testPractice->id . ' berhasil diedit',
             $type = 'success'
         );
 

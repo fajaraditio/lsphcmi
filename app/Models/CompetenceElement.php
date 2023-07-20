@@ -11,6 +11,11 @@ class CompetenceElement extends Model
 
     public $timestamps = false;
 
+    public function competence_unit()
+    {
+        return $this->belongsTo(CompetenceUnit::class);
+    }
+
     public function competence_criterias()
     {
         return $this->hasMany(CompetenceCriteria::class);

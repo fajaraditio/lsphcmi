@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Modals\Test;
 
+use App\Http\Livewire\Components\Alert;
 use App\Http\Livewire\Tables\Test\TestPracticeTable;
 use App\Models\CompetenceCriteria;
 use App\Models\CompetenceElement;
@@ -57,10 +58,10 @@ class CreateTestPracticeCaseModal extends ModalComponent
     }
 
     public function save()
-    {       
+    {
         $this->validate();
 
-        TestPractice::create([
+        $testPractice = TestPractice::create([
             'participant_user_id'   => $this->testSchedule->participant_user_id,
             'assessor_user_id'      => $this->testSchedule->assessor_user_id,
             'test_schedule_id'      => $this->testSchedule->id,
@@ -68,13 +69,11 @@ class CreateTestPracticeCaseModal extends ModalComponent
             'case'                  => $this->case,
         ]);
 
-        $competenceCriteria = CompetenceCriteria::find($this->competenceCriteriaId);
-
         $this->emitTo(
             Alert::class,
             'sendAlert',
             $title = 'Kasus berhasil dibuat!',
-            $message = 'Kasus Tugas Praktik dengan KUK ' . $competenceCriteria->title . ' berhasil ditambahkan',
+            $message = 'Kasus Tugas Praktik dengan KUK ' . $testPractice->id . ' berhasil ditambahkan',
             $type = 'success'
         );
 

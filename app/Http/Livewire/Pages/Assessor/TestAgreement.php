@@ -30,10 +30,11 @@ class TestAgreement extends Component
         $this->testAgreement->assessor_signature = $this->signature;
         $this->testAgreement->save();
 
-        return redirect()->route('assessor.test.agreement');
+        return redirect()->route('assessor.test.agreement', ['testSchedule' => $this->testSchedule->id]);
     }
 
-    public function back() {
+    public function back()
+    {
         return redirect()->route('assessor.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
     }
 
