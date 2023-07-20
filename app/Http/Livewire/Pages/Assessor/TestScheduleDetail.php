@@ -8,7 +8,12 @@ use Livewire\Component;
 class TestScheduleDetail extends Component
 {
     public TestSchedule $testSchedule;
-    
+
+    public function back()
+    {
+        return redirect()->route('assessor.test.list');
+    }
+
     public function render()
     {
         return view('livewire.pages.assessor.test-schedule-detail');

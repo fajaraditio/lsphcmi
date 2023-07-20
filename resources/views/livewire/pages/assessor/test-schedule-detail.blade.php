@@ -125,6 +125,10 @@
                             </a>
                         </div>
                     </div>
+
+                    <hr class="my-5">
+
+                    <x-secondary-button wire:click="back()">Kembali ke {{ __('Competency Test List')}}</x-secondary-button>
                 </div>
             </div>
         </div>

@@ -50,7 +50,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('assessor.test.list')"
-                        :active="request()->routeIs('assessor.test.list')">
+                        :active="request()->routeIs('assessor.test.*')">
                         {{ __('Competency Test List') }}
                     </x-nav-link>
 
