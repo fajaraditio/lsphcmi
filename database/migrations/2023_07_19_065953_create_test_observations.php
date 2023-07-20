@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('competence_criteria_id');
             $table->unsignedBigInteger('test_schedule_id');
             $table->text('question');
-            $table->text('response');
+            $table->text('response')->nullable();
             $table->string('result')->nullable();
             $table->string('status')->default('unlocked');
             $table->timestamps();

@@ -3,15 +3,15 @@
 namespace App\Http\Livewire\Modals\Test;
 
 use App\Http\Livewire\Components\Alert;
-use App\Http\Livewire\Tables\Test\TestPracticeTable;
+use App\Models\TestObservation;
+use App\Http\Livewire\Tables\Test\TestObservationTable;
 use App\Models\CompetenceCriteria;
 use App\Models\CompetenceElement;
 use App\Models\CompetenceUnit;
-use App\Models\TestPractice;
 use App\Models\TestSchedule;
 use LivewireUI\Modal\ModalComponent;
 
-class CreateTestPracticeCaseModal extends ModalComponent
+class CreateTestObservationModal extends ModalComponent
 {
     public TestSchedule $testSchedule;
     public $competenceUnitId;
@@ -20,20 +20,20 @@ class CreateTestPracticeCaseModal extends ModalComponent
     public $competenceUnits;
     public $competenceElements;
     public $competenceCriterias;
-    public $case;
+    public $question;
 
     protected $rules = [
         'competenceCriteriaId'  => 'required',
         'competenceElementId'   => 'required',
         'competenceUnitId'      => 'required',
-        'case'                  => 'required',
+        'question'              => 'required',
     ];
 
     protected $validationAttributes = [
         'competenceCriteriaId'  => 'Kriteria untuk Kerja',
         'competenceElementId'   => 'Elemen',
         'competenceUnit'        => 'Unit Kompetensi',
-        'case'                  => 'Kasus',
+        'question'              => 'Pertanyaan',
     ];
 
     public function mount()
@@ -61,23 +61,23 @@ class CreateTestPracticeCaseModal extends ModalComponent
     {
         $this->validate();
 
-        $testPractice = TestPractice::create([
+        $testPractice = TestObservation::create([
             'participant_user_id'   => $this->testSchedule->participant_user_id,
             'assessor_user_id'      => $this->testSchedule->assessor_user_id,
             'test_schedule_id'      => $this->testSchedule->id,
             'competence_criteria_id' => $this->competenceCriteriaId,
-            'case'                  => $this->case,
+            'question'              => $this->question,
         ]);
 
         $this->emitTo(
             Alert::class,
             'sendAlert',
-            $title = 'Kasus berhasil dibuat!',
-            $message = 'Kasus Tugas Praktik dengan ID ' . $testPractice->id . ' berhasil ditambahkan',
+            $title = 'Pertanyaan berhasil dibuat!',
+            $message = 'Pertanyaan Tugas Observasi dengan ID ' . $testPractice->id . ' berhasil ditambahkan',
             $type = 'success'
         );
 
-        $this->emitTo(TestPracticeTable::class, 'pg:eventRefresh-default');
+        $this->emitTo(TestObservationTable::class, 'pg:eventRefresh-default');
         $this->closeModal();
     }
 
@@ -88,6 +88,6 @@ class CreateTestPracticeCaseModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.modals.test.create-test-practice-case-modal');
+        return view('livewire.modals.test.create-test-observation-modal');
     }
 }
