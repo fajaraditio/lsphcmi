@@ -42,6 +42,13 @@
                         {{ __('Payment List') }}
                     </x-nav-link>
 
+                    @elseif (auth()->user()->role->slug === 'manager')
+                    <!-- Finance Nav -->
+                    <x-nav-link :href="route('manager.test.schedule')"
+                        :active="request()->routeIs('manager.test.schedule')">
+                        {{ __('Test Schedule') }}
+                    </x-nav-link>
+
                     @elseif (auth()->user()->role->slug === 'assessor')
                     <!-- Finance Nav -->
                     <x-nav-link :href="route('assessor.registration')"
@@ -49,8 +56,7 @@
                         {{ __('Registration List') }} / APL-02
                     </x-nav-link>
 
-                    <x-nav-link :href="route('assessor.test.list')"
-                        :active="request()->routeIs('assessor.test.*')">
+                    <x-nav-link :href="route('assessor.test.list')" :active="request()->routeIs('assessor.test.*')">
                         {{ __('Competency Test List') }}
                     </x-nav-link>
 

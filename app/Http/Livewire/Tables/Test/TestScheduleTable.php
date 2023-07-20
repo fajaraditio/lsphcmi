@@ -52,7 +52,7 @@ final class TestScheduleTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return TestSchedule::query()
+        $testSchedule = TestSchedule::query()
             ->select(
                 DB::raw('test_schedules.id'),
                 DB::raw('test_schedules.scheduled_at'),
@@ -66,8 +66,11 @@ final class TestScheduleTable extends PowerGridComponent
             ->join(DB::raw('users AS participant_users'), 'participant_users.id', '=', 'test_schedules.participant_user_id')
             ->join(DB::raw('users AS assessor_users'), 'assessor_users.id', '=', 'test_schedules.assessor_user_id')
             ->join('participants', 'participants.user_id', '=', 'participant_users.id')
-            ->join('test_sessions', 'test_sessions.id', '=', 'test_schedules.test_session_id')
-            ->where('assessor_users.id', auth()->user()->id);
+            ->join('test_sessions', 'test_sessions.id', '=', 'test_schedules.test_session_id');
+
+        if (auth()->user()->role->slug === 'assessor') $testSchedule->where('assessor_users.id', auth()->user()->id);
+
+        return $testSchedule;
     }
 
     /*
@@ -161,7 +164,7 @@ final class TestScheduleTable extends PowerGridComponent
     public function actions(): array
     {
         return [
-            Button::make('testSchedule', 'Lihat Detail')
+            Button::make('lookupTestSchedule', 'Lihat Detail')
                 ->caption('<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
                     </svg>              
@@ -170,6 +173,15 @@ final class TestScheduleTable extends PowerGridComponent
                 ->class('inline-block bg-yellow-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                 ->route('assessor.test.schedule.detail', ['testSchedule' => 'id'])
                 ->target('_self'),
+
+            Button::make('edit', 'Edit Jadwal')
+                ->caption('<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>                         
+                ')
+                ->tooltip('Edit Jadwal')
+                ->class('inline-block bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->openModal('modals.test.edit-test-schedule', ['testSchedule' => 'id']),
         ];
     }
 
@@ -187,16 +199,16 @@ final class TestScheduleTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
     public function actionRules(): array
     {
-       return [
+        return [
+            Rule::button('lookupTestSchedule')
+                ->when(fn () => auth()->user()->role->slug === 'manager')
+                ->hide(),
 
-           //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($test-schedule) => $test-schedule->id === 1)
+                ->when(fn () => auth()->user()->role->slug === 'assessor')
                 ->hide(),
         ];
     }
-    */
 }

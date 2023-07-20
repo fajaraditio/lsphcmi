@@ -12,13 +12,6 @@
                     <span>Halo, {{ auth()->user()->name }} 👋</span>
                 </div>
             </div>
-
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2">
-                <div class="p-6 text-sm text-gray-900">
-
-                    @livewire('components.alert')
-                </div>
-            </div>
         </div>
     </div>
 </div>

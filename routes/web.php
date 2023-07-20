@@ -6,6 +6,7 @@ use App\Http\Livewire\Pages\Assessor\CompetencyTestList as AssessorCompetencyTes
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
 use App\Http\Livewire\Pages\Assessor\Registration as AssessorRegistration;
+use App\Http\Livewire\Pages\Manager\TestSchedule as ManagerTestSchedule;
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
 use App\Http\Livewire\Pages\Participant\RegisterStep2;
 use App\Http\Livewire\Pages\Participant\RegisterStep3;
@@ -66,6 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:finance')->group(function () {
         Route::prefix('/finance')->group(function () {
             Route::get('/registration/payment', FinanceRegistration::class)->name('finance.registration');
+        });
+    });
+
+    Route::middleware('role:manager')->group(function () {
+        Route::prefix('/management')->group(function () {
+            Route::get('/schedule', ManagerTestSchedule::class)->name('manager.test.schedule');
         });
     });
 
