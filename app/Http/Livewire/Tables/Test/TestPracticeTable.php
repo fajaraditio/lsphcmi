@@ -40,7 +40,6 @@ final class TestPracticeTable extends PowerGridComponent
         ];
     }
 
-
     public function header(): array
     {
         if (auth()->user()->role->slug === 'assessor') {
@@ -49,6 +48,11 @@ final class TestPracticeTable extends PowerGridComponent
                     ->caption('Buat Kasus')
                     ->class('block w-full bg-red-500 text-white border border-red-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-red-500 dark:bg-red-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
                     ->openModal('modals.test.create-test-practice-case-modal', ['testSchedule' => $this->testSchedule->id]),
+
+                Button::add('create-case')
+                    ->caption('Submit Form Tugas Praktik')
+                    ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                    ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
             ];
         } else {
             return [];
