@@ -50,8 +50,8 @@ class RegisterStep1 extends Component
         $this->participant = Participant::where('user_id', auth()->user()->id)->first();
 
         if (!empty($this->jumpCurrent)) {
-            $this->jumpCurrent = empty($this->jumpCurrent) ? 1 : $this->jumpCurrent;
-            
+            $this->participant = empty($this->participant) ? 1 : $this->participant->step;
+
             return redirect()->route('participant.register.' . $this->participant->step);
         }
 
