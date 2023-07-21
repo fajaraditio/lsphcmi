@@ -42,11 +42,11 @@ return new class extends Migration
             $table->string('payment_receipt')->nullable();
             $table->string('assessment_purpose')->nullable();
             $table->timestamp('first_apl_verified_at')->nullable();
-            $table->timestamp('first_apl_status')->nullable();
+            $table->string('first_apl_status')->nullable();
             $table->timestamp('payment_verified_at')->nullable();
-            $table->timestamp('payment_status')->nullable();
+            $table->string('payment_status')->nullable();
             $table->timestamp('second_apl_verified_at')->nullable();
-            $table->timestamp('second_apl_status')->nullable();
+            $table->string('second_apl_status')->nullable();
             $table->integer('step')->default(1)->nullable();
             $table->timestamps();
         });
