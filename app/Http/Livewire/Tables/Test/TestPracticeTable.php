@@ -56,17 +56,22 @@ final class TestPracticeTable extends PowerGridComponent
                         ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
             }
+
+            return [];
         } else if (auth()->user()->role->slug === 'participant') {
             if (empty($this->testSchedule->participant_responded_test_practice_at)) {
                 return [
-                    Button::add('submit-test-practice')
+                    Button::add('submit-response-test-practice')
                         ->caption('Submit Jawaban Tugas Praktik')
                         ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->openModal('modals.test.submit-response-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
             }
-        } else {
+
             return [];
         }
+
+        return [];
     }
 
     /*
@@ -211,7 +216,7 @@ final class TestPracticeTable extends PowerGridComponent
             }
         } else if (auth()->user()->role->slug === 'participant') {
             return [
-                Button::make('edit', 'Jawaban')
+                Button::make('response', 'Jawab')
                     ->class('block w-full bg-purple-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                     ->openModal('modals.test.respond-test-practice-case-modal', ['testPractice' => 'id']),
             ];
@@ -238,6 +243,10 @@ final class TestPracticeTable extends PowerGridComponent
         return [
             Rule::button('edit')
                 ->when(fn ($testPractice) => $testPractice->status === 'locked')
+                ->hide(),
+
+            Rule::button('response')
+                ->when(fn ($testPractice) => !empty($testPractice->test_schedule->participant_responded_test_practice_at))
                 ->hide(),
 
             Rule::button('destroy')
