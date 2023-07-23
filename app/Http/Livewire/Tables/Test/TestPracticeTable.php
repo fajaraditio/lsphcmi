@@ -42,21 +42,28 @@ final class TestPracticeTable extends PowerGridComponent
 
     public function header(): array
     {
-        if (
-            auth()->user()->role->slug === 'assessor' &&
-            empty($this->testSchedule->assessor_submitted_test_practice_at)
-        ) {
-            return [
-                Button::add('create-case')
-                    ->caption('Buat Kasus')
-                    ->class('block w-full bg-red-500 text-white border border-red-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-red-500 dark:bg-red-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
-                    ->openModal('modals.test.create-test-practice-case-modal', ['testSchedule' => $this->testSchedule->id]),
+        if (auth()->user()->role->slug === 'assessor') {
+            if (empty($this->testSchedule->assessor_submitted_test_practice_at)) {
+                return [
+                    Button::add('create-case')
+                        ->caption('Buat Kasus')
+                        ->class('block w-full bg-red-500 text-white border border-red-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-red-500 dark:bg-red-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->openModal('modals.test.create-test-practice-case-modal', ['testSchedule' => $this->testSchedule->id]),
 
-                Button::add('submit-test-practice')
-                    ->caption('Submit Form Tugas Praktik')
-                    ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
-                    ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
-            ];
+                    Button::add('submit-test-practice')
+                        ->caption('Submit Form Tugas Praktik')
+                        ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
+                ];
+            }
+        } else if (auth()->user()->role->slug === 'participant') {
+            if (empty($this->testSchedule->participant_responded_test_practice_at)) {
+                return [
+                    Button::add('submit-test-practice')
+                        ->caption('Submit Jawaban Tugas Praktik')
+                        ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                ];
+            }
         } else {
             return [];
         }
@@ -125,8 +132,14 @@ final class TestPracticeTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('name_lower', fn (TestPractice $model) => strtolower(e($model->name)))
+            ->addColumn('response_file', function (TestPractice $model) {
+                if (!empty($model->response_file)) {
+                    return '<a href="' . url('storage/' . $model->response_file) . '" class="text-blue-500 hover:underline" target="_blank">[Lihat Berkas Jawaban]</a>';
+                } else {
+                    return '-';
+                }
+            })
             ->addColumn('created_at')
-            ->addColumn('competence_criteria_title', fn (TestPractice $model) => substr($model->competence_criteria_title, 0, 50) . '...')
             ->addColumn('created_at_formatted', fn (TestPractice $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
@@ -151,19 +164,18 @@ final class TestPracticeTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Unit Kompetensi', 'competence_unit_title')
-                ->searchable()
-                ->sortable(),
-
-            Column::make('Elemen', 'competence_element_title')
-                ->searchable()
-                ->sortable(),
-
             Column::make('Kriteria untuk Kerja', 'competence_criteria_title')
+                ->bodyAttribute('w-2/5')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Kasus', 'case')
+                ->bodyAttribute('w-2/5')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Berkas Jawaban', 'response_file')
+                ->bodyAttribute('w-1/5')
                 ->searchable()
                 ->sortable(),
         ];
@@ -185,15 +197,25 @@ final class TestPracticeTable extends PowerGridComponent
 
     public function actions(): array
     {
-        return [
-            Button::make('edit', 'Edit')
-                ->class('block w-full bg-green-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                ->openModal('modals.test.edit-test-practice-case-modal', ['testPractice' => 'id']),
+        if (auth()->user()->role->slug === 'assessor') {
+            if (empty($this->testSchedule->assessor_submitted_test_practice_at)) {
+                return [
+                    Button::make('edit', 'Edit')
+                        ->class('block w-full bg-green-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.edit-test-practice-case-modal', ['testPractice' => 'id']),
 
-            Button::make('destroy', 'Hapus')
-                ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                ->openModal('modals.test.destroy-test-practice-case-modal', ['testPractice' => 'id'])
-        ];
+                    Button::make('destroy', 'Hapus')
+                        ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.destroy-test-practice-case-modal', ['testPractice' => 'id'])
+                ];
+            }
+        } else if (auth()->user()->role->slug === 'participant') {
+            return [
+                Button::make('edit', 'Jawaban')
+                    ->class('block w-full bg-purple-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                    ->openModal('modals.test.respond-test-practice-case-modal', ['testPractice' => 'id']),
+            ];
+        }
     }
 
     /*

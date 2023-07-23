@@ -52,7 +52,6 @@
                             </x-input-label>
                             <x-file-input id="payment_receipt" :value="old('paymentReceiptFile')"
                                 class="block mt-1 w-full" :error="$errors->has('paymentReceiptFile')"
-                                placeholder="Masukkan Nama Lengkap sesuai Kartu Identitas"
                                 wire:model="paymentReceiptFile" accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']"
                                 required>
                             </x-file-input>

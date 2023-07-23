@@ -37,6 +37,11 @@ class TestAgreement extends Component
         return redirect()->route('participant.test.agreement');
     }
 
+    public function next()
+    {
+        return redirect()->route('participant.test.practice', ['testSchedule' => $this->testSchedule->id]);
+    }
+
     public function render()
     {
         return view('livewire.pages.participant.test-agreement');

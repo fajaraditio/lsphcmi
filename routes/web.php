@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Pages\Assessor\CompetencyTestList as AssessorCompetencyTestList;
+
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
-use App\Http\Livewire\Pages\Assessor\Registration as AssessorRegistration;
 use App\Http\Livewire\Pages\Manager\TestSchedule as ManagerTestSchedule;
+
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
 use App\Http\Livewire\Pages\Participant\RegisterStep2;
 use App\Http\Livewire\Pages\Participant\RegisterStep3;
@@ -14,6 +14,12 @@ use App\Http\Livewire\Pages\Participant\RegisterStep4;
 use App\Http\Livewire\Pages\Participant\RegisterStep5;
 use App\Http\Livewire\Pages\Participant\RegistrationVerified;
 use App\Http\Livewire\Pages\Participant\TestAgreement as ParticipantTestAgreement;
+use App\Http\Livewire\Pages\Participant\TestPractice as ParticipantTestPractice;
+use App\Http\Livewire\Pages\Participant\TestObservation as ParticipantTestObservation;
+use App\Http\Livewire\Pages\Participant\TestFeedback as ParticipantTestFeedback;
+
+use App\Http\Livewire\Pages\Assessor\Registration as AssessorRegistration;
+use App\Http\Livewire\Pages\Assessor\CompetencyTestList as AssessorCompetencyTestList;
 use App\Http\Livewire\Pages\Assessor\TestAgreement as AssessorTestAgreement;
 use App\Http\Livewire\Pages\Assessor\TestScheduleDetail as AssessorTestScheduleDetail;
 use App\Http\Livewire\Pages\Assessor\TestObservation as AssessorTestObservation;
@@ -54,7 +60,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/registration/verified', RegistrationVerified::class)->name('participant.registration.verified');
 
-            Route::get('/test/agreement', ParticipantTestAgreement::class)->name('participant.test.agreement');
+            Route::get('/test/agreement',               ParticipantTestAgreement::class)->name('participant.test.agreement');
+            Route::get('/test/{testSchedule}/ia/2',     ParticipantTestPractice::class)->name('participant.test.practice');
+            Route::get('/test/{testSchedule}/ia/3',     ParticipantTestObservation::class)->name('participant.test.observation');
+            Route::get('/test/{testSchedule}/feedback', ParticipantTestFeedback::class)->name('participant.test.feedback');
         });
     });
 
