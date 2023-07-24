@@ -60,10 +60,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/registration/verified', RegistrationVerified::class)->name('participant.registration.verified');
 
-            Route::get('/test/agreement',               ParticipantTestAgreement::class)->name('participant.test.agreement');
-            Route::get('/test/{testSchedule}/ia/2',     ParticipantTestPractice::class)->name('participant.test.practice');
-            Route::get('/test/{testSchedule}/ia/3',     ParticipantTestObservation::class)->name('participant.test.observation');
-            Route::get('/test/{testSchedule}/feedback', ParticipantTestFeedback::class)->name('participant.test.feedback');
+            Route::get('/test/agreement',           ParticipantTestAgreement::class)->name('participant.test.agreement');
+            Route::get('/test/test-practice',       ParticipantTestPractice::class)->name('participant.test.practice');
+            Route::get('/test/test-observation',    ParticipantTestObservation::class)->name('participant.test.observation');
+            Route::get('/test/feedback',            ParticipantTestFeedback::class)->name('participant.test.feedback');
         });
     });
 

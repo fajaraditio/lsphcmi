@@ -7,7 +7,12 @@ use Livewire\Component;
 
 class TestPractice extends Component
 {
-    public TestSchedule $testSchedule;
+    public $testSchedule;
+
+    public function mount()
+    {
+        $this->testSchedule = TestSchedule::where('participant_user_id', auth()->user()->id)->first();
+    }
 
     public function back()
     {
@@ -16,7 +21,7 @@ class TestPractice extends Component
 
     public function next()
     {
-        return redirect()->route('participant.test.observation', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('participant.test.observation');
     }
 
     public function render()

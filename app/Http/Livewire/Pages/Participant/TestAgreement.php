@@ -39,7 +39,7 @@ class TestAgreement extends Component
 
     public function next()
     {
-        return redirect()->route('participant.test.practice', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('participant.test.practice');
     }
 
     public function render()
