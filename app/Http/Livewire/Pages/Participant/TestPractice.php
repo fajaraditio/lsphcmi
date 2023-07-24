@@ -11,16 +11,16 @@ class TestPractice extends Component
 
     public function back()
     {
-        return redirect()->route('assessor.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('participant.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
     }
 
     public function next()
     {
-        return redirect()->route('assessor.test.observation', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('participant.test.observation', ['testSchedule' => $this->testSchedule->id]);
     }
 
     public function render()
     {
-        return view('livewire.pages.assessor.test-practice');
+        return view('livewire.pages.participant.test-practice');
     }
 }

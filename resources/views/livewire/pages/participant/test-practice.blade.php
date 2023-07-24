@@ -13,20 +13,18 @@
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
 
-                    @if (auth()->user()->role->slug === 'assessor' &&
+                    @if (auth()->user()->role->slug === 'participant' &&
                     !empty($testSchedule->assessor_submitted_test_practice_at) &&
-                    empty($testSchedule->participant_responded_test_practice_at))
-                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                    !empty($testSchedule->participant_responded_test_practice_at))
+                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                         role="alert">
-                        <span class="mr-3">⌛️</span>
+                        <span class="mr-3">✅</span>
                         <span class="sr-only"></span>
                         <div>
-                            <span class="font-bold">{{ __('Menunggu Jawaban Asesi') }}</span> {{ __('Asesi sedang
-                            melakukan pengisian form tugas praktik. Asesor akan bisa menilai setelah asesi submit semua
-                            respon.') }}
+                            <span class="font-bold">{{ __('Form Tugas Praktik Berhasil Disubmit') }}</span> {{ __('Form
+                            tugas sudah disubmit dan sedang menunggu penilaian dari asesor') }}
                         </div>
                     </div>
-                    @else
                     @endif
 
                     <table class="table-auto border-collapse border border-slate-400 w-1/2 text-left mt-3">
@@ -60,7 +58,8 @@
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="back()">Kembali ke {{ __('Competency Test List') }}
                         </x-secondary-button>
-                        <x-primary-button wire:click="next()">Lanjut Pengisian Tugas Observasi</x-primary-button>
+                        <x-primary-button wire:click="next()">{{ __('Lanjut Pengisian Tugas Observasi') }}
+                        </x-primary-button>
                     </div>
                 </div>
             </div>

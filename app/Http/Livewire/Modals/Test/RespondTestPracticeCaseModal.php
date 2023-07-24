@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Modals\Test;
 
+use App\Http\Livewire\Components\Alert;
+use App\Http\Livewire\Tables\Test\TestPracticeTable;
 use App\Models\TestPractice;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -35,7 +37,16 @@ class RespondTestPracticeCaseModal extends ModalComponent
             $this->testPractice->save();
         }
 
-        return redirect()->route('participant.test.practice', ['testSchedule' => $this->testPractice->test_schedule->id]);
+        $this->emitTo(
+            Alert::class,
+            'sendAlert',
+            $title = 'Berkas jawaban berhasil disimpan!',
+            $message = 'Berkas jawaban sudah disimpan. Silakan lanjut mengunggah berkas jawaban soal lain yang tersisa.',
+            $type = 'success'
+        );
+
+        $this->emitTo(TestPracticeTable::class, 'pg:eventRefresh-default');
+        $this->closeModal();
     }
 
     public function render()
