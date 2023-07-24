@@ -11,7 +11,7 @@ class TestPractice extends Component
 
     public function back()
     {
-        return redirect()->route('participant.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('participant.test.agreement');
     }
 
     public function next()

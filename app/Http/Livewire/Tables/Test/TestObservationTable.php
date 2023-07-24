@@ -64,7 +64,7 @@ final class TestObservationTable extends PowerGridComponent
                     Button::add('submit-response-test-observation')
                         ->caption('Submit Jawaban Tugas Praktik')
                         ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
-                        ->openModal('modals.test.submit-response-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
+                        ->openModal('modals.test.submit-response-test-observation-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
             }
 

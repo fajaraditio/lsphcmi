@@ -1,14 +1,14 @@
 <div>
     <div class="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-150">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ __('Submit Jawaban Tugas Praktik') }}
+            {{ __('Submit Jawaban Tugas Observasi') }}
         </h3>
     </div>
 
     <div class="bg-white text-sm sm:p-6">
         <div class="w-full">
-            <p>Apakah Anda yakin ingin submit seluruh jawaban tugas praktik?</p>
-            <p>Pastikan seluruh berkas jawaban sudah <b>DIUNGGAH</b> dan <b>BENAR</b>.</p>
+            <p>Apakah Anda yakin ingin submit seluruh jawaban tugas observasi?</p>
+            <p>Pastikan seluruh berkas jawaban sudah <b>DIJAWAB</b> dan <b>BENAR</b>.</p>
         </div>
     </div>
 

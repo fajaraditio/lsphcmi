@@ -58,9 +58,8 @@
                     <hr class="my-5">
 
                     <div class="flex justify-between">
-                        <x-secondary-button wire:click="back()">Kembali ke {{ __('Competency Test List') }}
-                        </x-secondary-button>
-                        <x-primary-button wire:click="next()">Lanjut Pengisian Tugas Observasi</x-primary-button>
+                        <x-secondary-button wire:click="back()">{{ __('Kembali ke Pengisian Tugas Praktik') }}</x-secondary-button>
+                        <x-primary-button wire:click="next()">{{ __('Lanjut Pengisian Feedback') }}</x-primary-button>
                     </div>
                 </div>
             </div>
