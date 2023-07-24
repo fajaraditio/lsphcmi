@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,9 +10,37 @@ module.exports = {
         './app/Http/Livewire/*.php',
         './app/Http/Livewire/**/*.php',
         './vendor/wire-elements/modal/src/ModalComponent.php',
+        './vendor/power-components/livewire-powergrid/resources/views/**/*.php',
+        './vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php',
     ],
 
-    theme: {
+    theme: { 
+        colors: {
+            transparent: 'transparent',
+            current: 'currentColor',
+            black: colors.black,
+            blue: colors.blue,
+            cyan: colors.cyan,
+            emerald: colors.emerald,
+            fuchsia: colors.fuchsia,
+            slate: colors.slate,
+            gray: colors.gray,
+            neutral: colors.neutral,
+            stone: colors.stone,
+            green: colors.green,
+            indigo: colors.indigo,
+            lime: colors.lime,
+            orange: colors.orange,
+            pink: colors.pink,
+            purple: colors.purple,
+            red: colors.red,
+            rose: colors.rose,
+            sky: colors.sky,
+            teal: colors.teal,
+            violet: colors.violet,
+            yellow: colors.amber,
+            white: colors.white,
+        },
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
