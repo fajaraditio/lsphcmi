@@ -107,8 +107,8 @@ final class TestScheduleTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('test_scheduled_at')
-            ->addColumn('test_scheduled_at_formatted', fn ($model) => Carbon::parse($model->scheduled_at)->translatedFormat('l, j F Y'))
-            ->addColumn('test_session', fn ($model) => $model->test_session_name . ' (' . Carbon::parse($model->test_session_started_at)->format('H:i') . ' - ' . Carbon::parse($model->test_session_ended_at)->format('H:i') . ')');
+            ->addColumn('test_scheduled_at_formatted', fn ($model) => empty($model->scheduled_at) ? '-' : Carbon::parse($model->scheduled_at)->translatedFormat('l, j F Y'))
+            ->addColumn('test_session', fn ($model) => empty($model->test_session_name) ? '-' : $model->test_session_name . ' (' . Carbon::parse($model->test_session_started_at)->format('H:i') . ' - ' . Carbon::parse($model->test_session_ended_at)->format('H:i') . ')');
     }
 
     /*
@@ -203,11 +203,20 @@ final class TestScheduleTable extends PowerGridComponent
     {
         return [
             Rule::button('lookupTestSchedule')
-                ->when(fn () => auth()->user()->role->slug === 'manager')
+                ->when(fn () => auth()->user()->role->slug !== 'assessor')
                 ->hide(),
 
-            Rule::button('edit')
-                ->when(fn () => auth()->user()->role->slug === 'assessor')
+            Rule::button('edit')->when(function ($model) {
+                if (auth()->user()->role->slug !== 'manager') {
+                    return true;
+                } else {
+                    if (!empty($model->scheduled_at) && Carbon::parse($model->scheduled_at)->lte(Carbon::now())) {
+                        return true;
+                    }
+                }
+
+                return false;
+            })
                 ->hide(),
         ];
     }

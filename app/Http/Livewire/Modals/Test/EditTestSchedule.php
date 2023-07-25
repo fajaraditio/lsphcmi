@@ -44,7 +44,7 @@ class EditTestSchedule extends ModalComponent
         $this->emitTo(
             Alert::class,
             'sendAlert',
-            $title = 'Jadwal untuk asesi ' . $this->testSchedule->name . ' berhasil diedit!',
+            $title = 'Jadwal untuk asesi ' . $this->testSchedule->participant->name . ' berhasil diedit!',
             $message = 'Jadwal pelaksanaan asesmen sudah diedit dan disesuaikan',
             $type = 'success'
         );
