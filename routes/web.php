@@ -17,6 +17,7 @@ use App\Http\Livewire\Pages\Participant\TestAgreement as ParticipantTestAgreemen
 use App\Http\Livewire\Pages\Participant\TestPractice as ParticipantTestPractice;
 use App\Http\Livewire\Pages\Participant\TestObservation as ParticipantTestObservation;
 use App\Http\Livewire\Pages\Participant\TestFeedback as ParticipantTestFeedback;
+use App\Http\Livewire\Pages\Participant\AssessmentReport as ParticipantAssessmentReport;
 
 use App\Http\Livewire\Pages\Assessor\Registration as AssessorRegistration;
 use App\Http\Livewire\Pages\Assessor\CompetencyTestList as AssessorCompetencyTestList;
@@ -64,6 +65,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/test/test-practice',       ParticipantTestPractice::class)->name('participant.test.practice');
             Route::get('/test/test-observation',    ParticipantTestObservation::class)->name('participant.test.observation');
             Route::get('/test/feedback',            ParticipantTestFeedback::class)->name('participant.test.feedback');
+
+            Route::get('/assessment/report',        ParticipantAssessmentReport::class)->name('participant.assessment.report');
         });
     });
 

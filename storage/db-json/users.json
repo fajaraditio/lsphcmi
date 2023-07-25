@@ -36,6 +36,15 @@
         }
     },
     {
+        "name": "Ketua LSP",
+        "email": "chief@lsphcmi.com",
+        "password": "12345678",
+        "role": {
+            "slug": "chief",
+            "name": "Ketua"
+        }
+    },
+    {
         "role": {
             "slug": "participant",
             "name": "Asesi"
