@@ -110,7 +110,7 @@
                             <x-secondary-button wire:click="back()">{{ __('Kembali ke Tugas Observasi') }}
                             </x-secondary-button>
 
-                            <x-primary-button wire:click="submit()">{{ __('Lanjut Laporan Kompetensi') }}
+                            <x-primary-button wire:click="next()">{{ __('Lanjut Laporan Kompetensi') }}
                             </x-primary-button>
                         </div>
                     </div>
