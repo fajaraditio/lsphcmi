@@ -14,7 +14,8 @@
                 <div class="p-8">
 
                     @if (!empty($testSchedule->assessor_submitted_test_practice_at) &&
-                    !empty($testSchedule->participant_responded_test_practice_at))
+                    !empty($testSchedule->participant_responded_test_practice_at) &&
+                    empty($testSchedule->assessor_reviewed_test_practice_at))
                     <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                         role="alert">
                         <span class="mr-3">✅</span>
@@ -25,7 +26,7 @@
                         </div>
                     </div>
                     @elseif (!empty($testSchedule->assessor_submitted_test_practice_at) &&
-                    !empty($testSchedule->participant_responded_test_practice_at)
+                    !empty($testSchedule->participant_responded_test_practice_at) &&
                     !empty($testSchedule->assessor_reviewed_test_practice_at))
                     <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-yellow-400"
                         role="alert">
