@@ -83,6 +83,23 @@
                                     $testSchedule->participant->name }}</td>
                             </tr>
                             <tr>
+                                <th class="border border-slate-300 w-1/5 p-2">{{ __('Tanggal Uji Kompetensi') }}</th>
+                                <td class="border border-slate-300 w-4/5 p-2" colspan="4">
+                                    @if (!empty($testSchedule->scheduled_at))
+                                    {{ Carbon\Carbon::parse($testSchedule->scheduled_at)->translatedFormat('l, j F Y')
+                                    }}
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="border border-slate-300 w-1/5 p-2">{{ __('Sesi') }}</th>
+                                <td class="border border-slate-300 w-4/5 p-2" colspan="4">
+                                    @if (!empty($testSchedule->test_session))
+                                    {{ $testSchedule->test_session->name }}
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="border border-slate-300 w-4/5 p-2" colspan="3">
                                     <p>{{ __('Asesi') }}: <br> {{ __('Bahwa Saya Sudah Mendapatkan Penjelasan Hak dan
                                         Prosedur Banding oleh Asesor.')}}</p>

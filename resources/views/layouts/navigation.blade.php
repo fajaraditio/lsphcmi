@@ -181,6 +181,13 @@
                 {{ __('Test Schedule') }}
             </x-responsive-nav-link>
 
+            @elseif (auth()->user()->role->slug === 'chief')
+            <!-- Chief Nav -->
+            <x-responsive-nav-link :href="route('chief.assessment.list')"
+                :active="request()->routeIs('chief.assessment.list')">
+                {{ __('Assessment List') }}
+            </x-responsive-nav-link>
+
             @elseif (auth()->user()->role->slug === 'assessor')
             <!-- Finance Nav -->
             <x-responsive-nav-link :href="route('assessor.registration')" :active="request()->routeIs('assessor.registration')">
