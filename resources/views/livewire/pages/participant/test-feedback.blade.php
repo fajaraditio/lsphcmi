@@ -131,7 +131,7 @@
                         <hr class="my-5">
 
                         <div class="flex justify-between">
-                            <x-secondary-button wire:click="back()">{{ __('Kembali ke Tugas Observasi') }}
+                            <x-secondary-button wire:click="back()">{{ __('Kembali ke Pengisian Tugas Observasi') }}
                             </x-secondary-button>
                         </div>
                     </div>
