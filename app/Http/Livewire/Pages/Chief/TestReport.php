@@ -40,13 +40,7 @@ class TestReport extends Component
         $this->testSchedule->chief_approved_report_at = Carbon::now();
         $this->testSchedule->save();
 
-        $this->emitTo(
-            Alert::class,
-            'sendAlert',
-            $title = 'Hasil laporan asesmen berhasil diverifikasi!',
-            $message = 'Hasil laporan asesmen ' . $this->participant->name . ' terverifikasi',
-            $type = 'success'
-        );
+        session()->flash('message', 'Berhasil memverifikasi laporan asesmen ' . $this->testSchedule->participant->name);
 
         return redirect()->route('chief.assessment.list');
     }
