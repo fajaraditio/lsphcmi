@@ -13,7 +13,7 @@
                 <div class="p-8">
 
                     @if (!empty($this->testSchedule->assessor_submitted_report_at))
-                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-yellow-400"
+                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                         role="alert">
                         <span class="mr-3">✅</span>
                         <span class="sr-only"></span>

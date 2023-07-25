@@ -23,6 +23,11 @@ class AssessmentReport extends Component
         $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
     }
 
+    public function back()
+    {
+        return redirect()->route('participant.test.agreement');
+    }
+
     public function render()
     {
         return view('livewire.pages.participant.assessment-report');

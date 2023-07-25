@@ -12,6 +12,47 @@
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
 
+                    @if (empty($testSchedule->assessor_submitted_report_at))
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Tidak Ada Laporan Hasil Asesmen') }}</span> <br> {{
+                            __('Silakan mengerjakan terlebih dahulu uji kompetensi yang ada di laman Uji Kompetensi') }}
+                        </div>
+                    </div>
+
+                    <button
+                        class="px-3 py-2 bg-green-500 hover:bg-green-600 border rounded text-white text-sm font-bold inline-flex items-center"
+                        wire:click="back()">
+                        Kembali ke Laman Uji Kompetensi
+                    </button>
+
+                    @elseif (
+                    !empty($testSchedule->assessor_submitted_report_at) &&
+                    empty($testSchedule->chief_approved_report_at)
+                    )
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Laporan Hasil Kompetensi Belum Ada') }}</span> <br> {{
+                            __('Harap menunggu untuk mendapatkan hasil laporan kompetensi, silakan mengecek berkala
+                            laman Laporan Hasil Asesmen') }}
+                        </div>
+                    </div>
+
+                    <button
+                        class="px-3 py-2 bg-green-500 hover:bg-green-600 border rounded text-white text-sm font-bold inline-flex items-center"
+                        wire:click="back()">
+                        Kembali ke Laman Uji Kompetensi
+                    </button>
+
+                    @elseif (
+                    !empty($testSchedule->assessor_submitted_report_at) &&
+                    !empty($testSchedule->chief_approved_report_at))
                     <table class="table-auto border-collapse border border-slate-400 w-full text-left mt-3">
                         <tbody>
                             <tr>
@@ -110,6 +151,7 @@
                     <br>
                     <p>{{ $testSchedule->assessor->name }}</p>
                 </div>
+                @endif
             </div>
         </div>
     </div>

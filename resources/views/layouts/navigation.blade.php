@@ -28,6 +28,11 @@
                         {{ __('Competency Test') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('participant.assessment.report')"
+                        :active="request()->routeIs('participant.assessment.report')">
+                        {{ __('Assessment Report') }}
+                    </x-nav-link>
+
                     @elseif (auth()->user()->role->slug === 'certification')
                     <!-- Ceritifcation Nav -->
                     <x-nav-link :href="route('certification.registration')"
@@ -64,7 +69,6 @@
                     <x-nav-link :href="route('assessor.test.list')" :active="request()->routeIs('assessor.test.*')">
                         {{ __('Competency Test List') }}
                     </x-nav-link>
-
                     @endif
                 </div>
             </div>
@@ -128,6 +132,58 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (auth()->user()->role->slug === 'participant')
+            <!-- Participant Nav -->
+            <x-responsive-nav-link :href="route('participant.register.1',  ['jumpCurrent' => 'true'])"
+                :active="request()->routeIs('participant.register.*')">
+                {{ __('Registration Form') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('participant.test.agreement')"
+                :active="request()->routeIs('participant.test.agreement')">
+                {{ __('Competency Test') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('participant.assessment.report')"
+                :active="request()->routeIs('participant.assessment.report')">
+                {{ __('Assessment Report') }}
+            </x-responsive-nav-link>
+
+            @elseif (auth()->user()->role->slug === 'certification')
+            <!-- Ceritifcation Nav -->
+            <x-responsive-nav-link :href="route('certification.registration')"
+                :active="request()->routeIs('certification.registration')">
+                {{ __('Registration List') }} / APL-01
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('certification.assessor.list')"
+                :active="request()->routeIs('certification.assessor.list')">
+                {{ __('Assessor List') }}
+            </x-responsive-nav-link>
+
+            @elseif (auth()->user()->role->slug === 'finance')
+            <!-- Finance Nav -->
+            <x-responsive-nav-link :href="route('finance.registration')" :active="request()->routeIs('finance.registration')">
+                {{ __('Payment List') }}
+            </x-responsive-nav-link>
+
+            @elseif (auth()->user()->role->slug === 'manager')
+            <!-- Finance Nav -->
+            <x-responsive-nav-link :href="route('manager.test.schedule')" :active="request()->routeIs('manager.test.schedule')">
+                {{ __('Test Schedule') }}
+            </x-responsive-nav-link>
+
+            @elseif (auth()->user()->role->slug === 'assessor')
+            <!-- Finance Nav -->
+            <x-responsive-nav-link :href="route('assessor.registration')" :active="request()->routeIs('assessor.registration')">
+                {{ __('Registration List') }} / APL-02
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('assessor.test.list')" :active="request()->routeIs('assessor.test.*')">
+                {{ __('Competency Test List') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
