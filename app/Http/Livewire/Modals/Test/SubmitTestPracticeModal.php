@@ -22,7 +22,7 @@ class SubmitTestPracticeModal extends ModalComponent
                 Alert::class,
                 'sendAlert',
                 $title = 'Tugas praktik gagal disubmit!',
-                $message = 'Tidak ada pertanyaan observasi yang disubmit',
+                $message = 'Tidak ada kasus yang disubmit',
                 $type = 'error'
             );
         } else {

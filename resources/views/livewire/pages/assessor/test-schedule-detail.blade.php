@@ -31,100 +31,91 @@
                                     \Carbon\Carbon::parse($testSchedule->scheduled_at)->translatedFormat('l, j F Y') }}
                                 </td>
                             </tr>
-                            <tr>
-                                <th class="border border-slate-300 w-2/5 p-2">{{ __('Status Terakhir Asesi') }}</th>
-                                <td class="border border-slate-300 w-3/5 p-2">{{__($testSchedule->participant_status )
-                                    }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="border border-slate-300 w-2/5 p-2">{{ __('Status Terakhir Asesor') }}</th>
-                                <td class="border border-slate-300 w-3/5 p-2">{{ __($testSchedule->assessor_status) }}
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
 
                     <hr class="my-5">
 
-                    <div class="flex flex-1 items-stretch">
-                        <div
-                            class="basis-1/5 flex flex-col justify-center items-center border border-slate-200 rounded p-3 mr-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
+                    <table class="border-collapse border border-slate-200 text-sm text-left w-2/3">
+                        <thead>
+                            <tr>
+                                <th class="bg-slate-200 border border-slate-200 p-2">Tahapan</th>
+                                <th class="bg-slate-200 border border-slate-200 p-2">Status</th>
+                                <th class="bg-slate-200 border border-slate-200 p-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-{{ $forms['test_agreement']['color'] }}-50">
+                                <td class="border border-slate-200 p-2">
+                                    <a href="{{ route('assessor.test.agreement', ['testSchedule' => $testSchedule->id] )}}"
+                                        class="text-blue-500 underline hover:text-indigo-500">
+                                        {{ __('Penandatanganan Form Persetujuan / FR.AK.01') }}
+                                    </a>
+                                </td>
+                                <td class="border border-slate-200 p-2">
+                                    {{ __($forms['test_agreement']['status']) }}
+                                </td>
+                                <td class="border border-slate-200 p-2 text-center">{{
+                                    $forms['test_agreement']['status'] === 'done' ? '✅' : '🕘' }}</td>
+                            </tr>
 
-                            <br>
+                            <tr class="bg-{{ $forms['test_practice']['color'] }}-50">
+                                <td class="border border-slate-200 p-2">
+                                    <a href="{{ route('assessor.test.practice', ['testSchedule' => $testSchedule->id] )}}"
+                                        class="text-blue-500 underline hover:text-indigo-500">
+                                        {{ __('Pengisian Form Tugas Praktik / FR.IA.02') }}
+                                    </a>
+                                </td>
+                                <td class="border border-slate-200 p-2">
+                                    {{ __($forms['test_practice']['status']) }}
+                                </td>
+                                <td class="border border-slate-200 p-2 text-center">{{
+                                    $forms['test_practice']['status'] === 'done' ? '✅' : '🕘' }}</td>
+                            </tr>
 
-                            <a href="{{ route('assessor.test.agreement', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Persetujuan')
-                                    }} <br>
-                                    {{ __('(FR.AK.01)')}}</span>
-                            </a>
-                        </div>
-                        <div
-                            class="basis-1/5 flex flex-col justify-center items-center border border-slate-200 rounded p-3 mr-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
+                            <tr class="bg-{{ $forms['test_observation']['color'] }}-50">
+                                <td class="border border-slate-200 p-2">
+                                    <a href="{{ route('assessor.test.observation', ['testSchedule' => $testSchedule->id] )}}"
+                                        class="text-blue-500 underline hover:text-indigo-500">
+                                        {{ __('Pengisian Form Tugas Observasi / FR.IA.03') }}
+                                    </a>
+                                </td>
+                                <td class="border border-slate-200 p-2">
+                                    {{ __($forms['test_observation']['status']) }}
+                                </td>
+                                <td class="border border-slate-200 p-2 text-center">{{
+                                    $forms['test_observation']['status'] === 'done' ? '✅' : '🕘' }}</td>
+                            </tr>
 
-                            <br>
+                            <tr class="bg-{{ $forms['feedback']['color'] }}-50">
+                                <td class="border border-slate-200 p-2">
+                                    <a href="{{ route('assessor.test.feedback', ['testSchedule' => $testSchedule->id] )}}"
+                                        class="text-blue-500 underline hover:text-indigo-500">
+                                        {{ __('Pengisian Form Feedback / FR.AK.03') }}
+                                    </a>
+                                </td>
+                                <td class="border border-slate-200 p-2">
+                                    {{ __($forms['feedback']['status']) }}
+                                </td>
+                                <td class="border border-slate-200 p-2 text-center">{{
+                                    $forms['feedback']['status'] === 'done' ? '✅' : '🕘' }}</td>
+                            </tr>
 
-                            <a href="{{ route('assessor.test.practice', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Tugas Praktik
-                                    ') }} <br> {{ __('(FR.IA.02)')}}</span>
-                            </a>
-                        </div>
-                        <div
-                            class="basis-1/5 flex flex-col justify-center items-center border border-slate-200 rounded p-3 mr-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
-
-                            <br>
-
-                            <a href="{{ route('assessor.test.observation', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form Pertanyaan
-                                    Observasi') }} <br> {{ __('(FR.IA.03)') }}</span>
-                            </a>
-                        </div>
-                        <div
-                            class="basis-1/5 flex flex-col justify-center items-center border border-slate-200 rounded p-3 mr-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
-
-                            <br>
-
-                            <a href="{{ route('assessor.test.feedback', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form
-                                    Feedback') }} <br> {{ __('(FR.AK.03)')}}</span>
-                            </a>
-                        </div>
-                        <div
-                            class="basis-1/5 flex flex-col justify-center items-center border border-slate-200 rounded p-3 mr-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
-
-                            <br>
-
-                            <a href="{{ route('assessor.test.report', ['testSchedule' => $testSchedule->id ])}}">
-                                <span class="underline hover:text-red-500 hover:no-underline">{{ __('Form
-                                    Laporan') }} <br> {{ __('(FR.AK.05)')}}</span>
-                            </a>
-                        </div>
-                    </div>
+                            <tr class="bg-{{ $forms['report']['color'] }}-50">
+                                <td class="border border-slate-200 p-2">
+                                    <a href="{{ route('assessor.test.report', ['testSchedule' => $testSchedule->id] )}}"
+                                        class="text-blue-500 underline hover:text-indigo-500">
+                                        {{ __('Pengisian Form Laporan / FR.AK.03') }}
+                                    </a>
+                                </td>
+                                <td class="border border-slate-200 p-2">
+                                    {{ __($forms['report']['status']) }}
+                                </td>
+                                <td class="border border-slate-200 p-2 text-center">{{
+                                    $forms['report']['status'] === 'done' ? '✅' : '🕘' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <hr class="my-5">
 

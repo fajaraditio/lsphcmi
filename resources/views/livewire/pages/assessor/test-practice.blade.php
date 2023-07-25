@@ -13,8 +13,7 @@
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
 
-                    @if (auth()->user()->role->slug === 'assessor' &&
-                    !empty($testSchedule->assessor_submitted_test_practice_at) &&
+                    @if (!empty($testSchedule->assessor_submitted_test_practice_at) &&
                     empty($testSchedule->participant_responded_test_practice_at))
                     <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
                         role="alert">
@@ -26,7 +25,17 @@
                             respon.') }}
                         </div>
                     </div>
-                    @else
+                    @elseif (!empty($testSchedule->assessor_submitted_test_practice_at) &&
+                    !empty($testSchedule->assessor_reviewed_test_practice_at))
+                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">✅</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Form Tugas Praktik Selesai!') }}</span> {{ __('Seluruh
+                            tahapan tugas praktik sudah selesai dan telah mendapatkan penilaian kompetensi') }}
+                        </div>
+                    </div>
                     @endif
 
                     <table class="table-auto border-collapse border border-slate-400 w-1/2 text-left mt-3">
@@ -58,9 +67,8 @@
                     <hr class="my-5">
 
                     <div class="flex justify-between">
-                        <x-secondary-button wire:click="back()">Kembali ke {{ __('Competency Test List') }}
-                        </x-secondary-button>
-                        <x-primary-button wire:click="next()">Lanjut Pengisian Tugas Observasi</x-primary-button>
+                        <x-secondary-button wire:click="back()">{{ __('Kembali ke ') . __('Competency Test List') }}</x-secondary-button>
+                        <x-primary-button wire:click="next()">{{ __('Lanjut Tugas Observasi') }}</x-primary-button>
                     </div>
                 </div>
             </div>

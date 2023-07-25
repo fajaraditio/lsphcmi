@@ -13,16 +13,26 @@
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
 
-                    @if (auth()->user()->role->slug === 'participant' &&
-                    !empty($testSchedule->assessor_submitted_test_practice_at) &&
+                    @if (!empty($testSchedule->assessor_submitted_test_practice_at) &&
                     !empty($testSchedule->participant_responded_test_practice_at))
                     <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                         role="alert">
                         <span class="mr-3">✅</span>
                         <span class="sr-only"></span>
                         <div>
-                            <span class="font-bold">{{ __('Form Tugas Praktik Berhasil Disubmit') }}</span> {{ __('Form
+                            <span class="font-bold">{{ __('Form Tugas Praktik Berhasil Disubmit!') }}</span> {{ __('Form
                             tugas sudah disubmit dan sedang menunggu penilaian dari asesor') }}
+                        </div>
+                    </div>
+                    @elseif (!empty($testSchedule->assessor_submitted_test_practice_at) &&
+                    !empty($testSchedule->assessor_reviewed_test_practice_at))
+                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">✅</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Form Tugas Praktik Selesai!') }}</span> {{ __('Seluruh
+                            tahapan tugas praktik sudah selesai dan telah mendapatkan penilaian kompetensi') }}
                         </div>
                     </div>
                     @endif
@@ -58,7 +68,7 @@
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="back()">{{ __('Kembali ke Persetujuan') }}
                         </x-secondary-button>
-                        <x-primary-button wire:click="next()">{{ __('Lanjut Pengisian Tugas Observasi') }}
+                        <x-primary-button wire:click="next()">{{ __('Lanjut Tugas Observasi') }}
                         </x-primary-button>
                     </div>
                 </div>

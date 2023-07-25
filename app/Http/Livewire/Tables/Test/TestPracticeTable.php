@@ -47,13 +47,20 @@ final class TestPracticeTable extends PowerGridComponent
                 return [
                     Button::add('create-case')
                         ->caption('Buat Kasus')
-                        ->class('block w-full bg-red-500 text-white border border-red-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-red-500 dark:bg-red-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->class('block w-full bg-red-500 hover:bg-red-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                         ->openModal('modals.test.create-test-practice-case-modal', ['testSchedule' => $this->testSchedule->id]),
 
                     Button::add('submit-test-practice')
                         ->caption('Submit Form Tugas Praktik')
-                        ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->class('block w-full bg-orange-500 hover:bg-orange-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                         ->openModal('modals.test.submit-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
+                ];
+            } else if (empty($this->testSchedule->assessor_reviewed_test_practice_at) && !empty($this->testSchedule->participant_responded_test_practice_at)) {
+                return [
+                    Button::add('submit-review-practice')
+                        ->caption('Submit Penilaian Tugas Praktik')
+                        ->class('block w-full bg-purple-500 hover:bg-purple-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.submit-review-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
             }
 
@@ -63,7 +70,7 @@ final class TestPracticeTable extends PowerGridComponent
                 return [
                     Button::add('submit-response-test-practice')
                         ->caption('Submit Jawaban Tugas Praktik')
-                        ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
+                        ->class('block w-full bg-orange-500 hover:bg-orange-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-smm')
                         ->openModal('modals.test.submit-response-test-practice-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
             }
@@ -137,6 +144,7 @@ final class TestPracticeTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('name_lower', fn (TestPractice $model) => strtolower(e($model->name)))
+            ->addColumn('result', fn (TestPractice $model) => $model->result === 'BK' ? '<span class="font-bold uppercase text-red-500">Belum Kompeten</span>' : '<span class="font-bold uppercase text-green-500">Kompeten</span>')
             ->addColumn('response_file', function (TestPractice $model) {
                 if (!empty($model->response_file)) {
                     return '<a href="' . url('storage/' . $model->response_file) . '" class="text-blue-500 hover:underline" target="_blank">[Lihat Berkas Jawaban]</a>';
@@ -170,17 +178,22 @@ final class TestPracticeTable extends PowerGridComponent
                 ->sortable(),
 
             Column::make('Kriteria untuk Kerja', 'competence_criteria_title')
-                ->bodyAttribute('w-2/5')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Kasus', 'case')
-                ->bodyAttribute('w-2/5')
+                ->bodyAttribute('w-2/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Berkas Jawaban', 'response_file')
-                ->bodyAttribute('w-1/5')
+                ->bodyAttribute('w-1/6')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Kompetensi', 'result')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
         ];
@@ -212,6 +225,12 @@ final class TestPracticeTable extends PowerGridComponent
                     Button::make('destroy', 'Hapus')
                         ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                         ->openModal('modals.test.destroy-test-practice-case-modal', ['testPractice' => 'id'])
+                ];
+            } else if (empty($this->testSchedule->assessor_reviewed_test_practice_at) && !empty($this->testSchedule->participant_responded_test_practice_at)) {
+                return [
+                    Button::make('review', 'Beri Penilaian')
+                        ->class('block w-full bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.review-test-practice-modal', ['testPractice' => 'id'])
                 ];
             }
 
@@ -252,7 +271,7 @@ final class TestPracticeTable extends PowerGridComponent
             Rule::button('edit')
                 ->when(fn ($testPractice) => $testPractice->status === 'locked')
                 ->hide(),
-                
+
             Rule::button('destroy')
                 ->when(fn ($testPractice) => $testPractice->status === 'locked')
                 ->hide(),

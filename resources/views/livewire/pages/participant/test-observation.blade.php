@@ -21,7 +21,7 @@
                         <span class="mr-3">✅</span>
                         <span class="sr-only"></span>
                         <div>
-                            <span class="font-bold">{{ __('Form Tugas Observasi Berhasil Disubmit') }}</span> {{
+                            <span class="font-bold">{{ __('Form Tugas Observasi Berhasil Disubmit!') }}</span> {{
                             __('Form
                             tugas sudah disubmit dan sedang menunggu penilaian dari asesor') }}
                         </div>

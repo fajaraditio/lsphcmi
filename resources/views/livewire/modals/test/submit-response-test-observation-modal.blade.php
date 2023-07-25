@@ -8,7 +8,7 @@
     <div class="bg-white text-sm sm:p-6">
         <div class="w-full">
             <p>Apakah Anda yakin ingin submit seluruh jawaban tugas observasi?</p>
-            <p>Pastikan seluruh berkas jawaban sudah <b>DIJAWAB</b> dan <b>BENAR</b>.</p>
+            <p>Pastikan seluruh berkas jawaban sudah <b>DIJAWAB</b> dan <b>SESUAI</b>.</p>
         </div>
     </div>
 
