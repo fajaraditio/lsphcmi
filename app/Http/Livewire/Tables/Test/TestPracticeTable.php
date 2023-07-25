@@ -188,12 +188,12 @@ final class TestPracticeTable extends PowerGridComponent
                 ->sortable(),
 
             Column::make('Berkas Jawaban', 'response_file')
-                ->bodyAttribute('w-1/6')
+                ->bodyAttribute('w-1/6 text-center')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Kompetensi', 'result')
-                ->bodyAttribute('w-1/6')
+                ->bodyAttribute('w-1/6 text-center')
                 ->searchable()
                 ->sortable(),
         ];

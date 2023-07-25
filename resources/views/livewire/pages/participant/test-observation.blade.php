@@ -26,7 +26,18 @@
                             tugas sudah disubmit dan sedang menunggu penilaian dari asesor') }}
                         </div>
                     </div>
-                    @else
+                    @elseif (!empty($testSchedule->assessor_submitted_test_observation_at) &&
+                    !empty($testSchedule->participant_responded_test_observation_at)
+                    !empty($testSchedule->assessor_reviewed_test_observation_at))
+                    <div class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">✅</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Form Tugas Observasi Selesai!') }}</span> {{ __('Seluruh
+                            tahapan tugas observasi sudah selesai dan telah mendapatkan penilaian kompetensi') }}
+                        </div>
+                    </div>
                     @endif
 
                     <table class="table-auto border-collapse border border-slate-400 w-1/2 text-left mt-3">
@@ -58,8 +69,9 @@
                     <hr class="my-5">
 
                     <div class="flex justify-between">
-                        <x-secondary-button wire:click="back()">{{ __('Kembali ke Pengisian Tugas Praktik') }}</x-secondary-button>
-                        <x-primary-button wire:click="next()">{{ __('Lanjut Pengisian Feedback') }}</x-primary-button>
+                        <x-secondary-button wire:click="back()">{{ __('Kembali ke Pengisian Tugas Praktik') }}
+                        </x-secondary-button>
+                        <x-primary-button wire:click="next()">{{ __('Lanjut Feedback') }}</x-primary-button>
                     </div>
                 </div>
             </div>

@@ -45,7 +45,8 @@ class SubmitTestPracticeModal extends ModalComponent
         }
 
         $this->emitTo(TestPracticeTable::class, 'pg:eventRefresh-default');
-        $this->closeModal();
+
+        redirect()->route('assessor.test.practice', ['testSchedule' => $this->testSchedule->id]);
     }
 
     public function render()
