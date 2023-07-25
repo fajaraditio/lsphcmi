@@ -21,7 +21,8 @@ class TestSchedule extends Model
         return $this->belongsTo(User::class, 'participant_user_id');
     }
 
-    public function agreement() {
+    public function agreement()
+    {
         return $this->hasOne(TestAgreement::class);
     }
 }
