@@ -26,6 +26,7 @@ class DestroyTestObservationModal extends ModalComponent
         $this->emitTo(TestObservationTable::class, 'pg:eventRefresh-default');
         $this->closeModal();
     }
+    
     public function render()
     {
         return view('livewire.modals.test.destroy-test-observation-modal');

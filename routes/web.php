@@ -4,7 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
+use App\Http\Livewire\Pages\Certification\Assessor as AssessorList;
+
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
+
 use App\Http\Livewire\Pages\Manager\TestSchedule as ManagerTestSchedule;
 
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
@@ -73,6 +76,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:certification')->group(function () {
         Route::prefix('/certification')->group(function () {
             Route::get('/registration/apl/1', CertificationRegistration::class)->name('certification.registration');
+
+            Route::get('/assessor', AssessorList::class)->name('certification.assessor.list');
         });
     });
 

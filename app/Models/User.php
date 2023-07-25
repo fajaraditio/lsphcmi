@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function test_schedules()
+    {
+        return $this->hasMany(TestSchedule::class, 'assessor_user_id');
+    }
 }

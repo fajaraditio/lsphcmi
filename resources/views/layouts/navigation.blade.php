@@ -35,6 +35,11 @@
                         {{ __('Registration List') }} / APL-01
                     </x-nav-link>
 
+                    <x-nav-link :href="route('certification.assessor.list')"
+                        :active="request()->routeIs('certification.assessor.list')">
+                        {{ __('Assessor List') }}
+                    </x-nav-link>
+
                     @elseif (auth()->user()->role->slug === 'finance')
                     <!-- Finance Nav -->
                     <x-nav-link :href="route('finance.registration')"
