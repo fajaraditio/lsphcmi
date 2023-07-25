@@ -86,6 +86,11 @@ class TestFeedback extends Component
         return redirect()->route('participant.test.observation');
     }
 
+    public function next()
+    {
+        return redirect()->route('participant.assessment.report');
+    }
+
     public function render()
     {
         $feedbackComponents = FeedbackComponent::all();
