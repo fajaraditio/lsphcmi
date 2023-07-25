@@ -13,8 +13,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2 text-sm">
                 <div class="p-8">
-                    @if (empty($testSchedule->agreement) || (!empty($testSchedule->agreement) &&
-                    empty($testSchedule->agreement->assessor_signed_at)))
+                    @if (empty($participant->second_apl_verified_at))
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Uji Kompetensi Belum Dapat Diakses') }}</span> <br> {{
+                            __('Mohon selesaikan seluruh tahapan permohonan di laman Form Permohonan dan menunggu jadwal
+                            uji kompetensi') }}
+                        </div>
+                    </div>
+                    @else
+                    @if (empty($testSchedule->assessor_signed_agreement_at))
                     <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
                         role="alert">
                         <span class="mr-3">⌛️</span>
@@ -137,13 +148,15 @@
                         @if (!empty($testSchedule->assessor_submitted_test_practice_at))
                         <x-primary-button wire:click="next()">Lanjut Pengisian Tugas Praktik</x-primary-button>
                         @else
-                        <x-primary-button class="bg-red-400 hover:bg-red-400" disabled>Menunggu Tugas Praktik ...</x-primary-button>
+                        <x-primary-button class="bg-red-400 hover:bg-red-400" disabled>Menunggu Tugas Praktik ...
+                        </x-primary-button>
                         @endif
 
                         @else
                         <x-primary-button id="accept">Setuju dan Tandatangani</x-primary-button>
                         @endif
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
