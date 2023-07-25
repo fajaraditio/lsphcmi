@@ -86,7 +86,7 @@
                                 <th class="border border-slate-300 w-1/5 p-2">{{ __('Tanggal Uji Kompetensi') }}</th>
                                 <td class="border border-slate-300 w-4/5 p-2" colspan="4">
                                     @if (!empty($testSchedule->scheduled_at))
-                                    {{ Carbon\Carbon::parse($testSchedule->scheduled_at)->translatedFormat('l, j F Y')
+                                    {{ \Carbon\Carbon::parse($testSchedule->scheduled_at)->translatedFormat('l, j F Y')
                                     }}
                                     @endif
                                 </td>
@@ -95,7 +95,9 @@
                                 <th class="border border-slate-300 w-1/5 p-2">{{ __('Sesi') }}</th>
                                 <td class="border border-slate-300 w-4/5 p-2" colspan="4">
                                     @if (!empty($testSchedule->test_session))
-                                    {{ $testSchedule->test_session->name }}
+                                    {{ $testSchedule->test_session->name . ' (' .
+                                    \Carbon\Carbon::parse($testSchedule->test_session->started_at)->format('H:i') . ' - ' .
+                                    \Carbon\Carbon::parse($testSchedule->test_session->ended_at)->format('H:i') . ')' }}
                                     @endif
                                 </td>
                             </tr>
