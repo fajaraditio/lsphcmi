@@ -10,7 +10,7 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2 text-sm">
 
                 <div id="form-wizard" class="p-8">
                     @livewire('components.step-wizard', ['stepWizards' => $stepWizards, 'currentStep' => $currentStep])
@@ -41,41 +41,23 @@
                         role="alert">
                         <span class="font-medium">💡 Informasi Pembayaran</span>
                         <p>
-                            Silakan lakukan pembayaran ke rekening BRI a/n LSP HCMI
-                            dengan nomor rekening 1167.0100.0254.305 lalu unggah melalui form di bawah ini
+                            Silakan lakukan pembayaran dengan mengklik tombol di bawah ini. Batas waktu pembayaran
+                            adalah 1 x 24 jam. Pembayaran otomatis terverifikasi dan akan dialihkan ke halaman
+                            berikutnya.
                         </p>
                     </div>
 
-                    <div class="sm:flex w-full mt-5">
-                        <div class="w-full sm:w-1/2 my-2 sm:mr-2">
-                            <x-input-label for="payment_receipt" :value="__('Unggah Bukti Pembayaran')">
-                            </x-input-label>
-                            <x-file-input id="payment_receipt" :value="old('paymentReceiptFile')"
-                                class="block mt-1 w-full" :error="$errors->has('paymentReceiptFile')"
-                                wire:model="paymentReceiptFile" accept="image/*" :allowed-exts="['PNG', 'BMP', 'JPG']"
-                                required>
-                            </x-file-input>
-                            <x-input-error :messages="$errors->get('paymentReceiptFile')" class="mt-2" />
-                        </div>
-                    </div>
-
-                    <hr class="my-3">
-
-                    <div class="sm:flex w-full mt-5">
-                        @if (!empty($paymentReceiptFile))
-                        <img src="{{ $paymentReceiptFile->temporaryUrl() }}" class="w-48 h-auto"
-                            alt="Temporary Preview Image">
-                        @elseif (!empty($participant->payment_receipt))
-                        <img src="{{ url('storage/' . $participant->payment_receipt) }}" class="w-48 h-auto"
-                            alt="Payment Receipt">
-                        @endif
+                    <div class="w-full mt-5">
+                        <button
+                            class="px-3 py-2 bg-blue-500 hover:bg-blue-600 border rounded text-white text-sm font-bold inline-flex items-center"
+                            wire:click="payWithDuitku()">Klik Di sini untuk Pembayaran</button>
                     </div>
 
                     <hr class="my-5">
 
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="back()">Sebelumnya</x-secondary-button>
-                        <x-primary-button wire:click="save()">Selanjutnya</x-primary-button>
+                        <x-primary-button wire:click="next()">Selanjutnya</x-primary-button>
                     </div>
                 </div>
 

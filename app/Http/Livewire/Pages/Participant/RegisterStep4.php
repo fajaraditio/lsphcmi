@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Pages\Participant;
 
 use App\Models\Participant;
 use App\Models\ParticipantDoc;
+use Duitku\Config as DuitkuConfig;
+use Duitku\Pop as DuitkuPop;
+use Exception;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -39,11 +42,6 @@ class RegisterStep4 extends Component
             'label'     => '5',
             'attr'      => 'Asesmen Mandiri',
             'desc'      => 'Mengisi asesmen mandiri',
-        ],
-        [
-            'label'     => 'Selesai',
-            'attr'      => 'Pendaftaran Selesai',
-            'desc'      => 'Pendaftaran dalam proses pengecekan pembayaran dan berkas',
         ],
     ];
     public $currentStep = 4;
@@ -93,6 +91,59 @@ class RegisterStep4 extends Component
             $this->participant->save();
         }
 
+        return redirect()->route('participant.register.5');
+    }
+
+    public function payWithDuitku()
+    {
+        $merchantCode   = 'DS16274';
+        $apiKey         = '0ec5267ac117ccd26f97536702abff0b';
+
+        $duitkuCfg = new DuitkuConfig($apiKey, $merchantCode);
+        $duitkuCfg->setSandboxMode(true);
+        $duitkuCfg->setSanitizedMode(false);
+        $duitkuCfg->setDuitkuLogs(true);
+
+        $paymentAmount = 10000;
+        $customerEmail = $this->participant->email;
+        $productDetail = 'Pembayaran Asesmen #U' . sprintf("%03d", $this->participant->user_id);
+        $merchantOrderId = 'U' . sprintf("%03d", $this->participant->user_id) . 'T' . time();
+        $customerName   = $this->participant->name;
+        $callbackUrl    = route('payment.duitku.callback');
+        $returnUrl      = route('payment.duitku.return');
+        $expiryPeriod   = 5;
+
+        $params = [
+            'paymentAmount'     => $paymentAmount,
+            'merchantOrderId'   => $merchantOrderId,
+            'productDetails'    => $productDetail,
+            'customerVaName'    => $customerName,
+            'customerDetail'    => [
+                'firstName'     => $this->participant->name,
+                'email'         => $this->participant->email,
+                'phoneNumber'   => $this->participant->cell_phone_number,
+            ],
+            'email'             => $customerEmail,
+            'callbackUrl'       => $callbackUrl,
+            'returnUrl'         => $returnUrl,
+            'expiryPeriod'      => $expiryPeriod
+        ];
+
+        try {
+            $responseDuitkuPop = DuitkuPop::createInvoice($params, $duitkuCfg);
+            $responseDuitkuPop = json_decode($responseDuitkuPop, true);
+
+            $this->participant->invoice = $merchantOrderId;
+            $this->participant->save();
+
+            return redirect()->to($responseDuitkuPop['paymentUrl']);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
+    public function next()
+    {
         return redirect()->route('participant.register.5');
     }
 

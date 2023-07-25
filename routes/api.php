@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DuitkuPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/payment/duitku/callback', [    DuitkuPayment::class, 'callback'])->name('payment.duitku.callback');
+Route::get('/payment/duitku/return',    [DuitkuPayment::class, 'return'])->name('payment.duitku.return');

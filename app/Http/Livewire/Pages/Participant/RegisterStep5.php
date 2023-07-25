@@ -97,6 +97,8 @@ class RegisterStep5 extends Component
     public function save()
     {
         $validateData = [];
+        $validateAttributes = [];
+
         foreach ($this->competenceCriterias as $criteria) {
             $validateData = array_merge(
                 $validateData,
@@ -104,11 +106,17 @@ class RegisterStep5 extends Component
                     'participantCompetencies.' . $criteria->id                      => 'required',
                     'participantCompetencies.' . $criteria->id . '.status'          => 'required|in:K,BK',
                     'participantCompetencies.' . $criteria->id . '.relevant_proof'  => (empty($this->participantCompetencies[$criteria->id]['relevant_proof_path']) ? 'required_if:participantCompetencies.' . $criteria->id . '.status,K' : null) . '|nullable|mimes:pdf',
-                ]
+                ],
             );
+
+            $validateAttributes = array_merge($validateAttributes, [
+                'participantCompetencies.' . $criteria->id                      => 'Kriteria',
+                'participantCompetencies.' . $criteria->id . '.status'          => 'Jawaban Kriteria',
+                'participantCompetencies.' . $criteria->id . '.relevant_proof'  => 'Bukti Relevan',
+            ]);
         }
 
-        $this->validate($validateData);
+        $this->validate($validateData, [], $validateAttributes);
 
         foreach ($this->participantCompetencies as $criteriaId => $competency) {
             $competenceRelProof = null;

@@ -10,7 +10,7 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-2 text-sm">
 
                 <div id="form-wizard" class="p-8">
                     @livewire('components.step-wizard', ['stepWizards' => $stepWizards, 'currentStep' => $currentStep])
@@ -43,41 +43,41 @@
                         <table class="table-auto border-collapse border border-slate-400 w-full text-left mt-3">
                             <tbody>
                                 <tr>
-                                    <th class="border border-slate-300 w-1/5 p-2">Kode</th>
-                                    <td class="border border-slate-300 w-4/5 p-2" colspan="4">{{
+                                    <th class="border w-1/5 p-2">Kode</th>
+                                    <td class="border w-4/5 p-2" colspan="4">{{
                                         $competenceUnit->code
                                         }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="border border-slate-300 w-1/5 p-2">Judul</th>
-                                    <td class="border border-slate-300 w-4/5 p-2" colspan="4">{{
+                                    <th class="border w-1/5 p-2">Judul</th>
+                                    <td class="border w-4/5 p-2" colspan="4">{{
                                         $competenceUnit->title
                                         }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-2" colspan="2">Dapatkah saya ...?</td>
-                                    <td class="border border-slate-300 p-2 text-center">K</td>
-                                    <td class="border border-slate-300 p-2 text-center">BK</td>
-                                    <td class="border border-slate-300 p-2 text-center">Bukti Relevan</td>
+                                    <td class="border p-2" colspan="2">Dapatkah saya ...?</td>
+                                    <td class="border p-2 text-center">K</td>
+                                    <td class="border p-2 text-center">BK</td>
+                                    <td class="border p-2 text-center">Bukti Relevan</td>
                                 </tr>
                                 @foreach ($competenceUnit->competence_elements as $competenceElement)
                                 <tr>
-                                    <th class="border border-slate-300 p-2">Elemen {{ $competenceElement->no }}</th>
-                                    <td class="border border-slate-300 p-2" colspan="4">{{ $competenceElement->title
+                                    <th class="border p-2">Elemen {{ $competenceElement->no }}</th>
+                                    <td class="border p-2" colspan="4">{{ $competenceElement->title
                                         }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-2" colspan="5">Kriteria Untuk Kerja</td>
+                                    <td class="border p-2" colspan="5">Kriteria Untuk Kerja</td>
                                 </tr>
                                 @foreach ($competenceElement->competence_criterias as $competenceCriteria)
                                 <tr>
-                                    <td class="border border-slate-300 p-2">{{ $competenceElement->no . '.' .
+                                    <td class="border p-2">{{ $competenceElement->no . '.' .
                                         $competenceCriteria->no }}</td>
-                                    <td class="border border-slate-300 w-2/5 p-2">{{ $competenceCriteria->title }}
+                                    <td class="border p-2 w-2/5">{{ $competenceCriteria->title }}
                                     </td>
                                     <td
-                                        class="border border-slate-300 p-2 @error('participantCompetencies.' . $competenceCriteria->id . '.status') border-2 border-red-300 @enderror">
+                                        class="border p-2 @error('participantCompetencies.' . $competenceCriteria->id . '.status') border-2 border-red-300 @enderror">
                                         <input type="radio"
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
@@ -85,15 +85,15 @@
                                             value="K" @if($hasParticipantCompetencies) disabled @endif>
                                     </td>
                                     <td
-                                        class="border border-slate-300 p-2 @error('participantCompetencies.' . $competenceCriteria->id) border-2 border-red-300 @enderror">
+                                        class="border p-2 @error('participantCompetencies.' . $competenceCriteria->id . '.status') border-2 border-red-300 @enderror">
                                         <input type="radio"
                                             name="participantCompetencies[{{ $competenceCriteria->id }}][status]"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.status"
                                             class="appearance-none text-red-500 checked:ring-red-400 focus:ring-red-400"
                                             value="BK" @if($hasParticipantCompetencies) disabled @endif>
                                     </td>
-                                    <td class="border border-slate-300 p-2">
-                                        <x-file-input id="relevant_proof" class="block mt-1 w-full" :error="$errors->has('participantCompetencies.' .
+                                    <td class="border p-2">
+                                        <x-file-input id="relevant_proof" class="block mt-1 w-full text-sm" :error="$errors->has('participantCompetencies.' .
                                         $competenceCriteria->id . '.relevant_proof')"
                                             wire:model="participantCompetencies.{{ $competenceCriteria->id }}.relevant_proof"
                                             placeholder="Masukkan Bukti yang Relevan" accept="application/pdf"
