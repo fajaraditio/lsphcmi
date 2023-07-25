@@ -11,48 +11,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
-
-                    @if (empty($testSchedule->assessor_submitted_report_at))
-                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
-                        role="alert">
-                        <span class="mr-3">⌛️</span>
-                        <span class="sr-only"></span>
-                        <div>
-                            <span class="font-bold">{{ __('Tidak Ada Laporan Hasil Asesmen') }}</span> <br> {{
-                            __('Silakan mengerjakan terlebih dahulu uji kompetensi yang ada di laman Uji Kompetensi') }}
-                        </div>
-                    </div>
-
-                    <button
-                        class="px-3 py-2 bg-green-500 hover:bg-green-600 border rounded text-white text-sm font-bold inline-flex items-center"
-                        wire:click="back()">
-                        Kembali ke Laman Uji Kompetensi
-                    </button>
-
-                    @elseif (
-                    !empty($testSchedule->assessor_submitted_report_at) &&
-                    empty($testSchedule->chief_approved_report_at)
-                    )
-                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
-                        role="alert">
-                        <span class="mr-3">⌛️</span>
-                        <span class="sr-only"></span>
-                        <div>
-                            <span class="font-bold">{{ __('Laporan Hasil Kompetensi Belum Ada') }}</span> <br> {{
-                            __('Harap menunggu untuk mendapatkan hasil laporan kompetensi, silakan mengecek berkala
-                            laman Laporan Hasil Asesmen') }}
-                        </div>
-                    </div>
-
-                    <button
-                        class="px-3 py-2 bg-green-500 hover:bg-green-600 border rounded text-white text-sm font-bold inline-flex items-center"
-                        wire:click="back()">
-                        Kembali ke Laman Uji Kompetensi
-                    </button>
-
-                    @elseif (
-                    !empty($testSchedule->assessor_submitted_report_at) &&
-                    !empty($testSchedule->chief_approved_report_at))
                     <table class="table-auto border-collapse border border-slate-400 w-full text-left mt-3">
                         <tbody>
                             <tr>
@@ -121,8 +79,9 @@
                             }}</span> selaku
                         <b>yang dinilai (asesi)</b>.
                     </p>
-                    <p>Seluruh tahapan pelaksanaan sudah dilaksanakan dan dengan ini kami sebagai Lembaga Sertifikasi
-                        Profesi (LSP) HCMI menyatakan bahwa asesi:</p>
+                    <p>Seluruh tahapan pelaksanaan sudah dilaksanakan dan dengan ini asesor membuat rekomendasi hasil
+                        asesmen
+                        bagi asesi, yaitu:</p>
                     <br>
                     <h1 class="text-2xl font-bold uppercase">{{ $testReport->result === 'K' ? 'Kompeten' : 'Belum
                         Kompeten' }}</h1>
@@ -134,24 +93,57 @@
                     </p>
                     <br>
 
-                    <p>Demikianlah, laporan hasil kompetensi yang sudah diverifikasi oleh Lembaga Sertifikasi Profesi
-                        (LSP) HCMI. <br> Dokumen ini merupakan bukti elektronik keikutsertaan dan hasil asesmen dan
-                        bukan merupakan
-                        lembar sertifikat.
-                    </p>
-                    <br><br>
+                    <hr class="my-5">
 
-                    {{ \Carbon\Carbon::parse($testSchedule->assessor_submitted_report_at)->translatedFormat('l, j F
-                    Y')
-                    }}
-
-                    <br><br>
-                    <img src="{{ $testAgreement->assessor_signature }}" alt="Asesor Signature"
-                        class="border border-slate-300" style="width: 250px; height: 100%; object-fit: cover;">
+                    <h1 class="text-lg font-bold uppercase">{{ __('Arsip Lembar Verifikasi dan Pengesahan ') }}</h1>
                     <br>
-                    <p>{{ $testSchedule->assessor->name }}</p>
+
+                    <p>
+                        Dengan mencentang pernyataan di bawah ini, maka hasil rekomendasi dinyatakan sah dan
+                        terverifikasi.
+                    </p>
+
+                    <div class="my-2">
+                        <label for="verifyAgreement" class="inline-flex items-center">
+
+                            @if (empty($this->testSchedule->chief_approved_report_at))
+                            <input id="verifyAgreement" type="checkbox"
+                                class="rounded text-red-600 shadow-sm focus:ring-red-500 @error('verifyAgreement') border-red-600 @enderror"
+                                name="verifyAgreement" wire:model="verifyAgreement">
+                            @else
+                            <input type="checkbox" class="rounded text-red-600 shadow-sm focus:ring-red-500" checked
+                                disabled>
+                            @endif
+
+                            <span class="ml-2 text-sm underline @error('verifyAgreement') decoration-red-600 @enderror">
+                                Saya sebagai yang berwenang memverfikasi dan mengesahkan hasil laporan asesmen secara
+                                sadar dan bertanggung jawab menyatakan hasil rekomendasi layak dan sesuai.
+                            </span>
+                        </label>
+                        <label for="verifyPublication" class="inline-flex items-center">
+                            @if (empty($this->testSchedule->chief_approved_report_at))
+                            <input id="verifyPublication" type="checkbox"
+                                class="rounded text-red-600 shadow-sm focus:ring-red-500 @error('verifyPublication') border-red-600 @enderror"
+                                name="verifyPublication" wire:model="verifyPublication">
+                            @else
+                            <input type="checkbox" class="rounded text-red-600 shadow-sm focus:ring-red-500" checked
+                                disabled>
+                            @endif
+                            
+                            <span
+                                class="ml-2 text-sm underline @error('verifyPublication') decoration-red-600 @enderror">
+                                Laporan hasil asesmen akan dipublikasikan langsung kepada asesi secara elektronik
+                                melalui dasbor asesi.
+                            </span>
+                        </label>
+
+                        <br><br>
+
+                        @if (empty($this->testSchedule->chief_approved_report_at))
+                        <x-primary-button wire:click="verify()">Verifikasi Laporan</x-primary-button>
+                        @endif
+                    </div>
                 </div>
-                @endif
             </div>
         </div>
     </div>
