@@ -70,7 +70,7 @@
                     <div class="flex justify-between">
                         <x-secondary-button wire:click="back()">{{ __('Kembali ke Persetujuan') }}
                         </x-secondary-button>
-                        <x-primary-button wire:click="next()">{{ __('Lanjut Tugas Observasi') }}
+                        <x-primary-button wire:click="next()">{{ __('Lanjut ke Pengisian Tugas Observasi') }}
                         </x-primary-button>
                     </div>
                 </div>

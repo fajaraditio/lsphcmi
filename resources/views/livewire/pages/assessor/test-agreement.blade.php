@@ -109,7 +109,7 @@
                         <div class="flex flex-col signature-pad">
                             @if (empty($testSchedule->agreement))
                             <div style="height: 200px;"></div>
-                            
+
                             @elseif (!empty($testSchedule->agreement) &&
                             !empty($testSchedule->agreement->participant_signed_at) &&
                             empty($testSchedule->agreement->assessor_signed_at))
@@ -137,11 +137,16 @@
                         empty($testSchedule->agreement->assessor_signed_at))
                         <x-secondary-button id="clear-signature">Ulangi Tandatangan</x-secondary-button>
 
-                        <x-primary-button id="accept">Setuju dan Tandatangani
+                        <x-primary-button id="accept">
+                            {{ __('Setuju dan Tandatangani') }}
                         </x-primary-button>
                         @else
-                        <x-secondary-button wire:click="back()">Kembali ke Uji Kompetensi</x-secondary-button>
-                        <x-primary-button wire:click="next()">Pengisian Form Tugas Praktik</x-primary-button>
+                        <x-secondary-button wire:click="back()">
+                            {{ __('Kembali ke Uji Kompetensi') }}
+                        </x-secondary-button>
+                        <x-primary-button wire:click="next()">
+                            {{ __('Lanjut Tugas Praktik') }}
+                        </x-primary-button>
                         @endif
                     </div>
                 </div>

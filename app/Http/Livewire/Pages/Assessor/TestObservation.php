@@ -11,7 +11,7 @@ class TestObservation extends Component
 
     public function back()
     {
-        return redirect()->route('assessor.test.schedule.detail', ['testSchedule' => $this->testSchedule->id]);
+        return redirect()->route('assessor.test.practice', ['testSchedule' => $this->testSchedule->id]);
     }
 
     public function next()
