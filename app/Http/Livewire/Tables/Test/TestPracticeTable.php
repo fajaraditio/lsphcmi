@@ -106,7 +106,9 @@ final class TestPracticeTable extends PowerGridComponent
             )
             ->join('competence_criterias', 'competence_criterias.id', '=', 'test_practices.competence_criteria_id')
             ->join('competence_elements', 'competence_elements.id', '=', 'competence_criterias.competence_element_id')
-            ->join('competence_units', 'competence_units.id', '=', 'competence_elements.competence_unit_id');
+            ->join('competence_units', 'competence_units.id', '=', 'competence_elements.competence_unit_id')
+            ->join('test_schedules', 'test_schedules.id', '=', 'test_observations.test_schedule_id')
+            ->where('test_schedules.id', $this->testSchedule->id);
     }
 
     /*
