@@ -43,7 +43,7 @@ final class TestObservationTable extends PowerGridComponent
     public function header(): array
     {
         if (auth()->user()->role->slug === 'assessor') {
-            if (empty($this->testSchedule->assessor_submitted_test_practice_at)) {
+            if (!empty($this->testSchedule->assessor_submitted_test_practice_at)) {
                 return [
                     Button::add('create-question')
                         ->caption('Buat Pertanyaan')
