@@ -123,7 +123,7 @@ final class PaymentTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('No. Invoice', 'invoiec')
+            Column::make('No. Invoice', 'invoice')
                 ->searchable()
                 ->sortable(),
 
