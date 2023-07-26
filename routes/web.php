@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
+use App\Http\Livewire\Pages\Certification\AssessmentList as CertificationAssessmentList;
+
 use App\Http\Livewire\Pages\Certification\Assessor as AssessorList;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
 
@@ -82,6 +84,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/registration/apl/1', CertificationRegistration::class)->name('certification.registration');
 
             Route::get('/assessor', AssessorList::class)->name('certification.assessor.list');
+
+            Route::get('/assessment', CertificationAssessmentList::class)->name('certification.assessment.list');
         });
     });
 

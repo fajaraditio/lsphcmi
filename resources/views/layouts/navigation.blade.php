@@ -45,6 +45,11 @@
                         {{ __('Assessor List') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('certification.assessment.list')"
+                        :active="request()->routeIs('certification.assessment.list')">
+                        {{ __('Assessment Archive') }}
+                    </x-nav-link>
+
                     @elseif (auth()->user()->role->slug === 'finance')
                     <!-- Finance Nav -->
                     <x-nav-link :href="route('finance.registration')"
@@ -169,15 +174,22 @@
                 {{ __('Assessor List') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('certification.assessment.list')"
+                :active="request()->routeIs('certification.assessment.list')">
+                {{ __('Assessment Archive') }}
+            </x-responsive-nav-link>
+
             @elseif (auth()->user()->role->slug === 'finance')
             <!-- Finance Nav -->
-            <x-responsive-nav-link :href="route('finance.registration')" :active="request()->routeIs('finance.registration')">
+            <x-responsive-nav-link :href="route('finance.registration')"
+                :active="request()->routeIs('finance.registration')">
                 {{ __('Payment List') }}
             </x-responsive-nav-link>
 
             @elseif (auth()->user()->role->slug === 'manager')
             <!-- Finance Nav -->
-            <x-responsive-nav-link :href="route('manager.test.schedule')" :active="request()->routeIs('manager.test.schedule')">
+            <x-responsive-nav-link :href="route('manager.test.schedule')"
+                :active="request()->routeIs('manager.test.schedule')">
                 {{ __('Test Schedule') }}
             </x-responsive-nav-link>
 
@@ -190,7 +202,8 @@
 
             @elseif (auth()->user()->role->slug === 'assessor')
             <!-- Finance Nav -->
-            <x-responsive-nav-link :href="route('assessor.registration')" :active="request()->routeIs('assessor.registration')">
+            <x-responsive-nav-link :href="route('assessor.registration')"
+                :active="request()->routeIs('assessor.registration')">
                 {{ __('Registration List') }} / APL-02
             </x-responsive-nav-link>
 

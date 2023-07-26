@@ -52,7 +52,7 @@ final class TestReportTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return TestReport::query()
+        $testReport = TestReport::query()
             ->select(
                 DB::raw('test_reports.*'),
                 DB::raw('participant_users.name AS participant_name'),
@@ -63,6 +63,12 @@ final class TestReportTable extends PowerGridComponent
             ->join('test_schedules', 'test_schedules.id', '=', 'test_reports.test_schedule_id')
             ->join(DB::raw('users AS participant_users'), 'participant_users.id', '=', 'test_schedules.participant_user_id')
             ->join(DB::raw('users AS assessor_users'), 'assessor_users.id', '=', 'test_schedules.assessor_user_id');
+
+        if (auth()->user()->role->slug === 'certification') {
+            $testReport = $testReport->whereNotNull('test_schedules.chief_approved_report_at');
+        }
+
+        return $testReport;
     }
 
     /*
@@ -203,16 +209,18 @@ final class TestReportTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
     public function actionRules(): array
     {
-       return [
+        return [
+            Rule::button('detail')
+                ->when(function ($testReport) {
+                    if (auth()->user()->role->slug !== 'chief') {
+                        return true;
+                    }
 
-           //Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($test-report) => $test-report->id === 1)
+                    return false;
+                })
                 ->hide(),
         ];
     }
-    */
 }
