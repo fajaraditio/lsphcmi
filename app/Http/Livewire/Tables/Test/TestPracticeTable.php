@@ -146,7 +146,13 @@ final class TestPracticeTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('name_lower', fn (TestPractice $model) => strtolower(e($model->name)))
-            ->addColumn('result', fn (TestPractice $model) => $model->result === 'BK' ? '<span class="font-bold uppercase text-red-500">Belum Kompeten</span>' : '<span class="font-bold uppercase text-green-500">Kompeten</span>')
+            ->addColumn('result', function (TestPractice $model) {
+                if (!empty($model->result)) {
+                    return $model->result === 'BK' ? '<span class="font-bold uppercase text-red-500">Belum Kompeten</span>' : '<span class="font-bold uppercase text-green-500">Kompeten</span>';
+                } else {
+                    return '-';
+                }
+            })
             ->addColumn('response_file', function (TestPractice $model) {
                 if (!empty($model->response_file)) {
                     return '<a href="' . url('storage/' . $model->response_file) . '" class="text-blue-500 hover:underline" target="_blank">[Lihat Berkas Jawaban]</a>';
