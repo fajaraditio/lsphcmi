@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestReportController;
 use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
@@ -122,5 +123,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::get('report/{testReport}/view/pdf', [TestReportController::class, 'viewPDF'])->name('report.pdf');
 
 require __DIR__ . '/auth.php';
