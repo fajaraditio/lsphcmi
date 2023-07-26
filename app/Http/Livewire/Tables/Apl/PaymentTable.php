@@ -55,8 +55,7 @@ final class PaymentTable extends PowerGridComponent
         return Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
-            ->whereNotNull('first_apl_verified_at')
-            ->whereNull('second_apl_verified_at');
+            ->whereNotNull('first_apl_verified_at');
     }
 
     /*
@@ -124,7 +123,7 @@ final class PaymentTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('No. Peserta', 'bib_number')
+            Column::make('No. Invoice', 'invoiec')
                 ->searchable()
                 ->sortable(),
 
