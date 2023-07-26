@@ -43,7 +43,14 @@ final class TestObservationTable extends PowerGridComponent
     public function header(): array
     {
         if (auth()->user()->role->slug === 'assessor') {
-            if (!empty($this->testSchedule->assessor_submitted_test_practice_at)) {
+            if (empty($this->testSchedule->assessor_reviewed_test_observation_at) && !empty($this->testSchedule->participant_responded_test_observation_at)) {
+                return [
+                    Button::add('submit-review-practice')
+                        ->caption('Submit Penilaian Tugas Observasi')
+                        ->class('block w-full bg-purple-500 hover:bg-purple-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.submit-review-test-observation-modal', ['testSchedule' => $this->testSchedule->id]),
+                ];
+            } else {
                 return [
                     Button::add('create-question')
                         ->caption('Buat Pertanyaan')
@@ -55,16 +62,7 @@ final class TestObservationTable extends PowerGridComponent
                         ->class('block w-full bg-orange-500 text-white border border-orange-200 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-red-500 focus:text-red-500 dark:border-orange-500 dark:bg-orange-600 2xl:dark:placeholder-slate-300 dark:text-slate-200 dark:text-slate-300 sm:text-sm')
                         ->openModal('modals.test.submit-test-observation-modal', ['testSchedule' => $this->testSchedule->id]),
                 ];
-            } else if (empty($this->testSchedule->assessor_reviewed_test_observation_at) && !empty($this->testSchedule->participant_responded_test_observation_at)) {
-                return [
-                    Button::add('submit-review-practice')
-                        ->caption('Submit Penilaian Tugas Observasi')
-                        ->class('block w-full bg-purple-500 hover:bg-purple-700 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.submit-review-test-observation-modal', ['testSchedule' => $this->testSchedule->id]),
-                ];
             }
-
-            return [];
         } else if (auth()->user()->role->slug === 'participant') {
             if (empty($this->testSchedule->participant_responded_test_observation_at)) {
                 return [
@@ -145,7 +143,13 @@ final class TestObservationTable extends PowerGridComponent
             ->addColumn('name')
             ->addColumn('name_lower', fn (TestObservation $model) => strtolower(e($model->name)))
             ->addColumn('response_status', fn (TestObservation $model) => !empty($model->response) ? '<span class="font-bold text-green-700">Y</span>' : '<span class="font-bold text-red-700">T</span>')
-            ->addColumn('result', fn (TestObservation $model) => $model->result === 'BK' ? '<span class="font-bold uppercase text-red-500">Belum Kompeten</span>' : '<span class="font-bold uppercase text-green-500">Kompeten</span>')
+            ->addColumn('result', function (TestObservation $model) {
+                if (!empty($model->result)) {
+                    return $model->result === 'BK' ? '<span class="font-bold uppercase text-red-500">Belum Kompeten</span>' : '<span class="font-bold uppercase text-green-500">Kompeten</span>';
+                } else {
+                    return '-';
+                }
+            })
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (TestObservation $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -233,7 +237,13 @@ final class TestObservationTable extends PowerGridComponent
     public function actions(): array
     {
         if (auth()->user()->role->slug === 'assessor') {
-            if (empty($this->testSchedule->assessor_submitted_test_practice_at)) {
+            if (empty($this->testSchedule->assessor_reviewed_test_observation_at) && !empty($this->testSchedule->participant_responded_test_observation_at)) {
+                return [
+                    Button::make('review', 'Beri Penilaian')
+                        ->class('block w-full bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                        ->openModal('modals.test.review-test-observation-modal', ['testObservation' => 'id'])
+                ];
+            } else {
                 return [
                     Button::make('edit', 'Edit')
                         ->class('block w-full bg-green-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
@@ -242,12 +252,6 @@ final class TestObservationTable extends PowerGridComponent
                     Button::make('destroy', 'Hapus')
                         ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                         ->openModal('modals.test.destroy-test-observation-modal', ['testObservation' => 'id'])
-                ];
-            } else if (empty($this->testSchedule->assessor_reviewed_test_observation_at) && !empty($this->testSchedule->participant_responded_test_observation_at)) {
-                return [
-                    Button::make('review', 'Beri Penilaian')
-                        ->class('block w-full bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.review-test-observation-modal', ['testObservation' => 'id'])
                 ];
             }
 
