@@ -39,6 +39,7 @@ class UpdatePaymentModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.modals.apl.update-payment-modal');
+        $status = $this->status;
+        return view('livewire.modals.apl.update-payment-modal', compact('status'));
     }
 }
