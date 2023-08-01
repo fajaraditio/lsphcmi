@@ -57,7 +57,7 @@ final class SecondAplTable extends PowerGridComponent
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
             ->whereNotNull('first_apl_verified_at')
             ->whereNotNull('payment_verified_at')
-            ->has('documents');
+            ->has('competencies');
     }
 
     /*

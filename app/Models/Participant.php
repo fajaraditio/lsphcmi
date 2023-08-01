@@ -25,4 +25,9 @@ class Participant extends Model
     {
         return $this->hasMany(ParticipantDoc::class);
     }
+
+    public function competencies()
+    {
+        return $this->hasMany(ParticipantCompetency::class);
+    }
 }
