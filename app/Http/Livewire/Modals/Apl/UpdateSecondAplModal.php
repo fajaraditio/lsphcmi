@@ -12,8 +12,8 @@ use LivewireUI\Modal\ModalComponent;
 class UpdateSecondAplModal extends ModalComponent
 {
     public Participant $participant;
-    public $competenceUnits;
-    public $participantCompetency;
+    protected $competenceUnits;
+    protected $participantCompetency;
 
     public function mount()
     {
@@ -55,10 +55,6 @@ class UpdateSecondAplModal extends ModalComponent
 
     public function render()
     {
-        $participant            = Participant::find($this->participant->id);
-        $competenceUnits        = CompetenceUnit::with('competence_elements.competence_criterias')->get();
-        $participantCompetency  = new ParticipantCompetency();
-
-        return view('livewire.modals.apl.update-second-apl-modal', compact('competenceUnits', 'participantCompetency'));
+        return view('livewire.modals.apl.update-second-apl-modal');
     }
 }
