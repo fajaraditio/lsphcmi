@@ -11,7 +11,7 @@ use LivewireUI\Modal\ModalComponent;
 
 class UpdateSecondAplModal extends ModalComponent
 {
-    protected $participant;
+    public $participant;
     protected $competenceUnits;
     protected $participantCompetency;
 
