@@ -12,8 +12,8 @@ use LivewireUI\Modal\ModalComponent;
 class UpdateSecondAplModal extends ModalComponent
 {
     public $participant;
-    protected $competenceUnits;
-    protected $participantCompetency;
+    public $competenceUnits;
+    public $participantCompetency;
 
     public function mount(Participant $participant)
     {
