@@ -58,6 +58,6 @@ class UpdateSecondAplModal extends ModalComponent
         $this->competenceUnits          = CompetenceUnit::with('competence_elements.competence_criterias')->get();
         $this->participantCompetency    = new ParticipantCompetency();
 
-        return view('livewire.modals.apl.update-second-apl-modal', compact('participant', 'competenceUnits', 'participantCompetency'));
+        return view('livewire.modals.apl.update-second-apl-modal', compact('competenceUnits', 'participantCompetency'));
     }
 }
