@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Modals\Apl;
 
+use App\Http\Livewire\Components\Alert;
 use App\Http\Livewire\Tables\Apl\SecondAplTable;
 use App\Models\CompetenceUnit;
 use App\Models\Participant;
