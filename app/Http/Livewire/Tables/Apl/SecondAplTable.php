@@ -55,6 +55,7 @@ final class SecondAplTable extends PowerGridComponent
         $participant = Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
+            ->join('test_schedules', 'test_schedules.participant_user_id', '=', 'participants.user_id')
             ->whereNotNull('first_apl_verified_at')
             ->whereNotNull('payment_verified_at')
             ->has('competencies');
