@@ -60,7 +60,7 @@ final class SecondAplTable extends PowerGridComponent
             ->whereNotNull('payment_verified_at')
             ->has('competencies');
 
-        if (auth()->user()->role->slug === 'assessor') $participant->where('assessor_users.id', auth()->user()->id);
+        if (auth()->user()->role->slug === 'assessor') $participant->where('test_schedules.assessor_user_id', auth()->user()->id);
 
         return $participant;
     }
