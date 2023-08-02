@@ -58,7 +58,12 @@
                     </x-nav-link>
 
                     @elseif (auth()->user()->role->slug === 'manager')
-                    <!-- Finance Nav -->
+                    <!-- Manager Nav -->
+                    <x-nav-link :href="route('manager.assessor.assignment')"
+                        :active="request()->routeIs('manager.assessor.assignment')">
+                        {{ __('Assessor Assignment') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('manager.test.schedule')"
                         :active="request()->routeIs('manager.test.schedule')">
                         {{ __('Test Schedule') }}
@@ -187,7 +192,12 @@
             </x-responsive-nav-link>
 
             @elseif (auth()->user()->role->slug === 'manager')
-            <!-- Finance Nav -->
+            <!-- Manager Nav -->
+            <x-responsive-nav-link :href="route('manager.assessor.assignment')"
+                :active="request()->routeIs('manager.assessor.assignment')">
+                {{ __('Assessor Assignment') }}
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('manager.test.schedule')"
                 :active="request()->routeIs('manager.test.schedule')">
                 {{ __('Test Schedule') }}

@@ -66,7 +66,8 @@ final class TestScheduleTable extends PowerGridComponent
             ->join(DB::raw('users AS participant_users'), 'participant_users.id', '=', 'test_schedules.participant_user_id')
             ->join(DB::raw('users AS assessor_users'), 'assessor_users.id', '=', 'test_schedules.assessor_user_id')
             ->join('participants', 'participants.user_id', '=', 'participant_users.id')
-            ->leftJoin('test_sessions', 'test_sessions.id', '=', 'test_schedules.test_session_id');
+            ->leftJoin('test_sessions', 'test_sessions.id', '=', 'test_schedules.test_session_id')
+            ->whereNotNull('participants.second_apl_verified_at');
 
         if (auth()->user()->role->slug === 'assessor') $testSchedule->where('assessor_users.id', auth()->user()->id);
 

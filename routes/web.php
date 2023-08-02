@@ -10,12 +10,11 @@ use App\Http\Livewire\Pages\Certification\AssessmentList as CertificationAssessm
 use App\Http\Livewire\Pages\Certification\Assessor as AssessorList;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
 
-
 use App\Http\Livewire\Pages\Chief\AssessmentList as ChiefAssessmentList;
 use App\Http\Livewire\Pages\Chief\TestReport as ChiefTestReport;
 
-
 use App\Http\Livewire\Pages\Manager\TestSchedule as ManagerTestSchedule;
+use App\Http\Livewire\Pages\Manager\AssessorAssignment as ManagerAssessorAssignment;
 
 use App\Http\Livewire\Pages\Participant\RegisterStep1;
 use App\Http\Livewire\Pages\Participant\RegisterStep2;
@@ -98,7 +97,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:manager')->group(function () {
         Route::prefix('/management')->group(function () {
-            Route::get('/schedule', ManagerTestSchedule::class)->name('manager.test.schedule');
+            Route::get('/schedule',             ManagerTestSchedule::class)->name('manager.test.schedule');
+            Route::get('/assessor-assignment',  ManagerAssessorAssignment::class)->name('manager.assessor.assignment');
         });
     });
 
