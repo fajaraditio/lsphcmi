@@ -52,12 +52,16 @@ final class SecondAplTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Participant::query()
+        $participant = Participant::query()
             ->select('participants.*', DB::raw('schemes.name scheme_name'))
             ->join('schemes', 'schemes.id', '=', 'participants.scheme_id')
             ->whereNotNull('first_apl_verified_at')
             ->whereNotNull('payment_verified_at')
             ->has('competencies');
+
+        if (auth()->user()->role->slug === 'assessor') $participant->where('assessor_users.id', auth()->user()->id);
+
+        return $participant;
     }
 
     /*
