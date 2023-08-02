@@ -53,14 +53,8 @@ class UpdateFirstAplModal extends ModalComponent
         $this->participant->step = 5;
 
         if ($status === 'verified') {
-            $this->validate(['assessorUserId' => 'required']);
-
             $this->participant->first_apl_status = 'verified';
             $this->participant->first_apl_verified_at = Carbon::now();
-
-            $this->testSchedule->assessor_user_id       = $this->assessorUserId;
-            $this->testSchedule->participant_user_id    = $this->participant->user_id;
-            $this->testSchedule->save();
         } else if ($status === 'rejected') {
             $this->participant->first_apl_status = 'rejected';
             $this->participant->first_apl_verified_at = null;
