@@ -1,0 +1,68 @@
+[
+    {
+        "title": "Riwayat Pendidikan",
+        "weight": 1.5,
+        "criterias": [
+            {
+                "title": "Post Doctoral",
+                "score": 4
+            },
+            {
+                "title": "Doktor (S3)",
+                "score": 3
+            },
+            {
+                "title": "Master (S2)",
+                "score": 2
+            },
+            {
+                "title": "Sarjana (S1)",
+                "score": 1
+            }
+        ]
+    },
+    {
+        "title": "Riwayat Diklat, Kursus, dan Workshop Terkait Penilaian / Asesmen",
+        "weight": 1,
+        "criterias": [
+            {
+                "title": "> 4 Sertifikat yang Relevan",
+                "score": 4
+            },
+            {
+                "title": "4 Sertifikat yang Relevan",
+                "score": 3
+            },
+            {
+                "title": "3 Sertifikat yang Relevan",
+                "score": 2
+            },
+            {
+                "title": "≤ 2 Sertifikat yang Relevan",
+                "score": 1
+            }
+        ]
+    },
+    {
+        "title": "Pengalaman Kerja di Bidang Pengembangan Penilaian Pendidikan (3 Tahun Terakhir)",
+        "weight": 1.5,
+        "criterias": [
+            {
+                "title": "> 10 Kegiatan",
+                "score": 4
+            },
+            {
+                "title": "8 s.d 10 Kegiatan",
+                "score": 3
+            },
+            {
+                "title": "5 s.d 7 kegiatan",
+                "score": 2
+            },
+            {
+                "title": "2 s.d 4 Kegiatan",
+                "score": 1
+            }
+        ]
+    }
+]

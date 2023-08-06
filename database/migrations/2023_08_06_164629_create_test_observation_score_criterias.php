@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('test_observation_score_criterias', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('test_observation_score_component_id')->nullable();
             $table->text('title')->nullable();
             $table->integer('score')->default(1);
         });
