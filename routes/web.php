@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\MinutesPaperController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestReportController;
 use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
 use App\Http\Livewire\Pages\Certification\AssessmentList as CertificationAssessmentList;
+use App\Http\Livewire\Pages\Certification\MinutesPaper as CertificationMinutesPaper;
 
 use App\Http\Livewire\Pages\Certification\Assessor as AssessorList;
 use App\Http\Livewire\Pages\Finance\Registration as FinanceRegistration;
@@ -86,6 +88,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/assessor', AssessorList::class)->name('certification.assessor.list');
 
             Route::get('/assessment', CertificationAssessmentList::class)->name('certification.assessment.list');
+
+            Route::get('/minutes-paper', CertificationMinutesPaper::class)->name('certification.minutes.paper');
         });
     });
 
@@ -124,6 +128,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get('report/{testReport}/view/pdf', [TestReportController::class, 'viewPDF'])->name('report.pdf');
+Route::get('report/{testReport}/view/pdf',  [TestReportController::class, 'viewPDF'])->name('report.pdf');
+Route::get('minutes-paper/view/pdf',        [MinutesPaperController::class, 'viewPDF'])->name('minutes-paper.pdf');
 
 require __DIR__ . '/auth.php';

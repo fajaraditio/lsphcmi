@@ -50,6 +50,11 @@
                         {{ __('Assessment Archive') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('certification.minutes.paper')"
+                        :active="request()->routeIs('certification.minutes.paper')">
+                        {{ __('Minutes Paper') }}
+                    </x-nav-link>
+
                     @elseif (auth()->user()->role->slug === 'finance')
                     <!-- Finance Nav -->
                     <x-nav-link :href="route('finance.registration')"
@@ -182,6 +187,11 @@
             <x-responsive-nav-link :href="route('certification.assessment.list')"
                 :active="request()->routeIs('certification.assessment.list')">
                 {{ __('Assessment Archive') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('certification.minutes.paper')"
+                :active="request()->routeIs('certification.minutes.paper')">
+                {{ __('Minutes Paper') }}
             </x-responsive-nav-link>
 
             @elseif (auth()->user()->role->slug === 'finance')
