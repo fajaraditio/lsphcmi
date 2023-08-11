@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\SelfAssessmentScoreComponent;
-use App\Models\SelfAssessmentScoreCriteria;
+use App\Models\ScoringComponent;
+use App\Models\ScoringCriteria;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SelfAssessmentScoringSeeder extends Seeder
+class ScoringSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,10 +16,10 @@ class SelfAssessmentScoringSeeder extends Seeder
      */
     public function run()
     {
-        $selfAssessmentScorings = json_decode(file_get_contents(storage_path('db-json/self_assessment_scoring.json')), true);
+        $scorings = json_decode(file_get_contents(storage_path('db-json/scoring.json')), true);
 
-        foreach ($selfAssessmentScorings as $component) {
-            $selfAssessmentComponent = SelfAssessmentScoreComponent::firstOrCreate(
+        foreach ($scorings as $component) {
+            $scoringComponent = ScoringComponent::firstOrCreate(
                 [
                     'title'     => $component['title'],
                 ],
@@ -29,9 +29,9 @@ class SelfAssessmentScoringSeeder extends Seeder
             );
 
             foreach ($component['criterias'] as $criteria) {
-                SelfAssessmentScoreCriteria::firstOrCreate(
+                ScoringCriteria::firstOrCreate(
                     [
-                        'self_assessment_score_component_id' => $selfAssessmentComponent->id,
+                        'scoring_component_id' => $scoringComponent->id,
                         'title'     => $criteria['title'],
                         'score'     => $criteria['score'],
                     ]

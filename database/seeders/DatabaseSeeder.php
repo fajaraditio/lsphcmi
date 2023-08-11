@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompetenceTableSeeder::class);
         $this->call(TestSessionsSeeder::class);
         $this->call(FeedbackComponentsSeeder::class);
+        $this->call(ScoringSeeder::class);
     }
 }
