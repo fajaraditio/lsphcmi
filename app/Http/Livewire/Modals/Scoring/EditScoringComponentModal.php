@@ -43,8 +43,8 @@ class EditScoringComponentModal extends ModalComponent
         $this->emitTo(
             Alert::class,
             'sendAlert',
-            $title = 'Komponen Penilaian Berhasil Ditambahkan!',
-            $message = 'Komponen penilaian #' . $scoringComponent->id . ' berhasil ditambahkan.',
+            $title = 'Komponen Penilaian Berhasil Diedit!',
+            $message = 'Komponen penilaian #' . $scoringComponent->id . ' berhasil diedit.',
             $type = 'success'
         );
 

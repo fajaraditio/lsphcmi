@@ -27,9 +27,9 @@ final class ScoringComponentTable extends PowerGridComponent
         // $this->showCheckBox();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+            // Exportable::make('export')
+            //     ->striped()
+            //     ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -66,7 +66,8 @@ final class ScoringComponentTable extends PowerGridComponent
             ->select(
                 'scoring_components.*',
                 DB::raw('(SELECT COUNT(*) FROM scoring_criterias WHERE scoring_criterias.scoring_component_id = scoring_components.id) scoring_criterias_count')
-            );
+            )
+            ->orderBy('id', 'desc');
     }
 
     /*
@@ -159,6 +160,14 @@ final class ScoringComponentTable extends PowerGridComponent
     public function actions(): array
     {
         return [
+            Button::make('detail', 'Detail')
+                ->caption('<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+              ')
+                ->class('inline-block bg-slate-500 cursor-pointer text-white p-2.5 m-1 rounded text-sm')
+                ->openModal('modals.scoring.detail-scoring-component-modal', ['scoringComponent' => 'id']),
+
             Button::make('edit', 'Edit')
                 ->caption('<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />

@@ -36,7 +36,7 @@
                 </svg>
             </span>
             <span>
-                {{ __('Eidt Komponen') }}
+                {{ __('Edit Komponen') }}
             </span>
         </button>
     </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('scoring_component_id')->nullable();
             $table->text('title')->nullable();
-            $table->integer('score')->default(1);
+            $table->float('score')->default(1);
         });
     }
 

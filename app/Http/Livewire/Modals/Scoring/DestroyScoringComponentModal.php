@@ -32,6 +32,7 @@ class DestroyScoringComponentModal extends ModalComponent
         $this->emitTo(ScoringComponentTable::class, 'pg:eventRefresh-default');
         $this->closeModal();
     }
+    
     public function render()
     {
         return view('livewire.modals.scoring.destroy-scoring-component-modal');
