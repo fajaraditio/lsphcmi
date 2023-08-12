@@ -54,6 +54,11 @@
                         :active="request()->routeIs('certification.minutes.paper')">
                         {{ __('Minutes Paper') }}
                     </x-nav-link>
+                    
+                    <x-nav-link :href="route('certification.scoring')"
+                        :active="request()->routeIs('certification.scoring')">
+                        {{ __('Scoring') }}
+                    </x-nav-link>
 
                     @elseif (auth()->user()->role->slug === 'finance')
                     <!-- Finance Nav -->

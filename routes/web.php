@@ -7,6 +7,7 @@ use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Pages\Certification\Registration as CertificationRegistration;
 use App\Http\Livewire\Pages\Certification\AssessmentList as CertificationAssessmentList;
+use App\Http\Livewire\Pages\Certification\Scoring as CertificationScoring;
 use App\Http\Livewire\Pages\Certification\MinutesPaper as CertificationMinutesPaper;
 
 use App\Http\Livewire\Pages\Certification\Assessor as AssessorList;
@@ -88,6 +89,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/assessor', AssessorList::class)->name('certification.assessor.list');
 
             Route::get('/assessment', CertificationAssessmentList::class)->name('certification.assessment.list');
+
+            Route::get('/scoring', CertificationScoring::class)->name('certification.scoring');
 
             Route::get('/minutes-paper', CertificationMinutesPaper::class)->name('certification.minutes.paper');
         });
