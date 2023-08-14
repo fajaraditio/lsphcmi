@@ -98,6 +98,80 @@
                         </tbody>
                     </table>
 
+                    <hr class="border-dotted my-3">
+
+                    @if (in_array(auth()->user()->role->slug, ['assessor', 'certification', 'chief']) &&
+                    count($this->testSchedule->test_scores) > 0)
+
+                    <div class="text-slate-500">
+                        <h3 class="font-bold text-lg">Hasil Penilaian</h3>
+                        <span class="underline">Bagian ini hanya bisa dilihat oleh yang berwenang</span> <br><br>
+
+                        <table class="table-auto border border-collapse border-slate-400">
+                            <thead>
+                                <tr>
+                                    <th class="border border-slate-400 py-3 px-2">Komponen</th>
+                                    <th class="border border-slate-400 py-3 px-2">Skor</th>
+                                    <th class="border border-slate-400 py-3 px-2">Bobot</th>
+                                    <th class="border border-slate-400 py-3 px-2">Skor x Bobot</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $scorings = 0;
+                                @endphp
+
+                                @foreach ($this->testSchedule->test_scores as $testScore)
+
+                                @php
+                                $scoreXweight = (float) $testScore->score * (float) $testScore->weight;
+                                $scorings += $scoreXweight;
+                                @endphp
+
+                                <tr>
+                                    <td class="border border-slate-400 py-3 px-2">{{
+                                        $testScore->scoring_component->title }}
+                                    </td>
+                                    <td class="border border-slate-400 py-3 px-2">
+                                        {{ $testScore->score }}
+                                    </td>
+                                    <td class="border border-slate-400 py-3 px-2">
+                                        {{ $testScore->weight }}
+                                    </td>
+                                    <td class="border border-slate-400 py-3 px-2">
+                                        {{ $scoreXweight }}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="font-bold border border-slate-400 py-3 px-2">Maksimal Skor:
+                                        {{
+                                        $maxScore
+                                        }}</td>
+                                    <td class="border border-slate-400 py-3 px-2">Total Skor</td>
+                                    <td class="font-bold border border-slate-400 py-3 px-2">{{ $scorings }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="border border-slate-400 py-3 px-2">Persentase</td>
+                                    <td class="font-bold border border-slate-400 py-3 px-2">{{ number_format($scorings /
+                                        $maxScore *
+                                        100, 2)
+                                        }}%</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class=" border border-slate-400 py-3 px-2">Rekomendasi</td>
+                                    <td class="font-bold border border-slate-400 py-3 px-2">{{ number_format($scorings /
+                                        $maxScore *
+                                        100, 2) >= $minPercentage ? 'Kompeten' : 'Belum Kompeten'
+                                        }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    @endif
+
                     @if (empty($this->testSchedule->assessor_submitted_report_at))
                     <div class="my-5">
                         <x-primary-button

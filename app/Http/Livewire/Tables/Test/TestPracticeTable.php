@@ -224,35 +224,25 @@ final class TestPracticeTable extends PowerGridComponent
     public function actions(): array
     {
         if (auth()->user()->role->slug === 'assessor') {
-            if (empty($this->testSchedule->assessor_submitted_test_practice_at)) {
-                return [
-                    Button::make('edit', 'Edit')
-                        ->class('block w-full bg-green-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.edit-test-practice-case-modal', ['testPractice' => 'id']),
+            return [
+                Button::make('edit', 'Edit')
+                    ->class('block w-full bg-green-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                    ->openModal('modals.test.edit-test-practice-case-modal', ['testPractice' => 'id']),
 
-                    Button::make('destroy', 'Hapus')
-                        ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.destroy-test-practice-case-modal', ['testPractice' => 'id'])
-                ];
-            } else if (empty($this->testSchedule->assessor_reviewed_test_practice_at) && !empty($this->testSchedule->participant_responded_test_practice_at)) {
-                return [
-                    Button::make('review', 'Beri Penilaian')
-                        ->class('block w-full bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.review-test-practice-modal', ['testPractice' => 'id'])
-                ];
-            }
+                Button::make('destroy', 'Hapus')
+                    ->class('block w-full bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                    ->openModal('modals.test.destroy-test-practice-case-modal', ['testPractice' => 'id']),
 
-            return [];
+                Button::make('review', 'Beri Penilaian')
+                    ->class('block w-full bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                    ->openModal('modals.test.review-test-practice-modal', ['testPractice' => 'id'])
+            ];
         } else if (auth()->user()->role->slug === 'participant') {
-            if (empty($this->testSchedule->participant_responded_test_practice_at)) {
-                return [
-                    Button::make('response', 'Jawab')
-                        ->class('block w-full bg-purple-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-                        ->openModal('modals.test.respond-test-practice-case-modal', ['testPractice' => 'id']),
-                ];
-            }
-
-            return [];
+            return [
+                Button::make('response', 'Jawab')
+                    ->class('block w-full bg-purple-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                    ->openModal('modals.test.respond-test-practice-case-modal', ['testPractice' => 'id']),
+            ];
         }
 
         return [];

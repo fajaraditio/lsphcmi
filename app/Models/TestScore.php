@@ -10,4 +10,14 @@ class TestScore extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function scoring_component()
+    {
+        return $this->belongsTo(ScoringComponent::class);
+    }
+
+    public function scoring_criteria()
+    {
+        return $this->belongsTo(ScoringCriteria::class);
+    }
 }

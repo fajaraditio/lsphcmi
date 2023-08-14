@@ -12,6 +12,8 @@ class TestReport extends Component
     public TestSchedule $testSchedule;
     public $testReport;
     public $participant;
+    public $maxScore = 16;
+    public $minPercentage = 60;
 
     public function mount()
     {

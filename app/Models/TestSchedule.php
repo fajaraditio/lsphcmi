@@ -30,4 +30,9 @@ class TestSchedule extends Model
     {
         return $this->hasOne(TestAgreement::class);
     }
+
+    public function test_scores()
+    {
+        return $this->hasMany(TestScore::class);
+    }
 }

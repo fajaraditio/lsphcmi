@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('assessor_user_id')->nullable();
             $table->unsignedBigInteger('scoring_component_id')->nullable();
             $table->unsignedBigInteger('scoring_criteria_id')->nullable();
-            $table->integer('score')->nullable();
-            $table->integer('weight')->nullable();
+            $table->float('score')->nullable();
+            $table->float('weight')->nullable();
             $table->timestamps();
         });
     }
