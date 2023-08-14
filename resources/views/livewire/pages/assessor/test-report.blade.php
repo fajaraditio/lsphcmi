@@ -101,8 +101,8 @@
                     @if (empty($this->testSchedule->assessor_submitted_report_at))
                     <div class="my-5">
                         <x-primary-button
-                            wire:click="$emit('openModal', 'modals.test.submit-test-report-modal', {{ json_encode(['testSchedule' => $testSchedule->id ]) }})">
-                            {{ __('Isi Hasil Laporan Kompetensi') }}
+                            wire:click="$emit('openModal', 'modals.test.submit-test-score-modal', {{ json_encode(['testSchedule' => $testSchedule->id ]) }})">
+                            {{ __('Isi Form Penilaian') }}
                         </x-primary-button>
                     </div>
                     @endif
