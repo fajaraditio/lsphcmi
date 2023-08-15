@@ -18,9 +18,12 @@ class AssessmentReport extends Component
     public function mount()
     {
         $this->testSchedule     = TestSchedule::where('participant_user_id', auth()->user()->id)->first();
-        $this->testReport       = TestReport::where('test_schedule_id', $this->testSchedule->id)->first();
-        $this->testAgreement    = TestAgreement::where('test_schedule_id', $this->testSchedule->id)->first();
-        $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
+
+        if (!empty($this->testSchedule)) {
+            $this->testReport       = TestReport::where('test_schedule_id', $this->testSchedule->id)->first();
+            $this->testAgreement    = TestAgreement::where('test_schedule_id', $this->testSchedule->id)->first();
+            $this->participant      = Participant::where('user_id', auth()->user()->id)->first();
+        }
     }
 
     public function back()

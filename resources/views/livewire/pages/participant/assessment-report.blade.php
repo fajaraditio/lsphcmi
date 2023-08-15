@@ -12,7 +12,23 @@
             <div class="bg-white text-sm overflow-hidden shadow-sm sm:rounded-lg my-2">
                 <div class="p-8">
 
-                    @if (empty($testSchedule->assessor_submitted_report_at))
+                    @if (empty($testSchedule))
+                    <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
+                        role="alert">
+                        <span class="mr-3">⌛️</span>
+                        <span class="sr-only"></span>
+                        <div>
+                            <span class="font-bold">{{ __('Tidak Ada Laporan Hasil Asesmen') }}</span> <br> {{
+                            __('Silakan mengerjakan terlebih dahulu uji kompetensi yang ada di laman Uji Kompetensi') }}
+                        </div>
+                    </div>
+
+                    <button
+                        class="px-3 py-2 bg-green-500 hover:bg-green-600 border rounded text-white text-sm font-bold inline-flex items-center"
+                        wire:click="back()">
+                        Kembali ke Laman Uji Kompetensi
+                    </button>
+                    @elseif (empty($testSchedule->assessor_submitted_report_at))
                     <div class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
                         role="alert">
                         <span class="mr-3">⌛️</span>
