@@ -186,12 +186,12 @@ final class TestObservationTable extends PowerGridComponent
                     ->sortable(),
 
                 Column::make('Pertanyaan', 'question')
-                    ->bodyAttribute('w-2/6')
+                    ->bodyAttribute('w-1/6')
                     ->searchable()
                     ->sortable(),
 
                 Column::make('Jawaban', 'response')
-                    ->bodyAttribute('w-2/6')
+                    ->bodyAttribute('w-1/6')
                     ->searchable()
                     ->sortable(),
 
