@@ -15,4 +15,9 @@ class TestReport extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function assessor_user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

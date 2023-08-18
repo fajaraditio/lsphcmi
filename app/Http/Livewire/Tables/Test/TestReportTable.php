@@ -114,6 +114,14 @@ final class TestReportTable extends PowerGridComponent
                     return '<div class="bg-yellow-100 text-yellow-800 text-xs text-center font-medium mr-2 px-2.5 py-1.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Belum Diverifikasi</div>';
                 }
             })
+            ->addColumn('bnsp_certificate', function (TestReport $model) {
+                if (empty($model->bnsp_certificate)) {
+                    return '-';
+                } else {
+                    $url = url('storage/' . $model->bnsp_certificate);
+                    return '<a href="' . $url . '" class="text-blue-500 hover:text-blue-700 hover:underline capitalize">[Lihat Sertifikat]</a>';
+                }
+            })
             ->addColumn('result', fn (TestReport $model) => $model->result === 'K' ? 'Kompeten' : 'Belum Kompeten')
             ->addColumn('created_at_formatted', fn (TestReport $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -140,27 +148,32 @@ final class TestReportTable extends PowerGridComponent
                 ->sortable(),
 
             Column::make('Tanggal Laporan', 'assessor_submitted_report_at')
-                ->bodyAttribute('w-1/5')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Status Verifikasi', 'chief_approval_status')
-                ->bodyAttribute('w-1/5')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Asesi', 'participant_name')
-                ->bodyAttribute('w-1/5')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Asesor', 'assessor_name')
-                ->bodyAttribute('w-1/5')
+                ->bodyAttribute('w-1/6')
                 ->searchable()
                 ->sortable(),
 
             Column::make('Rekomendasi', 'result')
-                ->bodyAttribute('w-1/5 font-bold uppercase')
+                ->bodyAttribute('w-1/6 font-bold uppercase')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Sertifikat BNSP', 'bnsp_certificate')
+                ->bodyAttribute('w-1/6 font-bold uppercase')
                 ->searchable()
                 ->sortable(),
         ];
@@ -200,7 +213,17 @@ final class TestReportTable extends PowerGridComponent
                     </svg>                              
                 ')
                 ->class('inline-block bg-blue-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->openModal('modals.test.view-test-report-pdf-modal', ['testReport' => 'id'])
+                ->openModal('modals.test.view-test-report-pdf-modal', ['testReport' => 'id']),
+
+            Button::make('upload-bnsp', 'Unggah Sertifikat')
+                ->caption('
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
+              </svg>
+                                        
+                ')
+                ->class('inline-block bg-yellow-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->openModal('modals.test.submit-bnsp-certificate-modal', ['testReport' => 'id'])
         ];
     }
 
@@ -232,6 +255,16 @@ final class TestReportTable extends PowerGridComponent
                 ->hide(),
 
             Rule::button('file')
+                ->when(function ($testReport) {
+                    if (auth()->user()->role->slug !== 'certification') {
+                        return true;
+                    }
+
+                    return false;
+                })
+                ->hide(),
+
+            Rule::button('upload-bnsp')
                 ->when(function ($testReport) {
                     if (auth()->user()->role->slug !== 'certification') {
                         return true;
