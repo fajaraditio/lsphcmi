@@ -26,7 +26,25 @@
         <hr class="my-5">
 
         <div class="w-full">
-            <x-input-label for="bnsp_certificate" :value="__('Unggah Jawaban')">
+            <x-input-label for="bnsp_certificate" :value="__('Nomor Sertifikat')">
+            </x-input-label>
+            <x-text-input type="text" id="bnsp_certificate" wire:model="bnspCertificateNumber"
+                :value="old('bnspCertificateNumber')" :error="$errors->has('bnspCertificateFile')"
+                class="block mt-1 w-full text-sm">
+            </x-text-input>
+            <x-input-error :messages="$errors->get('bnspCertificateNumber')" class="mt-2" />
+        </div>
+        <div class="w-full mt-5">
+            <x-input-label for="bnsp_certificate_date" :value="__('Tanggal Terbit')">
+            </x-input-label>
+            <x-text-input type="date" id="bnsp_certificate_date" wire:model="bnspCertificateDate"
+                :value="old('bnspCertificateDate') ?? \Carbon\Carbon::now()->format('Y-m-d')"
+                :error="$errors->has('bnspCertificateFile')" class="block mt-1 w-full text-sm">
+            </x-text-input>
+            <x-input-error :messages="$errors->get('bnspCertificateDate')" class="mt-2" />
+        </div>
+        <div class="w-full mt-5">
+            <x-input-label for="bnsp_certificate" :value="__('Unggah Sertifikat')">
             </x-input-label>
             <x-file-input id="bnsp_certificate" :value="old('bnspCertificateFile')" class="block mt-1 w-full text-sm"
                 :error="$errors->has('bnspCertificateFile')" wire:model="bnspCertificateFile"

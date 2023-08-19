@@ -39,6 +39,7 @@ use App\Http\Livewire\Pages\Assessor\TestObservation as AssessorTestObservation;
 use App\Http\Livewire\Pages\Assessor\TestPractice as AssessorTestPractice;
 use App\Http\Livewire\Pages\Assessor\TestFeedback as AssessorTestFeedback;
 use App\Http\Livewire\Pages\Assessor\TestReport as AssessorTestReport;
+use App\Http\Livewire\Pages\CheckCertificate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,12 +57,14 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/check-certificate', CheckCertificate::class)->name('check-certificate');
+
 Route::get('/dashboard', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile',      [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile',    [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile',   [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('role:participant')->group(function () {
         Route::prefix('/participant')->group(function () {

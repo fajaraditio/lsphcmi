@@ -119,7 +119,7 @@ final class TestReportTable extends PowerGridComponent
                     return '-';
                 } else {
                     $url = url('storage/' . $model->bnsp_certificate);
-                    return '<a href="' . $url . '" class="text-blue-500 hover:text-blue-700 hover:underline capitalize">[Lihat Sertifikat]</a>';
+                    return '<a href="' . $url . '" class="text-blue-500 hover:text-blue-700 hover:underline capitalize">[' . ($model->bnsp_certificate_number ?? 'Lihat Sertifikat') . ']</a>';
                 }
             })
             ->addColumn('result', fn (TestReport $model) => $model->result === 'K' ? 'Kompeten' : 'Belum Kompeten')

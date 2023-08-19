@@ -13,14 +13,20 @@ class SubmitBnspCertificateModal extends ModalComponent
     use WithFileUploads;
 
     public $testReport;
+    public $bnspCertificateNumber;
+    public $bnspCertificateDate;
     public $bnspCertificateFile;
 
     protected $rules = [
-        'bnspCertificateFile' => 'required|mimes:pdf',
+        'bnspCertificateNumber' => 'required',
+        'bnspCertificateDate'   => 'required|date_format:Y-m-d',
+        'bnspCertificateFile'   => 'required|mimes:pdf',
     ];
 
     protected $validationAttributes = [
-        'bnspCertificateFile' => 'Berkas Sertifikat BNSP',
+        'bnspCertificateNumber' => 'Nomor Sertifikat BNSP',
+        'bnspCertificateDate'   => 'Tanggal Sertifikat BNSP',
+        'bnspCertificateFile'   => 'Berkas Sertifikat BNSP',
     ];
 
     public function mount(TestReport $testReport)
@@ -31,13 +37,17 @@ class SubmitBnspCertificateModal extends ModalComponent
     public function upload()
     {
         $this->validate();
-        
+
         $bnspCertificateFilename  = 'bnsp_certificate_' . $this->testReport->id . '.' . $this->bnspCertificateFile->getClientOriginalExtension();
         $bnspCertificateUploaded  = $this->bnspCertificateFile->storeAs('public/bnsp', $bnspCertificateFilename);
 
         $bnspCertificateFile = str_replace('public/', '', $bnspCertificateUploaded);
 
-        $this->testReport->update(['bnsp_certificate' => $bnspCertificateFile]);
+        $this->testReport->update([
+            'bnsp_certificate'          => $bnspCertificateFile,
+            'bnsp_certificate_number'   => $this->bnspCertificateNumber,
+            'bnsp_certificate_date'     => $this->bnspCertificateDate,
+        ]);
 
         $this->emitTo(
             Alert::class,

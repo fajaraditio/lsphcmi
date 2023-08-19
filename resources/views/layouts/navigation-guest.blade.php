@@ -16,17 +16,20 @@
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Beranda') }}
                 </x-nav-link>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-nav-link href="https://lsphcmi.com/scheme" :active="request()->routeIs('dashboard')">
                     {{ __('Skema') }}
                 </x-nav-link>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-nav-link href="https://lsphcmi.com/gallery" :active="request()->routeIs('dashboard')">
                     {{ __('Galeri') }}
                 </x-nav-link>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-nav-link href="https://lsphcmi.com/contact" :active="request()->routeIs('dashboard')">
                     {{ __('Kontak') }}
                 </x-nav-link>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-nav-link href="https://lsphcmi.com/about" :active="request()->routeIs('dashboard')">
                     {{ __('Tentang') }}
+                </x-nav-link>
+                <x-nav-link :href="route('check-certificate')" :active="request()->routeIs('dashboard')">
+                    {{ __('Cek Sertifikat') }}
                 </x-nav-link>
                 <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
                     {{ __('Login / Daftar') }}
