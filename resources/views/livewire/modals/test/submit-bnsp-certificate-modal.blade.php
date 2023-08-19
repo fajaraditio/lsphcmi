@@ -26,22 +26,31 @@
         <hr class="my-5">
 
         <div class="w-full">
-            <x-input-label for="bnsp_certificate" :value="__('Nomor Sertifikat')">
+            <x-input-label for="bnsp_certificate_number" :value="__('Nomor Sertifikat')">
             </x-input-label>
-            <x-text-input type="text" id="bnsp_certificate" wire:model="bnspCertificateNumber"
+            <x-text-input type="text" id="bnsp_certificate_number" wire:model="bnspCertificateNumber"
                 :value="old('bnspCertificateNumber')" :error="$errors->has('bnspCertificateFile')"
                 class="block mt-1 w-full text-sm">
             </x-text-input>
             <x-input-error :messages="$errors->get('bnspCertificateNumber')" class="mt-2" />
         </div>
         <div class="w-full mt-5">
-            <x-input-label for="bnsp_certificate_date" :value="__('Tanggal Terbit')">
+            <x-input-label for="bnsp_certificate_date" :value="__('Tanggal Sertifikat')">
             </x-input-label>
             <x-text-input type="date" id="bnsp_certificate_date" wire:model="bnspCertificateDate"
                 :value="old('bnspCertificateDate') ?? \Carbon\Carbon::now()->format('Y-m-d')"
-                :error="$errors->has('bnspCertificateFile')" class="block mt-1 w-full text-sm">
+                :error="$errors->has('bnspCertificateDate')" class="block mt-1 w-full text-sm">
             </x-text-input>
             <x-input-error :messages="$errors->get('bnspCertificateDate')" class="mt-2" />
+        </div>
+        <div class="w-full mt-5">
+            <x-input-label for="bnsp_certificate_valid_thru" :value="__('Berlaku Sampai')">
+            </x-input-label>
+            <x-text-input type="date" id="bnsp_certificate_valid_thru" wire:model="bnspCertificateValidThru"
+                :value="old('bnspCertificateDate') ?? \Carbon\Carbon::now()->format('Y-m-d')"
+                :error="$errors->has('bnspCertificateValidThru')" class="block mt-1 w-full text-sm">
+            </x-text-input>
+            <x-input-error :messages="$errors->get('bnspCertificateValidThru')" class="mt-2" />
         </div>
         <div class="w-full mt-5">
             <x-input-label for="bnsp_certificate" :value="__('Unggah Sertifikat')">
