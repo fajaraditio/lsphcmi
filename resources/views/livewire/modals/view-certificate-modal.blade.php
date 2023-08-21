@@ -56,8 +56,6 @@
             </table>
         </div>
 
-        <iframe src="{{ url('storage/' . $testReport->bnsp_certificate) }}" name="viewReportPdf" frameborder="0"
-            class="border border-slate-200 w-full h-96"></iframe>
     </div>
 
     <div class="bg-gray-50 p-3 sm:flex justify-end">
